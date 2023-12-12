@@ -19,7 +19,7 @@ export const App = () => {
 
   return (
     <>
-      <Banner />
+      <Banner token={token} setToken={setToken} />
       <NavBar token={token} setToken={setToken} />
       <AppViews
         token={token}

@@ -10,6 +10,7 @@ import { EditPlant } from "../components/plants/EditPlant";
 import { Favorites } from "../components/plants/Favorites";
 import { CritterList } from "../components/critters/CritterList";
 import { CritterDetails } from "../components/critters/CritterDetails";
+import { GardenBuilder } from "../components/misc/GardenBuilder";
 
 export const AppViews = ({ token, setToken, userId, setCurrentUserId }) => {
   return (
@@ -38,6 +39,7 @@ export const AppViews = ({ token, setToken, userId, setCurrentUserId }) => {
           <Route path="/critters" element={<CritterList />}>
             <Route path=":critterId" element={<CritterDetails />} />
           </Route>
+          <Route path="/gardenbuilder" element={<GardenBuilder />} />
         </Route>
       </Routes>
     </>
