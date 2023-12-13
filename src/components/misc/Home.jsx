@@ -9,7 +9,7 @@ export const Home = () => {
         <div className="text-xl">blah blah blah blah blah</div>
         <br></br>
         <button
-          className="text-3xl"
+          className="text-3xl border-double border-4 border-green-900 rounded-xl p-4"
           onClick={() => {
             navigate("/plants");
           }}

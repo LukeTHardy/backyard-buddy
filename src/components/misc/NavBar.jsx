@@ -10,7 +10,7 @@ export const NavBar = ({ token }) => {
         <div className="">
           {token ? (
             <>
-              <Link to="/" className="">
+              <Link to="/" className="text-xl">
                 Home
               </Link>
             </>
@@ -21,7 +21,7 @@ export const NavBar = ({ token }) => {
         <div className="">
           {token ? (
             <>
-              <Link to="/plants" className="">
+              <Link to="/plants" className="text-xl">
                 Plants
               </Link>
             </>
@@ -32,7 +32,7 @@ export const NavBar = ({ token }) => {
         <div className="">
           {token ? (
             <>
-              <Link to="/critters" className="">
+              <Link to="/critters" className="text-xl">
                 Critters
               </Link>
             </>
@@ -42,7 +42,7 @@ export const NavBar = ({ token }) => {
         </div>
         <div className="">
           {token ? (
-            <Link to="/plants/favorites" className="">
+            <Link to="/plants/favorites" className="text-xl">
               Favorites
             </Link>
           ) : (
@@ -51,7 +51,7 @@ export const NavBar = ({ token }) => {
         </div>
         <div className="">
           {token ? (
-            <Link to="/gardenbuilder" className="">
+            <Link to="/gardenbuilder" className="text-xl">
               Garden Builder
             </Link>
           ) : (
