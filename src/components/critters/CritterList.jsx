@@ -51,7 +51,7 @@ export const CritterList = () => {
   const handleValueFilter = (e) => {
     setFilterTypeSwitch("value");
     const filteredCritters = allCritters.filter(
-      (critter) => critter.type.label === e.target.name
+      (critter) => critter.type.label.toLowerCase() === e.target.name
     );
     setValueCritters(filteredCritters);
   };
@@ -88,9 +88,9 @@ export const CritterList = () => {
   };
 
   return (
-    <div className="comp-container flex flex-col justify-center items-center mt-8">
+    <div className="comp-container flex flex-col justify-center items-center mt-4">
       <div className="title search-bar flex w-3/4 mb-6 relative">
-        <div className="title text-xl mx-auto">Browse Critters</div>
+        <div className="title text-xl mx-auto font-bold">Browse Critters</div>
         <div className="search-bar-container absolute right-0">
           <input
             className="search-bar border border-solid border-black rounded-md"
@@ -101,7 +101,7 @@ export const CritterList = () => {
           />
         </div>
       </div>
-      <div className="buttons-container mb-4">
+      <div className="buttons-container">
         <button
           name="helpful"
           className="text-xl border-double border-4 border-green-900 rounded-xl p-2 mx-8"
@@ -127,14 +127,14 @@ export const CritterList = () => {
       {searchTerm || filterTypeSwitch ? (
         <button
           onClick={clearFilters}
-          className="border border-solid border-black rounded-xl p-0.5"
+          className="border border-solid border-black rounded-xl px-1 py-0.5 mt-2"
         >
           ⓧ clear filters
         </button>
       ) : (
         ""
       )}
-      <div className="list-container w-3/4 grid grid-cols-5 gap-14 mt-4">
+      <div className="list-container w-3/4 grid grid-cols-5 gap-14 mt-4 p-8 rounded-xl bg-amber-100">
         {displayCritters()}
       </div>
     </div>

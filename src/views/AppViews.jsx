@@ -14,34 +14,34 @@ import { GardenBuilder } from "../components/misc/GardenBuilder";
 
 export const AppViews = ({ token, setToken, userId, setCurrentUserId }) => {
   return (
-    <>
-      <Routes>
-        <Route
-          path="/login"
-          element={
-            <Login setToken={setToken} setCurrentUserId={setCurrentUserId} />
-          }
-        />
-        <Route
-          path="/register"
-          element={
-            <Register setToken={setToken} setCurrentUserId={setCurrentUserId} />
-          }
-        />
-        <Route element={<Authorized token={token} userId={userId} />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/plants" element={<PlantList />}>
-            <Route path="newplant" element={<NewPlant userId={userId} />} />
-            <Route path="favorites" element={<Favorites />} />
-            <Route path=":plantId" element={<PlantDetails />} />
-            <Route path=":plantId/edit" element={<EditPlant />} />
-          </Route>
-          <Route path="/critters" element={<CritterList />}>
-            <Route path=":critterId" element={<CritterDetails />} />
-          </Route>
-          <Route path="/gardenbuilder" element={<GardenBuilder />} />
+    <Routes>
+      <Route
+        path="/login"
+        element={
+          <Login setToken={setToken} setCurrentUserId={setCurrentUserId} />
+        }
+      />
+      <Route
+        path="/register"
+        element={
+          <Register setToken={setToken} setCurrentUserId={setCurrentUserId} />
+        }
+      />
+      <Route element={<Authorized token={token} userId={userId} />}>
+        <Route path="/" element={<Home />} />
+        <Route path="plants">
+          <Route index element={<PlantList userId={userId} />} />
+          <Route path="newplant" element={<NewPlant userId={userId} />} />
+          <Route path="favorites" element={<Favorites />} />
+          <Route path=":plantId" element={<PlantDetails />} />
+          <Route path=":plantId/edit" element={<EditPlant />} />
         </Route>
-      </Routes>
-    </>
+        <Route path="critters">
+          <Route index element={<CritterList />} />
+          <Route path=":critterId" element={<CritterDetails />} />
+        </Route>
+        <Route path="/gardenbuilder" element={<GardenBuilder />} />
+      </Route>
+    </Routes>
   );
 };
