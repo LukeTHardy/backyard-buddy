@@ -30,7 +30,7 @@ export const CritterDetails = () => {
             />
           </div>
           <div className="details-card flex flex-col items-center border-solid round-xl bg-amber-100 w-[40rem] h-[30rem] rounded-3xl">
-            <div className="critter-name text-2xl m-4">
+            <div className="critter-name text-3xl underline m-4">
               {chosenCritter.name}
             </div>
             <div className="critter-description text-2xl italic m-4">
