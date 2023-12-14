@@ -6,7 +6,10 @@ export const NavBar = ({ token }) => {
 
   return (
     <nav className="" role="navigation" aria-label="main navigation">
-      <div className="h-12 flex justify-evenly items-center" ref={navbar}>
+      <div
+        className="navbar-container h-12 flex justify-evenly items-center bg-amber-100"
+        ref={navbar}
+      >
         <div className="">
           {token ? (
             <>
