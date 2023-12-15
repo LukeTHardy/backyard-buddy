@@ -30,7 +30,7 @@ export const PlantDetails = ({ userId }) => {
 
   useEffect(() => {
     fetchAndSetPlant();
-  }, [plantId]);
+  }, [plantId, foundFavorite]);
 
   useEffect(() => {
     fetchMyFavorites().then((favsArray) => {
