@@ -1,23 +1,35 @@
 import { createPlant } from "../../services/PlantServices";
-import { fetchSoils } from "../../services/MiscServices";
-import { fetchWaters } from "../../services/MiscServices";
-import { fetchLights } from "../../services/MiscServices";
-import { fetchPlantTypes } from "../../services/MiscServices";
-import { fetchVeggieCats } from "../../services/MiscServices";
-import { fetchZones } from "../../services/MiscServices";
-// import { fetchPlant } from "../../services/PlantServices";
+import {
+  fetchSoils,
+  fetchWaters,
+  fetchLights,
+  fetchPlantTypes,
+  fetchVeggieCats,
+  fetchZones,
+  createPlantZonePairing,
+  createCompanionPairing,
+  createPlantCritterPairing,
+} from "../../services/MiscServices";
+import { fetchAllPlants } from "../../services/PlantServices";
+import { fetchAllCritters } from "../../services/CritterServices";
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Select from "react-select";
 
 export const NewPlant = () => {
   const navigate = useNavigate();
+  const [plants, setPlants] = useState([]);
+  const [critters, setCritters] = useState([]);
   const [soils, setSoils] = useState([]);
   const [waters, setWaters] = useState([]);
   const [lights, setLights] = useState([]);
   const [plantTypes, setPlantTypes] = useState([]);
   const [veggieCats, setVeggieCats] = useState([]);
   const [zones, setZones] = useState([]);
+  const [selectedZones, setSelectedZones] = useState([]);
+  const [selectedPlants, setSelectedPlants] = useState([]);
+  const [selectedCritters, setSelectedCritters] = useState([]);
   const [newPlant, setNewPlant] = useState({
     name: "",
     description: "",
@@ -37,6 +49,16 @@ export const NewPlant = () => {
     plants: 0,
   });
 
+  useEffect(() => {
+    fetchAllPlants().then((plantsArray) => {
+      setPlants(plantsArray);
+    });
+  }, []);
+  useEffect(() => {
+    fetchAllCritters().then((crittersArray) => {
+      setCritters(crittersArray);
+    });
+  }, []);
   useEffect(() => {
     fetchSoils().then((soilsArray) => {
       setSoils(soilsArray);
@@ -68,10 +90,64 @@ export const NewPlant = () => {
     });
   }, []);
 
+  const zoneOptions = zones.map((zone) => ({
+    value: zone.id,
+    label: zone.name,
+  }));
+  const critterOptions = critters.map((zone) => ({
+    value: zone.id,
+    label: zone.name,
+  }));
+  const companionOptions = plants.map((zone) => ({
+    value: zone.id,
+    label: zone.name,
+  }));
+
+  const handleZoneSelect = (options) => {
+    const optionValues = options.map((option) => option.value);
+    setSelectedZones(optionValues);
+  };
+  const handleCompanionSelect = (options) => {
+    const optionValues = options.map((option) => option.value);
+    setSelectedPlants(optionValues);
+  };
+  const handleCritterSelect = (options) => {
+    const optionValues = options.map((option) => option.value);
+    setSelectedCritters(optionValues);
+  };
+
   const handleInputChange = (e) => {
     const plantCopy = { ...newPlant };
     plantCopy[e.target.name] = e.target.value;
     setNewPlant(plantCopy);
+  };
+
+  const createZonePairings = (plantId) => {
+    selectedZones.map((zoneId) => {
+      const newPairing = {
+        plant: plantId,
+        zone: zoneId,
+      };
+      createPlantZonePairing(newPairing);
+    });
+  };
+  const createPlantPairings = (plantId) => {
+    selectedPlants.map((companionId) => {
+      const newPairing = {
+        plant1: plantId,
+        plant2: companionId,
+      };
+      createCompanionPairing(newPairing);
+    });
+  };
+  const createCritterPairings = (plantId) => {
+    selectedCritters.map((critterId) => {
+      const newPairing = {
+        plant: plantId,
+        critter: critterId,
+      };
+      createPlantCritterPairing(newPairing);
+    });
   };
 
   const handleSave = () => {
@@ -91,12 +167,19 @@ export const NewPlant = () => {
       days_to_mature: newPlant.days_to_mature,
       image: newPlant.image,
       icon: newPlant.icon,
-      zones: newPlant.zones,
-      companions: newPlant.companions,
-      critters: newPlant.critters,
     };
 
-    createPlant(newPlantObj).then(navigate("/plants"));
+    createPlant(newPlantObj)
+      .then((createdPlant) => {
+        const newPlantId = createdPlant.id;
+        createZonePairings(newPlantId)
+          .then(createPlantPairings(newPlantId))
+          .then(createCritterPairings(newPlantId));
+        navigate(`/plants/${newPlantId}`);
+      })
+      .catch((error) => {
+        console.error("Error creating plant:", error);
+      });
   };
 
   return (
@@ -135,7 +218,7 @@ export const NewPlant = () => {
           <div className="type-title">Plant Type:</div>
           <div className="select-container">
             <select
-              name="typeId"
+              name="type"
               onChange={handleInputChange}
               value={newPlant.type}
             >
@@ -169,11 +252,11 @@ export const NewPlant = () => {
             </select>
           </div>
         </div>
-        <div className="state-container">
-          <div className="state-title">Soil:</div>
+        <div className="soil-container">
+          <div className="soil-title">Soil:</div>
           <div className="select-container">
             <select
-              name="stateId"
+              name="soil"
               onChange={handleInputChange}
               value={newPlant.soil}
             >
@@ -188,11 +271,11 @@ export const NewPlant = () => {
             </select>
           </div>
         </div>
-        <div className="state-container">
-          <div className="state-title">Water:</div>
+        <div className="water-container">
+          <div className="water-title">Water:</div>
           <div className="select-container">
             <select
-              name="stateId"
+              name="water"
               onChange={handleInputChange}
               value={newPlant.water}
             >
@@ -207,11 +290,11 @@ export const NewPlant = () => {
             </select>
           </div>
         </div>
-        <div className="state-container">
-          <div className="state-title">Light:</div>
+        <div className="light-container">
+          <div className="light-title">Light:</div>
           <div className="select-container">
             <select
-              name="stateId"
+              name="light"
               onChange={handleInputChange}
               value={newPlant.light}
             >
@@ -249,7 +332,7 @@ export const NewPlant = () => {
               name="height"
               type="text"
               className="form-control"
-              placeholder=""
+              placeholder="Enter Height (in.)"
               onChange={handleInputChange}
             />
           </div>
@@ -263,7 +346,7 @@ export const NewPlant = () => {
               name="spacing"
               type="text"
               className="form-control"
-              placeholder=""
+              placeholder="Enter Spacing (in.)"
               onChange={handleInputChange}
             />
           </div>
@@ -277,7 +360,7 @@ export const NewPlant = () => {
               name="days_to_mature"
               type="text"
               className="form-control"
-              placeholder=""
+              placeholder="Number of Days"
               onChange={handleInputChange}
             />
           </div>
@@ -310,53 +393,45 @@ export const NewPlant = () => {
             />
           </div>
         </fieldset>
-        <div className="zones-container">
-          <div className="zones-title">Light:</div>
-          <div className="select-container">
-            <select
-              name="zones"
-              onChange={handleInputChange}
-              value={newPlant.zones}
-            >
-              <option value={0}>Select zones</option>
-              {zones.map((zoneObj) => {
-                return (
-                  <option key={zoneObj.id} value={zoneObj.id}>
-                    {zoneObj.name}
-                  </option>
-                );
-              })}
-            </select>
+        <div className="zones-container flex">
+          <label htmlFor="zones" className="zones-title">
+            Zones:
+          </label>
+          <div className="select-container w-[20rem]">
+            <Select
+              options={zoneOptions}
+              isMulti
+              closeMenuOnSelect={false}
+              onChange={handleZoneSelect}
+            />
           </div>
         </div>
-        <fieldset>
-          <div className="companions-container">
-            <label htmlFor="companions">Companion Plants:</label>
-            <input
-              id="companions"
-              value={newPlant.companions}
-              name="companions"
-              type="text"
-              className="form-control"
-              placeholder=""
-              onChange={handleInputChange}
+        <div className="companions-container flex">
+          <label htmlFor="companions" className="companions-title">
+            Companions:
+          </label>
+          <div className="select-container w-[20rem]">
+            <Select
+              options={companionOptions}
+              isMulti
+              closeMenuOnSelect={false}
+              onChange={handleCompanionSelect}
             />
           </div>
-        </fieldset>
-        <fieldset>
-          <div className="critters-container">
-            <label htmlFor="critters">Critters:</label>
-            <input
-              id="critters"
-              value={newPlant.critters}
-              name="critters"
-              type="text"
-              className="form-control"
-              placeholder=""
-              onChange={handleInputChange}
+        </div>
+        <div className="critters-container flex">
+          <label htmlFor="critters" className="critters-title">
+            Critters:
+          </label>
+          <div className="select-container w-[20rem]">
+            <Select
+              options={critterOptions}
+              isMulti
+              closeMenuOnSelect={false}
+              onChange={handleCritterSelect}
             />
           </div>
-        </fieldset>
+        </div>
         <button className="save-btn" onClick={handleSave}>
           Save Plant
         </button>

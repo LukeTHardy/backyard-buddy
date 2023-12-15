@@ -46,3 +46,34 @@ export const fetchZones = async () => {
   });
   return await response.json();
 };
+
+export const createPlantZonePairing = (newPairing) => {
+  return fetch(`http://localhost:8000/plantzonepairings`, {
+    method: "POST",
+    headers: {
+      Authorization: `Token ${localStorage.getItem("auth_token")}`,
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(newPairing),
+  });
+};
+export const createCompanionPairing = (newPairing) => {
+  return fetch(`http://localhost:8000/companionpairings`, {
+    method: "POST",
+    headers: {
+      Authorization: `Token ${localStorage.getItem("auth_token")}`,
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(newPairing),
+  });
+};
+export const createPlantCritterPairing = (newPairing) => {
+  return fetch(`http://localhost:8000/plantcritterpairings`, {
+    method: "POST",
+    headers: {
+      Authorization: `Token ${localStorage.getItem("auth_token")}`,
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(newPairing),
+  });
+};
