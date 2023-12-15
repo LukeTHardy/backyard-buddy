@@ -1,8 +1,10 @@
 import { fetchAllPlants } from "../../services/PlantServices";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const PlantList = () => {
+  const navigate = useNavigate();
   const [allPlants, setAllPlants] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchTermPlants, setSearchTermPlants] = useState([]);
@@ -18,7 +20,7 @@ export const PlantList = () => {
 
   useEffect(() => {
     fetchAndSetAllPlants();
-  }, []);
+  }, [renderedPlants]);
 
   useEffect(() => {
     const foundPlants = allPlants.filter((plant) =>
@@ -84,10 +86,18 @@ export const PlantList = () => {
   return (
     <div className="comp-container flex flex-col justify-center items-center mt-4">
       <div className="title search-bar flex w-3/4 mb-6 relative">
-        <div className="title text-xl mx-auto font-bold">Browse Plants</div>
+        <div className="title text-2xl mx-auto font-bold">Browse Plants</div>
+        <button
+          className="add-plant-button text-2xl text-green-700 absolute left-0 underline"
+          onClick={() => {
+            navigate("/plants/newplant");
+          }}
+        >
+          ✚ Add Plant
+        </button>
         <div className="search-bar-container absolute right-0">
           <input
-            className="search-bar border border-solid border-black rounded-md"
+            className="search-bar border text-xl border-solid border-black rounded-md"
             type="text"
             value={searchTerm}
             placeholder=" Search Plants"

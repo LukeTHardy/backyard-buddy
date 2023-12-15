@@ -1,5 +1,5 @@
 // import { createPlant } from "../../services/PlantServices";
 
 export const NewPlant = () => {
-  return <div>sup</div>;
+  return <div>sup new plant</div>;
 };

@@ -33,7 +33,7 @@ export const AppViews = ({ token, setToken, userId, setCurrentUserId }) => {
           <Route index element={<PlantList userId={userId} />} />
           <Route path="newplant" element={<NewPlant userId={userId} />} />
           <Route path="favorites" element={<Favorites />} />
-          <Route path=":plantId" element={<PlantDetails />} />
+          <Route path=":plantId" element={<PlantDetails userId={userId} />} />
           <Route path=":plantId/edit" element={<EditPlant />} />
         </Route>
         <Route path="critters">

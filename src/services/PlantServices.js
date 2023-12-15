@@ -7,7 +7,7 @@ export const fetchAllPlants = async () => {
   return await response.json();
 };
 
-export const fetchFavorites = async () => {
+export const fetchMyFavorites = async () => {
   const response = await fetch("http://localhost:8000/favorites?user=current", {
     headers: {
       Authorization: `Token ${localStorage.getItem("auth_token")}`,
@@ -57,4 +57,25 @@ export const deletePlant = async (plantId) => {
     },
   });
   return response;
+};
+
+export const createFavorite = (newFavorite) => {
+  return fetch(`http://localhost:8000/favorites`, {
+    method: "POST",
+    headers: {
+      Authorization: `Token ${localStorage.getItem("auth_token")}`,
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(newFavorite),
+  });
+};
+
+export const deleteFavoriteById = (favoriteId) => {
+  return fetch(`http://localhost:8000/favorites/${favoriteId}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Token ${localStorage.getItem("auth_token")}`,
+      "Content-Type": "application/json",
+    },
+  });
 };

@@ -21,7 +21,7 @@ export const Banner = ({ token, setToken }) => {
         )}
       </div>
       <div className="flex-col justify-center">
-        <h1 className="text-3xl mt-8 text-green-900">BACKYARD BUDDY 🪴</h1>
+        <h1 className="text-3xl mt-8 text-green-900">BACKYARD BUDDY 🥬</h1>
       </div>
     </div>
   );
