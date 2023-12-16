@@ -155,7 +155,7 @@ export const NewPlant = () => {
       water: parseInt(newPlant.water),
       light: parseInt(newPlant.light),
       height: parseInt(newPlant.height),
-      annual: newPlant.annual,
+      annual: JSON.parse(newPlant.annual),
       spacing: newPlant.spacing,
       days_to_mature: newPlant.days_to_mature,
       image: newPlant.image,
@@ -166,9 +166,14 @@ export const NewPlant = () => {
       .then((createdPlant) => {
         const newPlantId = createdPlant.id;
         createZonePairings(newPlantId)
-          .then(createPlantPairings(newPlantId))
-          .then(createCritterPairings(newPlantId));
-        navigate(`/plants/${newPlantId}`);
+          .then(() => createPlantPairings(newPlantId))
+          .then(() => createCritterPairings(newPlantId))
+          .then(() => {
+            navigate(`/plants/${newPlantId}`);
+          })
+          .catch((error) => {
+            console.error("Error creating critter pairings:", error);
+          });
       })
       .catch((error) => {
         console.error("Error creating plant:", error);
