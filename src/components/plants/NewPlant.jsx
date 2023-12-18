@@ -31,6 +31,8 @@ export const NewPlant = () => {
   const [selectedZones, setSelectedZones] = useState([]);
   const [selectedPlants, setSelectedPlants] = useState([]);
   const [selectedCritters, setSelectedCritters] = useState([]);
+  const [b64ImageString, setB64ImageString] = useState("");
+  const [b64IconString, setB64IconString] = useState("");
   const [newPlant, setNewPlant] = useState({
     name: "",
     description: "",
@@ -42,6 +44,8 @@ export const NewPlant = () => {
     height: "",
     spacing: "",
     days_to_mature: "",
+    image: "",
+    icon: "",
   });
 
   useEffect(() => {
@@ -110,74 +114,62 @@ export const NewPlant = () => {
     const optionValues = options.map((option) => option.value);
     setSelectedCritters(optionValues);
   };
-  const createZonePairings = (plantId) => {
-    selectedZones.map((zoneId) => {
-      const newPairing = {
-        plant: plantId,
-        zone: zoneId,
-      };
-      createPlantZonePairing(newPairing);
-    });
-  };
-  const createPlantPairings = (plantId) => {
-    selectedPlants.map((companionId) => {
-      const newPairing = {
-        plant1: plantId,
-        plant2: companionId,
-      };
-      createCompanionPairing(newPairing);
-    });
-  };
-  const createCritterPairings = (plantId) => {
-    selectedCritters.map((critterId) => {
-      const newPairing = {
-        plant: plantId,
-        critter: critterId,
-      };
-      createPlantCritterPairing(newPairing);
-    });
-  };
+
   const handleInputChange = (e) => {
     const plantCopy = { ...newPlant };
     plantCopy[e.target.name] = e.target.value;
     setNewPlant(plantCopy);
   };
 
-  const handleSave = () => {
-    // e.preventDefault();
+  const getBase64 = (file, callback) => {
+    const reader = new FileReader();
+    reader.addEventListener("load", () => callback(reader.result));
+    reader.readAsDataURL(file);
+  };
 
-    const newPlantObj = {
-      name: newPlant.name,
-      description: newPlant.description,
-      type: parseInt(newPlant).type,
-      veggie_cat: parseInt(newPlant.veggie_cat),
-      soil: parseInt(newPlant.soil),
-      water: parseInt(newPlant.water),
-      light: parseInt(newPlant.light),
-      height: parseInt(newPlant.height),
-      annual: JSON.parse(newPlant.annual),
-      spacing: newPlant.spacing,
-      days_to_mature: newPlant.days_to_mature,
-      image: newPlant.image,
-      icon: newPlant.icon,
-    };
+  const createImageString = (event) => {
+    getBase64(event.target.files[0], (base64ImageString) => {
+      setB64ImageString(base64ImageString);
+    });
+  };
+  const createIconString = (event) => {
+    getBase64(event.target.files[0], (base64ImageString) => {
+      setB64IconString(base64ImageString);
+    });
+  };
 
-    createPlant(newPlantObj)
-      .then((createdPlant) => {
-        const newPlantId = createdPlant.id;
-        createZonePairings(newPlantId)
-          .then(() => createPlantPairings(newPlantId))
-          .then(() => createCritterPairings(newPlantId))
-          .then(() => {
-            navigate(`/plants/${newPlantId}`);
-          })
-          .catch((error) => {
-            console.error("Error creating critter pairings:", error);
-          });
-      })
-      .catch((error) => {
-        console.error("Error creating plant:", error);
-      });
+  const handleSave = async () => {
+    try {
+      const newPlantObj = {
+        name: newPlant.name,
+        description: newPlant.description,
+        type: parseInt(newPlant.type),
+        veggie_cat: parseInt(newPlant.veggie_cat),
+        soil: parseInt(newPlant.soil),
+        water: parseInt(newPlant.water),
+        light: parseInt(newPlant.light),
+        height: parseInt(newPlant.height),
+        annual: JSON.parse(newPlant.annual),
+        spacing: newPlant.spacing,
+        days_to_mature: newPlant.days_to_mature,
+        image: b64ImageString,
+        icon: b64IconString,
+        // zones: [selectedZones],
+        // companions: [selectedPlants],
+        // critters: [selectedCritters]
+      };
+
+      const response = await createPlant(newPlantObj);
+      // console.log(response.json());
+
+      // Assuming the server responds with the newly created plant object
+      const createdPlantId = response.id;
+
+      navigate(`/plants/${createdPlantId}`);
+    } catch (error) {
+      console.error("Error creating plant:", error);
+      // Handle error as needed
+    }
   };
 
   return (
@@ -185,38 +177,34 @@ export const NewPlant = () => {
       <h2 className="form-title mt-8 text-2xl">New Plant</h2>
       <div className="fields-container flex justify-center mt-4">
         <div className="left-side-fields flex flex-col mx-4 w-[20rem]">
-          <fieldset>
-            <div className="name-field flex">
-              <label htmlFor="name" className="mr-2">
-                Name:
-              </label>
-              <input
-                id="name"
-                value={newPlant.name}
-                name="name"
-                type="text"
-                className="text-input"
-                placeholder=" Enter Plant Name"
-                onChange={handleInputChange}
-              />
-            </div>
-          </fieldset>
-          <fieldset>
-            <div className="description-field flex">
-              <label htmlFor="description" className="mr-2">
-                Description:
-              </label>
-              <input
-                id="description"
-                value={newPlant.description}
-                name="description"
-                type="text"
-                className="text-input"
-                placeholder=" Enter Plant Description"
-                onChange={handleInputChange}
-              />
-            </div>
-          </fieldset>
+          <div className="name-field flex">
+            <label htmlFor="name" className="mr-2">
+              Name:
+            </label>
+            <input
+              id="name"
+              value={newPlant.name}
+              name="name"
+              type="text"
+              className="text-input"
+              placeholder=" Enter Plant Name"
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="description-field flex">
+            <label htmlFor="description" className="mr-2">
+              Description:
+            </label>
+            <input
+              id="description"
+              value={newPlant.description}
+              name="description"
+              type="text"
+              className="text-input"
+              placeholder=" Enter Plant Description"
+              onChange={handleInputChange}
+            />
+          </div>
           <div className="type-container flex select-input">
             <div className="type-title mr-2">Plant Type:</div>
             <div className="select-container">
@@ -318,116 +306,92 @@ export const NewPlant = () => {
               </select>
             </div>
           </div>
-          <fieldset>
-            <div className="annual-container flex select-input w-[16rem]">
-              <label className="mr-2">Lifecycle:</label>
-              <div>
-                <label>
-                  <input
-                    type="radio"
-                    name="annual"
-                    value={true}
-                    className="mx-1"
-                    onChange={handleInputChange}
-                  />
-                  Annual
-                </label>
+          <div className="annual-container flex select-input w-[16rem]">
+            <label htmlFor="annual" className="mr-2">
+              Lifecycle:
+            </label>
+            <div>
+              <label>
+                <input
+                  id="annual"
+                  type="radio"
+                  name="annual"
+                  value={true}
+                  className="mx-1"
+                  onChange={handleInputChange}
+                />
+                Annual
+              </label>
 
-                <label className="mx-1">
-                  <input
-                    type="radio"
-                    name="annual"
-                    value={false}
-                    className="mx-1"
-                    onChange={handleInputChange}
-                  />
-                  Perennial
-                </label>
-              </div>
+              <label className="mx-1">
+                <input
+                  id="perennial"
+                  type="radio"
+                  name="annual"
+                  value={false}
+                  className="mx-1"
+                  onChange={handleInputChange}
+                />
+                Perennial
+              </label>
             </div>
-          </fieldset>
+          </div>
         </div>
         <div className="right-side-fields flex flex-col mx-4 w-[20rem]">
-          <fieldset>
-            <div className="height-container flex">
-              <label htmlFor="height" className="mr-2">
-                Height:
-              </label>
-              <input
-                id="height"
-                value={newPlant.height}
-                name="height"
-                type="text"
-                className="text-input"
-                placeholder=" Enter Height (in.)"
-                onChange={handleInputChange}
-              />
-            </div>
-          </fieldset>
-          <fieldset>
-            <div className="spacing-container flex">
-              <label htmlFor="spacing" className="mr-2">
-                Spacing:
-              </label>
-              <input
-                id="spacing"
-                value={newPlant.spacing}
-                name="spacing"
-                type="text"
-                className="text-input"
-                placeholder=" Enter Spacing (in.)"
-                onChange={handleInputChange}
-              />
-            </div>
-          </fieldset>
-          <fieldset>
-            <div className="days-to-mature-container flex">
-              <label htmlFor="days_to_mature" className="mr-2">
-                Days To Mature:
-              </label>
-              <input
-                id="days_to_mature"
-                value={newPlant.days_to_mature}
-                name="days_to_mature"
-                type="text"
-                className="text-input"
-                placeholder=" Number of Days"
-                onChange={handleInputChange}
-              />
-            </div>
-          </fieldset>
-          <fieldset>
-            <div className="image-container flex upload-input">
-              <label htmlFor="image" className="mr-2">
-                Image Upload:
-              </label>
-              <input
-                id="image"
-                value={newPlant.image}
-                name="image"
-                type="text"
-                className="form-control"
-                placeholder=""
-                onChange={handleInputChange}
-              />
-            </div>
-          </fieldset>
-          <fieldset>
-            <div className="icon-container flex upload-input">
-              <label htmlFor="icon" className="mr-2">
-                Icon Upload:
-              </label>
-              <input
-                id="icon"
-                value={newPlant.icon}
-                name="icon"
-                type="text"
-                className="form-control"
-                placeholder=""
-                onChange={handleInputChange}
-              />
-            </div>
-          </fieldset>
+          <div className="height-container flex">
+            <label htmlFor="height" className="mr-2">
+              Height:
+            </label>
+            <input
+              id="height"
+              value={newPlant.height}
+              name="height"
+              type="text"
+              className="text-input"
+              placeholder=" Enter Height (in.)"
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="spacing-container flex">
+            <label htmlFor="spacing" className="mr-2">
+              Spacing:
+            </label>
+            <input
+              id="spacing"
+              value={newPlant.spacing}
+              name="spacing"
+              type="text"
+              className="text-input"
+              placeholder=" Enter Spacing (in.)"
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="days-to-mature-container flex">
+            <label htmlFor="days_to_mature" className="mr-2">
+              Days To Mature:
+            </label>
+            <input
+              id="days_to_mature"
+              value={newPlant.days_to_mature}
+              name="days_to_mature"
+              type="text"
+              className="text-input"
+              placeholder=" Number of Days"
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="image-container flex upload-input">
+            <label htmlFor="image" className="mr-2">
+              Image Upload:
+            </label>
+            <input type="file" id="image" onChange={createImageString} />
+          </div>
+          <div className="icon-container flex upload-input">
+            <label htmlFor="icon" className="mr-2">
+              Icon Upload:
+            </label>
+            <input type="file" id="icon" onChange={createIconString} />
+          </div>
           <div className="zones-container flex">
             <span className="zones-title mr-2">Zones:</span>
             <div className="select-container select-input">
