@@ -20,7 +20,7 @@ export const PlantList = () => {
 
   useEffect(() => {
     fetchAndSetAllPlants();
-  }, [renderedPlants]);
+  }, []);
 
   useEffect(() => {
     const foundPlants = allPlants.filter((plant) =>
