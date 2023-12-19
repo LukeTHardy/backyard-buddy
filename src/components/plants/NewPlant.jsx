@@ -154,18 +154,14 @@ export const NewPlant = () => {
         days_to_mature: newPlant.days_to_mature,
         image: b64ImageString,
         icon: b64IconString,
-        // zones: [selectedZones],
-        // companions: [selectedPlants],
-        // critters: [selectedCritters]
+        zones: selectedZones,
+        companions: selectedPlants,
+        critters: selectedCritters,
       };
 
       const response = await createPlant(newPlantObj);
-      // console.log(response.json());
-
-      // Assuming the server responds with the newly created plant object
-      const createdPlantId = response.id;
-
-      navigate(`/plants/${createdPlantId}`);
+      const newPlantId = response.id;
+      navigate(`/plants/${newPlantId}`);
     } catch (error) {
       console.error("Error creating plant:", error);
       // Handle error as needed
