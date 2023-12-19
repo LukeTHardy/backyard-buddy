@@ -43,6 +43,12 @@ export const CritterList = () => {
     valueCritters,
   ]);
 
+  useEffect(() => {
+    if (!searchTerm) {
+      setFilterTypeSwitch("");
+    }
+  }, [searchTerm]);
+
   const handleSearch = (e) => {
     setFilterTypeSwitch("search");
     setSearchTerm(e.target.value);
@@ -63,28 +69,43 @@ export const CritterList = () => {
 
   const displayCritters = () => {
     if (renderedCritters && renderedCritters.length) {
-      return renderedCritters.map((critter) => {
-        return (
-          <div key={critter.id}>
-            <>
-              <Link to={`/critters/${critter.id}`} className="">
-                <div className="critter-image">
-                  <img
-                    src={`${critter.image}`}
-                    className="border-double border-4 border-amber-900 rounded-xl"
-                  />
-                </div>
-                <div className="critter-name text-center absolute w-[180px]">
-                  {critter.name}
-                </div>
-              </Link>
-            </>
-          </div>
-        );
-      });
+      return (
+        <div className="list-container w-3/4 grid grid-cols-5 gap-14 mt-4 p-8 rounded-xl bg-amber-100">
+          {renderedCritters.map((critter) => {
+            return (
+              <div key={critter.id}>
+                <>
+                  <Link to={`/critters/${critter.id}`} className="">
+                    <div className="critter-image">
+                      <img
+                        src={`${critter.image}`}
+                        className="border-double border-4 border-amber-900 rounded-xl"
+                      />
+                    </div>
+                    <div className="critter-name text-center absolute w-[180px]">
+                      {critter.name}
+                    </div>
+                  </Link>
+                </>
+              </div>
+            );
+          })}
+          ;
+        </div>
+      );
+    } else if (allCritters && allCritters.length && filterTypeSwitch) {
+      return (
+        <h3 className="text-xl w-3/4 mt-4 p-8 rounded-xl bg-amber-100 text-center">
+          No critters found :/
+        </h3>
+      );
+    } else {
+      return (
+        <h3 className="text-xl w-3/4 mt-4 p-8 rounded-xl bg-amber-100 text-center">
+          Loading Critters...
+        </h3>
+      );
     }
-
-    return <h3 className="">Loading Critters...</h3>;
   };
 
   return (
@@ -134,9 +155,7 @@ export const CritterList = () => {
       ) : (
         ""
       )}
-      <div className="list-container w-3/4 grid grid-cols-5 gap-14 mt-4 p-8 rounded-xl bg-amber-100">
-        {displayCritters()}
-      </div>
+      {displayCritters()}
     </div>
   );
 };
