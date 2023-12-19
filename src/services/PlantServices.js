@@ -34,7 +34,7 @@ export const createPlant = async (newPlant) => {
     },
     body: JSON.stringify(newPlant),
   });
-  return response;
+  return response.json();
 };
 
 export const updatePlant = async (plant) => {
