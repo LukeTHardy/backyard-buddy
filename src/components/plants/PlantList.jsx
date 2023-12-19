@@ -67,7 +67,7 @@ export const PlantList = () => {
                 <div className="plant-image">
                   <img
                     src={`${plant.image}`}
-                    className="border-double border-4 border-amber-900 rounded-xl"
+                    className="border-double w-[169.2px] h-[169.2px] object-cover border-4 border-amber-900 rounded-xl"
                   />
                 </div>
                 <div className="plant-name text-center absolute w-[180px]">

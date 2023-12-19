@@ -6,9 +6,6 @@ import {
   fetchPlantTypes,
   fetchVeggieCats,
   fetchZones,
-  createPlantZonePairing,
-  createCompanionPairing,
-  createPlantCritterPairing,
 } from "../../services/MiscServices";
 import { fetchAllPlants } from "../../services/PlantServices";
 import { fetchAllCritters } from "../../services/CritterServices";
@@ -52,38 +49,24 @@ export const NewPlant = () => {
     fetchAllPlants().then((plantsArray) => {
       setPlants(plantsArray);
     });
-  }, []);
-  useEffect(() => {
     fetchAllCritters().then((crittersArray) => {
       setCritters(crittersArray);
     });
-  }, []);
-  useEffect(() => {
     fetchSoils().then((soilsArray) => {
       setSoils(soilsArray);
     });
-  }, []);
-  useEffect(() => {
     fetchWaters().then((watersArray) => {
       setWaters(watersArray);
     });
-  }, []);
-  useEffect(() => {
     fetchLights().then((lightsArray) => {
       setLights(lightsArray);
     });
-  }, []);
-  useEffect(() => {
     fetchPlantTypes().then((typesArray) => {
       setPlantTypes(typesArray);
     });
-  }, []);
-  useEffect(() => {
     fetchVeggieCats().then((catsArray) => {
       setVeggieCats(catsArray);
     });
-  }, []);
-  useEffect(() => {
     fetchZones().then((zonesArray) => {
       setZones(zonesArray);
     });
