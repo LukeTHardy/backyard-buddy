@@ -39,6 +39,12 @@ export const PlantList = () => {
     }
   }, [searchTerm, allPlants, searchTermPlants, filterTypeSwitch, typePlants]);
 
+  useEffect(() => {
+    if (!searchTerm) {
+      setFilterTypeSwitch("");
+    }
+  }, [searchTerm]);
+
   const handleSearch = (e) => {
     setFilterTypeSwitch("search");
     setSearchTerm(e.target.value);
@@ -59,28 +65,41 @@ export const PlantList = () => {
 
   const displayPlants = () => {
     if (renderedPlants && renderedPlants.length) {
-      return renderedPlants.map((plant) => {
-        return (
-          <div key={plant.id}>
-            <>
-              <Link to={`/plants/${plant.id}`} className="">
-                <div className="plant-image">
-                  <img
-                    src={`${plant.image}`}
-                    className="border-double w-[169.2px] h-[169.2px] object-cover border-4 border-amber-900 rounded-xl"
-                  />
-                </div>
-                <div className="plant-name text-center absolute w-[180px]">
-                  {plant.name}
-                </div>
-              </Link>
-            </>
-          </div>
-        );
-      });
+      return (
+        <div className="list-container w-3/4 grid grid-cols-5 gap-14 mt-4 p-8 rounded-xl bg-amber-100">
+          {renderedPlants.map((plant) => {
+            return (
+              <div key={plant.id}>
+                <Link to={`/plants/${plant.id}`} className="">
+                  <div className="plant-image">
+                    <img
+                      src={`${plant.image}`}
+                      className="border-double w-[169.2px] h-[169.2px] object-cover border-4 border-amber-900 rounded-xl"
+                    />
+                  </div>
+                  <div className="plant-name text-center absolute w-[180px]">
+                    {plant.name}
+                  </div>
+                </Link>
+              </div>
+            );
+          })}
+          ;
+        </div>
+      );
+    } else if (allPlants && allPlants.length && filterTypeSwitch) {
+      return (
+        <h3 className="text-xl w-3/4 mt-4 p-8 rounded-xl bg-amber-100 text-center">
+          No plants found :/
+        </h3>
+      );
+    } else {
+      return (
+        <h3 className="text-xl w-3/4 mt-4 p-8 rounded-xl bg-amber-100 text-center">
+          Loading Plants...
+        </h3>
+      );
     }
-
-    return <h3 className="">Loading Plants...</h3>;
   };
 
   return (
@@ -145,9 +164,8 @@ export const PlantList = () => {
       ) : (
         ""
       )}
-      <div className="list-container w-3/4 grid grid-cols-5 gap-14 mt-4 p-8 rounded-xl bg-amber-100">
-        {displayPlants()}
-      </div>
+
+      {displayPlants()}
     </div>
   );
 };
