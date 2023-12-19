@@ -33,7 +33,7 @@ export const NewPlant = () => {
   const [newPlant, setNewPlant] = useState({
     name: "",
     description: "",
-    type: "",
+    type: 0,
     veggie_cat: 0,
     soil: 0,
     water: 0,
@@ -121,8 +121,44 @@ export const NewPlant = () => {
     });
   };
 
+  const isFormValid = () => {
+    if (
+      !newPlant.name ||
+      !newPlant.description ||
+      !newPlant.type ||
+      newPlant.type === "0" ||
+      !newPlant.veggie_cat ||
+      newPlant.veggie_cat === "0" ||
+      !newPlant.soil ||
+      newPlant.soil === "0" ||
+      !newPlant.water ||
+      newPlant.water === "0" ||
+      !newPlant.light ||
+      newPlant.light === "0" ||
+      !newPlant.height ||
+      !newPlant.annual ||
+      !newPlant.spacing ||
+      !newPlant.days_to_mature ||
+      !selectedCritters ||
+      !selectedPlants ||
+      !selectedZones ||
+      !b64ImageString ||
+      !b64IconString
+    ) {
+      return false;
+    }
+    return true;
+  };
+
   const handleSave = async () => {
     try {
+      if (!isFormValid()) {
+        console.error("Please fill in all fields before saving.");
+        window.alert(
+          "You think I would let you screw up my database with an incomplete Plant?  Get real."
+        );
+        return;
+      }
       const newPlantObj = {
         name: newPlant.name,
         description: newPlant.description,
