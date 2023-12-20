@@ -60,7 +60,6 @@ export const Favorites = () => {
               </div>
             );
           })}
-          ;
         </div>
       );
     } else if (allFavorites && allFavorites.length && searchTerm) {

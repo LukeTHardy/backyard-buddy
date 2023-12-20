@@ -1,0 +1,35 @@
+.lightbox-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.lightbox-content {
+  position: relative;
+  max-height: 93vh; /* Limiting height to 80% of the screen height */
+  max-width: 93vh; /* Enable scrolling if the content exceeds the height */
+}
+
+.lightbox-image {
+  max-width: 100%;
+  max-height: 100%;
+  border: 1px solid white;
+  border-radius: 10px;
+  box-shadow: rgb(249, 229, 149) 0 0 5px;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: -10px;
+  right: 10px;
+  font-size: 40px;
+  color: white;
+  cursor: pointer;
+}
