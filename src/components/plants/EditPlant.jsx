@@ -12,6 +12,7 @@ import {
   fetchVeggieCats,
   fetchZones,
 } from "../../services/MiscServices";
+// import { CustomFileInput } from "../misc/CustomFileInput";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Select from "react-select";
@@ -20,6 +21,23 @@ import "./Forms.css";
 export const EditPlant = () => {
   const navigate = useNavigate();
   const { plantId } = useParams();
+  const [originalPlant, setOriginalPlant] = useState({
+    name: "",
+    description: "",
+    type: 0,
+    veggie_cat: 0,
+    soil: 0,
+    water: 0,
+    light: 0,
+    height: "",
+    spacing: "",
+    days_to_mature: "",
+    image: "",
+    icon: "",
+    zones: [],
+    companions: [],
+    critters: [],
+  });
   const [plantToEdit, setPlantToEdit] = useState({
     name: "",
     description: "",
@@ -54,7 +72,7 @@ export const EditPlant = () => {
 
   useEffect(() => {
     fetchPlant(plantId).then((plantObj) => {
-      setPlantToEdit(plantObj);
+      setOriginalPlant(plantObj);
     });
     fetchAllPlants().then((plantsArray) => {
       setCompanions(plantsArray);
@@ -82,6 +100,31 @@ export const EditPlant = () => {
     });
   }, [plantId]);
 
+  useEffect(() => {
+    const zoneArray = originalPlant.zones.map((z) => z.id);
+    const companionArray = originalPlant.companions.map((c) => c.id);
+    const critterArray = originalPlant.critters.map((cr) => cr.id);
+
+    setPlantToEdit({
+      name: originalPlant.name,
+      description: originalPlant.description,
+      type: originalPlant.type.id,
+      veggie_cat: originalPlant.veggie_cat.id,
+      soil: originalPlant.soil.id,
+      water: originalPlant.water.id,
+      light: originalPlant.light.id,
+      height: originalPlant.height,
+      spacing: originalPlant.spacing,
+      days_to_mature: originalPlant.days_to_mature,
+      image: "",
+      icon: "",
+      annual: originalPlant.annual,
+      zones: zoneArray,
+      companions: companionArray,
+      critters: critterArray,
+    });
+  }, [originalPlant]);
+
   const handleZonesChange = (selectedOptions) => {
     setSelectedZones(selectedOptions);
     setUserChangedSelections(true);
@@ -98,27 +141,27 @@ export const EditPlant = () => {
   };
 
   useEffect(() => {
-    if (plantToEdit && !userChangedSelections) {
+    if (originalPlant && !userChangedSelections) {
       setSelectedCompanions(
-        plantToEdit.companions.map((c) => ({
+        originalPlant.companions.map((c) => ({
           value: c.id,
           label: c.name,
         }))
       );
       setSelectedZones(
-        plantToEdit.zones.map((z) => ({
+        originalPlant.zones.map((z) => ({
           value: z.id,
           label: z.name,
         }))
       );
       setSelectedCritters(
-        plantToEdit.critters.map((cr) => ({
+        originalPlant.critters.map((cr) => ({
           value: cr.id,
           label: cr.name,
         }))
       );
     }
-  }, [plantToEdit]);
+  }, [originalPlant, userChangedSelections]);
 
   const handleInputChange = (e) => {
     const plantCopy = { ...plantToEdit };
@@ -151,13 +194,14 @@ export const EditPlant = () => {
         (companion) => companion.value
       );
       const editedPlant = {
+        id: parseInt(plantId),
         name: plantToEdit.name,
         description: plantToEdit.description,
-        type: parseInt(plantToEdit.type.id),
-        veggie_cat: parseInt(plantToEdit.veggie_cat.id),
-        soil: parseInt(plantToEdit.soil.id),
-        water: parseInt(plantToEdit.water.id),
-        light: parseInt(plantToEdit.light.id),
+        type: parseInt(plantToEdit.type),
+        veggie_cat: parseInt(plantToEdit.veggie_cat),
+        soil: parseInt(plantToEdit.soil),
+        water: parseInt(plantToEdit.water),
+        light: parseInt(plantToEdit.light),
         height: parseInt(plantToEdit.height),
         annual: JSON.parse(plantToEdit.annual),
         spacing: parseInt(plantToEdit.spacing),
@@ -169,9 +213,9 @@ export const EditPlant = () => {
         critters: updatedCritters,
       };
       console.log(editedPlant);
-      // updatePlant(editedPlant).then(() => {
-      //   navigate(`/plants/${plantId}`);
-      // });
+      updatePlant(editedPlant).then(() => {
+        navigate(`/plants/${plantId}`);
+      });
       setUserChangedSelections(false);
     } catch (error) {
       console.error("Error editing plant:", error);
@@ -217,7 +261,7 @@ export const EditPlant = () => {
               <select
                 name="type"
                 onChange={handleInputChange}
-                value={plantToEdit.type.id}
+                value={plantToEdit.type}
                 placeholder="Select a Type"
               >
                 <option value={0}>Select a type</option>
@@ -237,7 +281,7 @@ export const EditPlant = () => {
               <select
                 name="veggie_cat"
                 onChange={handleInputChange}
-                value={plantToEdit.veggie_cat.id}
+                value={plantToEdit.veggie_cat}
                 placeholder="Select a Category"
               >
                 <option value={0}>Select a Category</option>
@@ -258,7 +302,7 @@ export const EditPlant = () => {
               <select
                 name="soil"
                 onChange={handleInputChange}
-                value={plantToEdit.soil.id}
+                value={plantToEdit.soil}
                 placeholder="Select a Soil Type"
               >
                 <option value={0}>Select a type</option>
@@ -278,7 +322,7 @@ export const EditPlant = () => {
               <select
                 name="water"
                 onChange={handleInputChange}
-                value={plantToEdit.water.id}
+                value={plantToEdit.water}
                 placeholder="Select a Frequency"
               >
                 <option value={0}>Select a watering frequency</option>
@@ -298,7 +342,7 @@ export const EditPlant = () => {
               <select
                 name="light"
                 onChange={handleInputChange}
-                value={plantToEdit.light.id}
+                value={plantToEdit.light}
                 placeholder="Select a Light Level"
               >
                 <option value={0}>Select a light level</option>
