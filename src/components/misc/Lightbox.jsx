@@ -7,6 +7,7 @@ export const Lightbox = ({ imageUrl, onClose }) => {
       onClose();
     }
   };
+
   return (
     <div className="lightbox-overlay" onClick={handleOverlayClick}>
       <div className="lightbox-content">
