@@ -37,14 +37,14 @@ export const createPlant = async (newPlant) => {
   return response.json();
 };
 
-export const updatePlant = async (plant) => {
-  await fetch(`http://localhost:8000/categories/${plant.id}`, {
+export const updatePlant = async (editedPlant) => {
+  await fetch(`http://localhost:8000/plants/${editedPlant.id}`, {
     method: "PUT",
     headers: {
       Authorization: `Token ${localStorage.getItem("auth_token")}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(plant),
+    body: JSON.stringify(editedPlant),
   });
 };
 

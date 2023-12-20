@@ -183,7 +183,6 @@ export const NewPlant = () => {
       navigate(`/plants/${newPlantId}`);
     } catch (error) {
       console.error("Error creating plant:", error);
-      // Handle error as needed
     }
   };
 
