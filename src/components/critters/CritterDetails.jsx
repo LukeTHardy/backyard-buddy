@@ -2,8 +2,10 @@ import { fetchCritter } from "../../services/CritterServices";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { Lightbox } from "../misc/Lightbox";
 
 export const CritterDetails = () => {
+  const [lightboxOpen, setLightboxOpen] = useState(false);
   const [chosenCritter, setChosenCritter] = useState({
     type: { id: 0, label: "" },
     plants: [],
@@ -19,15 +21,28 @@ export const CritterDetails = () => {
     fetchAndSetCritter();
   }, []);
 
+  const openLightbox = () => setLightboxOpen(true);
+  const closeLightbox = () => setLightboxOpen(false);
+
   const displayCritter = () => {
     if (chosenCritter) {
       return (
         <div className="card-container flex justify-center">
           <div className="image-card flex flex-col w-[35rem] items-center">
-            <img
-              src={`${chosenCritter.image}`}
-              className="critter-image border-double border-4 border-amber-900 rounded-xl w-[30rem]"
-            />
+            <button onClick={openLightbox}>
+              <img
+                src={chosenCritter.image}
+                className="critter-image border-double border-4 border-amber-900 rounded-xl w-[30rem] h-[30rem] object-cover"
+                alt="Critter Image"
+              />
+            </button>
+
+            {lightboxOpen && (
+              <Lightbox
+                imageUrl={chosenCritter.image}
+                onClose={closeLightbox}
+              />
+            )}
           </div>
           <div className="details-card flex flex-col items-center border-solid round-xl bg-amber-100 w-[40rem] h-[30rem] rounded-3xl">
             <div className="critter-name text-3xl underline m-4">

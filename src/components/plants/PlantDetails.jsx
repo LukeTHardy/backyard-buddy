@@ -5,12 +5,14 @@ import {
   deleteFavoriteById,
   fetchMyFavorites,
 } from "../../services/PlantServices";
+import { Lightbox } from "../misc/Lightbox";
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 export const PlantDetails = ({ userId }) => {
   const navigate = useNavigate();
+  const [lightboxOpen, setLightboxOpen] = useState(false);
   const [favorites, setFavorites] = useState([]);
   const [foundFavorite, setFoundFavorite] = useState({});
   const [chosenPlant, setChosenPlant] = useState({
@@ -57,15 +59,25 @@ export const PlantDetails = ({ userId }) => {
     deleteFavoriteById(favoriteId).then(window.location.reload());
   };
 
+  const openLightbox = () => setLightboxOpen(true);
+  const closeLightbox = () => setLightboxOpen(false);
+
   const displayPlant = () => {
     if (chosenPlant) {
       return (
         <div className="card-container flex justify-center">
           <div className="image-card flex flex-col w-[35rem] items-center">
-            <img
-              src={`${chosenPlant.image}`}
-              className="plant-image border-double border-4 border-amber-900 rounded-xl w-[30rem]"
-            />
+            <button onClick={openLightbox}>
+              <img
+                src={chosenPlant.image}
+                className="plant-image border-double border-4 border-amber-900 rounded-xl w-[30rem] h-[30rem] object-cover"
+                alt="Plant Image"
+              />
+            </button>
+
+            {lightboxOpen && (
+              <Lightbox imageUrl={chosenPlant.image} onClose={closeLightbox} />
+            )}
           </div>
           <div className="details-card flex flex-col items-center border-solid round-xl bg-amber-100 w-[40rem] h-[30rem] rounded-3xl">
             <div className="plant-name text-3xl underline m-1">
