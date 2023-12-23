@@ -1,5 +1,6 @@
 import {
   fetchPlant,
+  fetchAllPlants,
   deletePlant,
   createFavorite,
   deleteFavoriteById,
@@ -15,6 +16,7 @@ export const PlantDetails = ({ userId }) => {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [favorites, setFavorites] = useState([]);
   const [foundFavorite, setFoundFavorite] = useState({});
+  const [plants, setPlants] = useState([]);
   const [chosenPlant, setChosenPlant] = useState({
     soil: { id: 0, soil_type: "" },
     light: { id: 0, label: "" },
@@ -33,6 +35,12 @@ export const PlantDetails = ({ userId }) => {
   useEffect(() => {
     fetchAndSetPlant();
   }, [plantId, foundFavorite]);
+
+  useEffect(() => {
+    fetchAllPlants().then((plantsArray) => {
+      setPlants(plantsArray);
+    });
+  }, []);
 
   useEffect(() => {
     fetchMyFavorites().then((favsArray) => {
@@ -62,136 +70,185 @@ export const PlantDetails = ({ userId }) => {
   const openLightbox = () => setLightboxOpen(true);
   const closeLightbox = () => setLightboxOpen(false);
 
+  const getNextPlantId = (currentPlantId) => {
+    const sortedIds = plants.map((plant) => plant.id).sort((a, b) => a - b);
+    const currentIndex = sortedIds.indexOf(currentPlantId);
+    if (currentIndex !== -1 && currentIndex < sortedIds.length - 1) {
+      return sortedIds[currentIndex + 1];
+    }
+    return null;
+  };
+
+  const getPreviousPlantId = (currentPlantId) => {
+    const sortedIds = plants.map((plant) => plant.id).sort((a, b) => a - b);
+    const currentIndex = sortedIds.indexOf(currentPlantId);
+    if (currentIndex > 0) {
+      return sortedIds[currentIndex - 1];
+    }
+    return null;
+  };
+
+  const nextPlant = () => {
+    const nextId = getNextPlantId(parseInt(plantId));
+    if (nextId !== null) {
+      navigate(`/plants/${nextId}`);
+    } else {
+      window.alert(`This is the last plant!`);
+    }
+  };
+
+  const previousPlant = () => {
+    const previousId = getPreviousPlantId(parseInt(plantId));
+    if (previousId !== null) {
+      navigate(`/plants/${previousId}`);
+    } else {
+      window.alert(`This is the first plant!`);
+    }
+  };
+
   const displayPlant = () => {
     if (chosenPlant) {
       return (
-        <div className="card-container flex justify-center">
-          <div className="image-card flex flex-col w-[35rem] items-center">
-            <button onClick={openLightbox}>
-              <img
-                src={chosenPlant.image}
-                className="plant-image border-double border-4 border-amber-900 rounded-xl w-[30rem] h-[30rem] object-cover"
-                alt="Plant Image"
-              />
-            </button>
-
-            {lightboxOpen && (
-              <Lightbox imageUrl={chosenPlant.image} onClose={closeLightbox} />
-            )}
+        <>
+          <div className="navigate-btns flex justify-between items-center font-bold text-gray-700 text-lg h-12 w-3/4">
+            <button onClick={previousPlant}>﹤Prev</button>
+            <button onClick={nextPlant}>Next﹥</button>
           </div>
-          <div className="details-card flex flex-col items-center border-solid round-xl bg-amber-100 w-[40rem] h-[30rem] rounded-3xl">
-            <div className="plant-name text-3xl underline m-1">
-              {chosenPlant.name}
-            </div>
-            <div className="annual-perennial text-xl m-1">
-              {chosenPlant.annual ? "(Annual)" : "(Perennial)"}
-            </div>
-            <div className="plant-description text-xl italic m-1">
-              -[{chosenPlant.description}]
-            </div>
-            <div className="growing-needs flex justify-evenly">
-              <div className="plant-status text-xl m-1">
-                Soil: {chosenPlant.soil.soil_type}
-              </div>
-              <div className="plant-status text-xl m-1">
-                Water: {chosenPlant.water.frequency}
-              </div>
-              <div className="plant-status text-xl m-1">
-                Light: {chosenPlant.light.label}
-              </div>
-            </div>
-            <div className="plant-size text-xl m-1">
-              Spacing: {chosenPlant.spacing} in.
-            </div>
-            <div className="plant-size text-xl m-1">
-              Height: {chosenPlant.height} in.
-            </div>
-            <div className="plant-management text-xl m-1">
-              Days To Mature: {chosenPlant.days_to_mature}
-            </div>
-            <div className="zones text-xl">
-              Zones:
-              {chosenPlant.zones.map((zone) => {
-                return ` ${zone.name},`;
-              })}
-            </div>
-            <div className="lists-container flex justify-between w-[30rem]">
-              <div className="companions text-xl">
-                Companion Plants: <br></br>
-                {chosenPlant.companions.map((plant) => {
-                  return (
-                    <div key={plant.id} className="plant-link">
-                      <Link to={`/plants/${plant.id}`}>
-                        <div className="plant-name hover:font-medium">
-                          {plant.name}
-                        </div>
-                      </Link>
-                    </div>
-                  );
-                })}
-              </div>
-              <div className="plant-critters text-xl">
-                Potential Critters: <br></br>
-                {chosenPlant.critters.map((critter) => {
-                  return (
-                    <div key={critter.id} className="critter-link">
-                      <Link to={`/critters/${critter.id}`}>
-                        <div className="critter-name hover:font-medium">
-                          {critter.name}
-                        </div>
-                      </Link>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-            <div className="buttons-container w-[15rem] flex justify-evenly">
-              {userId == chosenPlant.user ? (
-                <>
-                  <button
-                    className="text-xl border-double border-4 border-green-900 rounded-xl p-1"
-                    onClick={() => {
-                      navigate(`/plants/${plantId}/edit`);
-                    }}
-                  >
-                    Edit Plant
-                  </button>
-                  <button
-                    className="text-xl border-double border-4 border-green-900 rounded-xl p-1"
-                    onClick={() => {
-                      deletePlant(plantId);
-                      navigate("/plants");
-                    }}
-                  >
-                    Delete
-                  </button>
-                </>
-              ) : (
-                ""
+          <div className="card-container flex justify-center">
+            <div className="image-card flex flex-col w-[35rem] items-center">
+              <button onClick={openLightbox}>
+                <img
+                  src={chosenPlant.image}
+                  className="plant-image border-double border-4 border-amber-900 rounded-xl w-[30rem] h-[30rem] object-cover"
+                  alt="Plant Image"
+                />
+              </button>
+
+              {lightboxOpen && (
+                <Lightbox
+                  imageUrl={chosenPlant.image}
+                  onClose={closeLightbox}
+                />
               )}
             </div>
-            {foundFavorite ? (
-              <button
-                className="delete-favorite-button text-xl border-double border-4 border-green-900 rounded-xl mt-2 p-1"
-                onClick={handleRemoveFavoriteClick}
-              >
-                Remove from Favorites 💔
-              </button>
-            ) : (
-              <button
-                className="favorite-button text-xl border-double border-4 border-green-900 rounded-xl mt-2 p-1"
-                onClick={handleAddFavoriteClick}
-              >
-                Save To Favorites 🌻
-              </button>
-            )}
+            <div className="details-card flex flex-col items-center border-solid round-xl bg-amber-100 w-[40rem] h-[30rem] rounded-3xl">
+              <div className="plant-name text-3xl underline m-1">
+                {chosenPlant.name}
+              </div>
+              <div className="annual-perennial text-xl m-1">
+                {chosenPlant.annual ? "(Annual)" : "(Perennial)"}
+              </div>
+              <div className="plant-description text-xl italic m-1">
+                -[{chosenPlant.description}]
+              </div>
+              <div className="growing-needs flex justify-evenly">
+                <div className="plant-status text-xl m-1">
+                  Soil: {chosenPlant.soil.soil_type}
+                </div>
+                <div className="plant-status text-xl m-1">
+                  Water: {chosenPlant.water.frequency}
+                </div>
+                <div className="plant-status text-xl m-1">
+                  Light: {chosenPlant.light.label}
+                </div>
+              </div>
+              <div className="plant-size text-xl m-1">
+                Spacing: {chosenPlant.spacing} in.
+              </div>
+              <div className="plant-size text-xl m-1">
+                Height: {chosenPlant.height} in.
+              </div>
+              <div className="plant-management text-xl m-1">
+                Days To Mature: {chosenPlant.days_to_mature}
+              </div>
+              <div className="zones text-xl">
+                Zones:
+                {chosenPlant.zones.map((zone) => {
+                  return ` ${zone.name},`;
+                })}
+              </div>
+              <div className="lists-container flex justify-between w-[30rem]">
+                <div className="companions text-xl">
+                  Companion Plants: <br></br>
+                  {chosenPlant.companions.map((plant) => {
+                    return (
+                      <div key={plant.id} className="plant-link">
+                        <Link to={`/plants/${plant.id}`}>
+                          <div className="plant-name hover:font-bold">
+                            {plant.name}
+                          </div>
+                        </Link>
+                      </div>
+                    );
+                  })}
+                </div>
+                <div className="plant-critters text-xl">
+                  Potential Critters: <br></br>
+                  {chosenPlant.critters.map((critter) => {
+                    return (
+                      <div key={critter.id} className="critter-link">
+                        <Link to={`/critters/${critter.id}`}>
+                          <div className="critter-name hover:font-medium">
+                            {critter.name}
+                          </div>
+                        </Link>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+              <div className="buttons-container w-[15rem] flex justify-evenly">
+                {userId == chosenPlant.user ? (
+                  <>
+                    <button
+                      className="text-xl border-double border-4 border-green-900 rounded-xl p-1"
+                      onClick={() => {
+                        navigate(`/plants/${plantId}/edit`);
+                      }}
+                    >
+                      Edit Plant
+                    </button>
+                    <button
+                      className="text-xl border-double border-4 border-green-900 rounded-xl p-1"
+                      onClick={() => {
+                        deletePlant(plantId);
+                        navigate("/plants");
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </>
+                ) : (
+                  ""
+                )}
+              </div>
+              {foundFavorite ? (
+                <button
+                  className="delete-favorite-button text-xl border-double border-4 border-green-900 rounded-xl mt-2 p-1"
+                  onClick={handleRemoveFavoriteClick}
+                >
+                  Remove from Favorites 💔
+                </button>
+              ) : (
+                <button
+                  className="favorite-button text-xl border-double border-4 border-green-900 rounded-xl mt-2 p-1"
+                  onClick={handleAddFavoriteClick}
+                >
+                  Save To Favorites 🌻
+                </button>
+              )}
+            </div>
           </div>
-        </div>
+        </>
       );
     }
 
     return <h3 className="">Loading Plant...</h3>;
   };
 
-  return <div className="detail-comp-container mt-8">{displayPlant()}</div>;
+  return (
+    <div className="detail-comp-container flex flex-col items-center">
+      {displayPlant()}
+    </div>
+  );
 };

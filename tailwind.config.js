@@ -2,7 +2,16 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        body: ["VCR Mono", "sans-serif"],
+        mono: ["Retro Mono", "serif"],
+        arcade: ["Retro Arcade", "mono"],
+        vcr: ["VCR Mono", "sans-serif"],
+        thick: ["Retro Thick", "sans-serif"],
+        pixel: ["Pixel7", "sans-serif"],
+      },
+    },
   },
   plugins: [],
 };

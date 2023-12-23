@@ -1,3 +1,24 @@
+@font-face {
+  font-family: "VCR Mono";
+  src: url("/fonts/vcr_mono.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Retro Mono";
+  src: url("/fonts/retro_mono.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Retro Arcade";
+  src: url("/fonts/retro_arcade.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Retro Thick";
+  src: url("/fonts/retro_thick.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Pixel7";
+  src: url("/fonts/pixel7.ttf") format("truetype");
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
