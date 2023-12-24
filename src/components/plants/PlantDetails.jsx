@@ -110,7 +110,7 @@ export const PlantDetails = ({ userId }) => {
     if (chosenPlant) {
       return (
         <>
-          <div className="navigate-btns flex justify-between items-center font-bold text-gray-700 text-lg h-12 w-3/4">
+          <div className="navigate-btns flex justify-between items-center font-bold text-xl h-12 w-3/4">
             <button onClick={previousPlant}>﹤Prev</button>
             <button onClick={nextPlant}>Next﹥</button>
           </div>
@@ -169,14 +169,15 @@ export const PlantDetails = ({ userId }) => {
               </div>
               <div className="lists-container flex justify-between w-[30rem]">
                 <div className="companions text-xl">
-                  Companion Plants: <br></br>
+                  Companion Plants: <br />
                   {chosenPlant.companions.map((plant) => {
                     return (
                       <div key={plant.id} className="plant-link">
-                        <Link to={`/plants/${plant.id}`}>
-                          <div className="plant-name hover:font-bold">
-                            {plant.name}
-                          </div>
+                        <Link
+                          to={`/plants/${plant.id}`}
+                          className="plant-name hover:font-bold"
+                        >
+                          {plant.name}
                         </Link>
                       </div>
                     );
@@ -188,7 +189,7 @@ export const PlantDetails = ({ userId }) => {
                     return (
                       <div key={critter.id} className="critter-link">
                         <Link to={`/critters/${critter.id}`}>
-                          <div className="critter-name hover:font-medium">
+                          <div className="critter-name hover:font-bold">
                             {critter.name}
                           </div>
                         </Link>
