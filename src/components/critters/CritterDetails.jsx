@@ -85,7 +85,7 @@ export const CritterDetails = () => {
               <button onClick={openLightbox}>
                 <img
                   src={chosenCritter.image}
-                  className="critter-image border-double border-4 border-amber-900 rounded-xl w-[30rem] h-[30rem] object-cover"
+                  className="critter-image border-double border-4 border-brown-600 rounded-xl w-[30rem] h-[30rem] object-cover"
                   alt="Critter Image"
                 />
               </button>

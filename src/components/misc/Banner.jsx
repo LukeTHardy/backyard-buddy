@@ -4,7 +4,7 @@ export const Banner = ({ token, setToken }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="h-40 bg-sky-300 flex flex-col items-center">
+    <div className="h-40 bg-blue-200 flex flex-col items-center">
       <div className="self-end">
         {token ? (
           <button

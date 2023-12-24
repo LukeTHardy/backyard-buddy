@@ -119,7 +119,7 @@ export const PlantDetails = ({ userId }) => {
               <button onClick={openLightbox}>
                 <img
                   src={chosenPlant.image}
-                  className="plant-image border-double border-4 border-amber-900 rounded-xl w-[30rem] h-[30rem] object-cover"
+                  className="plant-image border-double border-4 border-brown-600 rounded-xl w-[30rem] h-[30rem] object-cover"
                   alt="Plant Image"
                 />
               </button>
