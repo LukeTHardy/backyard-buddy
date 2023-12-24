@@ -139,9 +139,9 @@ export const NewPlant = () => {
       !newPlant.annual ||
       !newPlant.spacing ||
       !newPlant.days_to_mature ||
-      !selectedCritters ||
-      !selectedPlants ||
-      !selectedZones ||
+      selectedCritters.length === 0 ||
+      selectedPlants.length === 0 ||
+      selectedZones.length === 0 ||
       !b64ImageString ||
       !b64IconString
     ) {
@@ -155,7 +155,7 @@ export const NewPlant = () => {
       if (!isFormValid()) {
         console.error("Please fill in all fields before saving.");
         window.alert(
-          "You think I would let you screw up my database with an incomplete Plant?  Get real."
+          `Congratulations, you found a secret message that says fill out all the fields before saving :)`
         );
         return;
       }

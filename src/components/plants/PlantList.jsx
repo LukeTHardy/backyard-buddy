@@ -2,6 +2,7 @@ import { fetchAllPlants } from "../../services/PlantServices";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import searchSymbol from "/assets/graphics/search_symbol.png";
 
 export const PlantList = () => {
   const navigate = useNavigate();
@@ -116,10 +117,17 @@ export const PlantList = () => {
         </button>
         <div className="search-bar-container absolute right-0">
           <input
-            className="search-bar border text-xl border-solid border-black rounded-md"
+            className="search-bar border text-2xl border-solid border-black rounded-md w-[14rem] h-[1.85rem]"
             type="text"
             value={searchTerm}
-            placeholder=" Search Plants"
+            style={{
+              backgroundImage: `url(${searchSymbol})`,
+              backgroundSize: "25px 22px", // Adjust the size as needed
+              backgroundPosition: "5px center", // Adjust position as needed
+              backgroundRepeat: "no-repeat",
+              paddingLeft: "40px", // Adjust to make room for the image
+            }}
+            placeholder={`Search Plants`}
             onChange={handleSearch}
           />
         </div>

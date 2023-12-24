@@ -1,6 +1,7 @@
 import { fetchAllCritters } from "../../services/CritterServices";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import searchSymbol from "/assets/graphics/search_symbol.png";
 
 export const CritterList = () => {
   const [allCritters, setAllCritters] = useState([]);
@@ -111,13 +112,20 @@ export const CritterList = () => {
   return (
     <div className="comp-container flex flex-col justify-center items-center mt-4">
       <div className="title search-bar flex w-3/4 mb-6 relative">
-        <div className="title text-xl mx-auto font-bold">Browse Critters</div>
+        <div className="title text-2xl mx-auto font-bold">Browse Critters</div>
         <div className="search-bar-container absolute right-0">
           <input
-            className="search-bar border border-solid border-black rounded-md"
+            className="search-bar border text-2xl border-solid border-black rounded-md w-[14rem] h-[1.85rem]"
             type="text"
             value={searchTerm}
-            placeholder=" Search Critters"
+            style={{
+              backgroundImage: `url(${searchSymbol})`,
+              backgroundSize: "25px 22px", // Adjust the size as needed
+              backgroundPosition: "5px center", // Adjust position as needed
+              backgroundRepeat: "no-repeat",
+              paddingLeft: "40px", // Adjust to make room for the image
+            }}
+            placeholder="Search Critters"
             onChange={handleSearch}
           />
         </div>
