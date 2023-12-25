@@ -397,7 +397,7 @@ export const EditPlant = () => {
         <div className="right-side-fields flex flex-col mx-4 w-[20rem]">
           <div className="height-container flex">
             <label htmlFor="height" className="mr-2">
-              Height:
+              Height (inches):
             </label>
             <input
               id="height"
@@ -411,7 +411,7 @@ export const EditPlant = () => {
           </div>
           <div className="spacing-container flex">
             <label htmlFor="spacing" className="mr-2">
-              Spacing:
+              Spacing (inches):
             </label>
             <input
               id="spacing"

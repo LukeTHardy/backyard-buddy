@@ -169,10 +169,16 @@ export const PlantDetails = ({ userId }) => {
                 </div>
               </div>
               <div className="plant-size text-xl m-1">
-                Spacing: {chosenPlant.spacing} in.
+                Spacing:{" "}
+                {chosenPlant.spacing >= 48
+                  ? `${chosenPlant.spacing / 12} ft.`
+                  : `${chosenPlant.spacing} in.`}
               </div>
               <div className="plant-size text-xl m-1">
-                Height: {chosenPlant.height} in.
+                Height:{" "}
+                {chosenPlant.height >= 48
+                  ? `${chosenPlant.height / 12} ft.`
+                  : `${chosenPlant.height} in.`}
               </div>
               <div className="plant-management text-xl m-1">
                 Days To Mature: {chosenPlant.days_to_mature}
