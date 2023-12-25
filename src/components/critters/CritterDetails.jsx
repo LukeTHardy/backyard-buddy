@@ -3,10 +3,16 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Lightbox } from "../misc/Lightbox";
+import {
+  Popover,
+  PopoverHandler,
+  PopoverContent,
+} from "@material-tailwind/react";
 
 export const CritterDetails = () => {
   const navigate = useNavigate();
   const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [popoverStates, setPopoverStates] = useState({});
   const [critters, setCritters] = useState([]);
   const [chosenCritter, setChosenCritter] = useState({
     type: { id: 0, label: "" },
@@ -72,6 +78,16 @@ export const CritterDetails = () => {
     }
   };
 
+  const handleMouseEnter = (plantId) => {
+    // Set the state for the corresponding plant to true
+    setPopoverStates((prevState) => ({ ...prevState, [plantId]: true }));
+  };
+
+  const handleMouseLeave = (plantId) => {
+    // Set the state for the corresponding plant to false
+    setPopoverStates((prevState) => ({ ...prevState, [plantId]: false }));
+  };
+
   const displayCritter = () => {
     if (chosenCritter) {
       return (
@@ -117,13 +133,47 @@ export const CritterDetails = () => {
               <div className="critter-plants text-2xl">
                 May be found on: <br></br>
                 {chosenCritter.plants.map((plant) => {
+                  const isOpen = popoverStates[plant.id];
                   return (
-                    <div key={plant.id} className="plant-link">
-                      <Link to={`/plants/${plant.id}`}>
-                        <div className="plant-name hover:font-medium">
-                          {plant.name}
-                        </div>
-                      </Link>
+                    <div key={plant.id} className="plant-popover-link">
+                      <Popover
+                        offset={7}
+                        open={isOpen}
+                        handler={() => handleMouseLeave(plant.id)}
+                        transitionDuration={0}
+                      >
+                        <PopoverHandler
+                          onMouseEnter={() => handleMouseEnter(plant.id)}
+                          onMouseLeave={() => handleMouseLeave(plant.id)}
+                        >
+                          <Link
+                            to={`/plants/${plant.id}`}
+                            className="plant-name hover:font-bold focus:outline-none"
+                          >
+                            {plant.name}
+                          </Link>
+                        </PopoverHandler>
+                        <PopoverContent>
+                          <div className="popover-card -m-2.5 flex">
+                            <div className="image-container w-[10rem] h-[10rem]">
+                              <img
+                                src={plant.image}
+                                alt={`${plant.name}`}
+                                className="h-full w-full rounded-md object-cover"
+                              />
+                            </div>
+                            <div className="plant-details flex flex-col items-center justify-evenly">
+                              <div className="plant-name w-[10rem] px-1 text-3xl font-bold text-center text-gray-dark font-pixel">
+                                {plant.name}
+                              </div>
+                              <div className="plant-type w-[8rem] text-2xl italic font-bold text-center text-gray-dark font-pixel">
+                                {plant.annual ? "Annual" : "Perennial"}{" "}
+                                {plant.type.label}
+                              </div>
+                            </div>
+                          </div>
+                        </PopoverContent>
+                      </Popover>
                     </div>
                   );
                 })}

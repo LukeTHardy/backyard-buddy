@@ -235,13 +235,46 @@ export const PlantDetails = ({ userId }) => {
                 <div className="plant-critters text-xl">
                   Potential Critters: <br></br>
                   {chosenPlant.critters.map((critter) => {
+                    const isOpen = popoverStates[critter.id];
                     return (
-                      <div key={critter.id} className="critter-link">
-                        <Link to={`/critters/${critter.id}`}>
-                          <div className="critter-name hover:font-bold">
-                            {critter.name}
-                          </div>
-                        </Link>
+                      <div key={critter.id} className="critter-popover-link">
+                        <Popover
+                          offset={7}
+                          open={isOpen}
+                          handler={() => handleMouseLeave(critter.id)}
+                          transitionDuration={0}
+                        >
+                          <PopoverHandler
+                            onMouseEnter={() => handleMouseEnter(critter.id)}
+                            onMouseLeave={() => handleMouseLeave(critter.id)}
+                          >
+                            <Link
+                              to={`/critters/${critter.id}`}
+                              className="critter-name hover:font-bold focus:outline-none"
+                            >
+                              {critter.name}
+                            </Link>
+                          </PopoverHandler>
+                          <PopoverContent>
+                            <div className="popover-card -m-2.5 flex">
+                              <div className="image-container w-[10rem] h-[10rem]">
+                                <img
+                                  src={critter.image}
+                                  alt={`${critter.name}`}
+                                  className="h-full w-full rounded-md object-cover"
+                                />
+                              </div>
+                              <div className="critter-details flex flex-col items-center justify-evenly">
+                                <div className="critter-name w-[10rem] px-1 text-3xl font-bold text-center text-gray-dark font-pixel">
+                                  {critter.name}
+                                </div>
+                                <div className="critter-type w-[8rem] text-2xl italic font-bold text-center text-gray-dark font-pixel">
+                                  {critter.type.label}
+                                </div>
+                              </div>
+                            </div>
+                          </PopoverContent>
+                        </Popover>
                       </div>
                     );
                   })}
