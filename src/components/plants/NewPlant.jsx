@@ -40,7 +40,7 @@ export const NewPlant = () => {
     light: 0,
     height: "",
     spacing: "",
-    days_to_mature: "",
+    maturity: "",
     image: "",
     icon: "",
   });
@@ -138,7 +138,7 @@ export const NewPlant = () => {
       !newPlant.height ||
       !newPlant.annual ||
       !newPlant.spacing ||
-      !newPlant.days_to_mature ||
+      !newPlant.maturity ||
       selectedCritters.length === 0 ||
       selectedPlants.length === 0 ||
       selectedZones.length === 0 ||
@@ -170,7 +170,7 @@ export const NewPlant = () => {
         height: parseInt(newPlant.height),
         annual: JSON.parse(newPlant.annual),
         spacing: newPlant.spacing,
-        days_to_mature: newPlant.days_to_mature,
+        maturity: newPlant.maturity,
         image: b64ImageString,
         icon: b64IconString,
         zones: selectedZones,
@@ -380,14 +380,14 @@ export const NewPlant = () => {
               onChange={handleInputChange}
             />
           </div>
-          <div className="days-to-mature-container flex">
-            <label htmlFor="days_to_mature" className="mr-2">
-              Days To Mature:
+          <div className="maturity-container flex">
+            <label htmlFor="maturity" className="mr-2">
+              Time to Maturity:
             </label>
             <input
-              id="days_to_mature"
-              value={newPlant.days_to_mature}
-              name="days_to_mature"
+              id="maturity"
+              value={newPlant.maturity}
+              name="maturity"
               type="text"
               className="text-input"
               placeholder=" Number of Days"

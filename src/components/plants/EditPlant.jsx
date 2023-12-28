@@ -31,7 +31,7 @@ export const EditPlant = () => {
     light: 0,
     height: "",
     spacing: "",
-    days_to_mature: "",
+    maturity: "",
     image: "",
     icon: "",
     zones: [],
@@ -48,7 +48,7 @@ export const EditPlant = () => {
     light: 0,
     height: "",
     spacing: "",
-    days_to_mature: "",
+    maturity: "",
     image: "",
     icon: "",
     zones: [],
@@ -115,7 +115,7 @@ export const EditPlant = () => {
       light: originalPlant.light.id,
       height: originalPlant.height,
       spacing: originalPlant.spacing,
-      days_to_mature: originalPlant.days_to_mature,
+      maturity: originalPlant.maturity,
       image: "",
       icon: "",
       annual: originalPlant.annual,
@@ -205,7 +205,7 @@ export const EditPlant = () => {
         height: parseInt(plantToEdit.height),
         annual: JSON.parse(plantToEdit.annual),
         spacing: parseInt(plantToEdit.spacing),
-        days_to_mature: plantToEdit.days_to_mature,
+        maturity: plantToEdit.maturity,
         image: b64ImageString,
         icon: b64IconString,
         zones: updatedZones,
@@ -423,14 +423,14 @@ export const EditPlant = () => {
               onChange={handleInputChange}
             />
           </div>
-          <div className="days-to-mature-container flex">
-            <label htmlFor="days_to_mature" className="mr-2">
-              Days To Mature:
+          <div className="maturity-container flex">
+            <label htmlFor="maturity" className="mr-2">
+              Time to Maturity:
             </label>
             <input
-              id="days_to_mature"
-              value={plantToEdit.days_to_mature}
-              name="days_to_mature"
+              id="maturity"
+              value={plantToEdit.maturity}
+              name="maturity"
               type="text"
               className="text-input"
               placeholder=" Number of Days"

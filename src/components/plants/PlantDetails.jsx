@@ -30,6 +30,7 @@ export const PlantDetails = ({ userId }) => {
     zones: [],
     critters: [],
     companions: [],
+    type: { id: 0, label: "" },
   });
   const { plantId } = useParams();
 
@@ -181,10 +182,12 @@ export const PlantDetails = ({ userId }) => {
                   : `${chosenPlant.height} in.`}
               </div>
               <div className="plant-management text-xl m-1">
-                Days To Mature: {chosenPlant.days_to_mature}
+                Maturity: {chosenPlant.maturity}
               </div>
               <div className="zones text-xl">
-                Zones:
+                {chosenPlant.type.label === "Veggie"
+                  ? "Grows in zones:"
+                  : "Winter hardy in zones:"}
                 {chosenPlant.zones.map((zone) => {
                   return ` ${zone.name},`;
                 })}
