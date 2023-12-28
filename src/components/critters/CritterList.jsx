@@ -80,7 +80,7 @@ export const CritterList = () => {
                     <div className="critter-image">
                       <img
                         src={`${critter.image}`}
-                        className="border-double border-4 border-amber-900 rounded-xl"
+                        className="border-double border-4 border-brown-600 rounded-xl"
                       />
                     </div>
                     <div className="critter-name text-center absolute w-[180px]">

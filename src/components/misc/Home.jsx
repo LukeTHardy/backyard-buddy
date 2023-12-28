@@ -4,7 +4,7 @@ export const Home = () => {
   const navigate = useNavigate();
   return (
     <div className="comp-container flex justify-center">
-      <div className="home-comp flex flex-col mt-10 p-12 bg-green-300 items-center rounded-3xl">
+      <div className="home-comp flex flex-col mt-10 p-12 bg-light-green-200 items-center rounded-3xl">
         <div className="text-2xl">Welcome to Backyard Buddy</div>
         <div className="text-xl">blah blah blah blah blah</div>
         <br></br>
