@@ -256,7 +256,6 @@ export const NewPlant = () => {
                     </option>
                   );
                 })}
-                <option value={8}>N/A (not a veggie)</option>
               </select>
             </div>
           </div>

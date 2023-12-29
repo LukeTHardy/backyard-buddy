@@ -14,7 +14,10 @@ export const CritterList = () => {
 
   const fetchAndSetAllCritters = async () => {
     const critterArray = await fetchAllCritters();
-    setAllCritters(critterArray);
+    const alphabetizedCritters = critterArray
+      .slice()
+      .sort((a, b) => a.name.localeCompare(b.name));
+    setAllCritters(alphabetizedCritters);
   };
 
   useEffect(() => {

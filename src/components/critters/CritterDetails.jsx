@@ -113,20 +113,20 @@ export const CritterDetails = () => {
                 />
               )}
             </div>
-            <div className="details-card flex flex-col items-center border-solid round-xl bg-amber-100 w-[40rem] h-[30rem] rounded-3xl">
-              <div className="critter-name text-3xl underline m-4">
+            <div className="details-card flex flex-col items-center border-solid round-xl bg-amber-100 w-[40rem] rounded-3xl">
+              <div className="critter-name text-3xl underline">
                 {chosenCritter.name}
               </div>
-              <div className="critter-description text-2xl italic m-4">
-                -{chosenCritter.description}
+              <div className="critter-description text-lg">
+                {chosenCritter.description}
               </div>
-              <div className="critter-status text-2xl m-4">
+              <div className="critter-status text-2xl">
                 Status: {chosenCritter.type.label}
               </div>
-              <div className="critter-size text-2xl m-4">
+              <div className="critter-size text-2xl">
                 Size: {chosenCritter.size} in.
               </div>
-              <div className="critter-management text-2xl italic m-4">
+              <div className="critter-management text-lg">
                 -{chosenCritter.management}
               </div>
               <br></br>

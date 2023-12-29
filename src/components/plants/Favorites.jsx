@@ -49,7 +49,7 @@ export const Favorites = () => {
                     <div className="favorite-image">
                       <img
                         src={`${favorite.plant.image}`}
-                        className="border-double w-[169.2px] h-[169.2px] object-cover border-4 border-amber-900 rounded-xl"
+                        className="border-double w-[169.2px] h-[169.2px] object-cover border-4 border-brown-600 rounded-xl"
                       />
                     </div>
                     <div className="favorite-name text-center absolute w-[180px]">
@@ -82,7 +82,7 @@ export const Favorites = () => {
       <div className="title search-bar flex w-3/4 mb-6 relative">
         <div className="title text-2xl mx-auto font-bold">My Saved Plants</div>
         <button
-          className="add-plant-button text-2xl text-green-700 absolute left-0 underline"
+          className="add-plant-button text-2xl text-light-green-800 absolute left-0 underline"
           onClick={() => {
             navigate("/plants/newplant");
           }}

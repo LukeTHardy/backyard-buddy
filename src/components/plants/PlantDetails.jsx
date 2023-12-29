@@ -148,15 +148,15 @@ export const PlantDetails = ({ userId }) => {
                 />
               )}
             </div>
-            <div className="details-card flex flex-col items-center border-solid round-xl bg-amber-100 w-[40rem] h-[30rem] rounded-3xl">
+            <div className="details-card flex flex-col items-center border-solid round-xl bg-amber-100 w-[40rem] rounded-3xl">
               <div className="plant-name text-3xl underline m-1">
                 {chosenPlant.name}
               </div>
               <div className="annual-perennial text-xl m-1">
                 {chosenPlant.annual ? "(Annual)" : "(Perennial)"}
               </div>
-              <div className="plant-description text-xl italic m-1">
-                -[{chosenPlant.description}]
+              <div className="plant-description text-lg m-1">
+                {chosenPlant.description}
               </div>
               <div className="growing-needs flex justify-evenly">
                 <div className="plant-status text-xl m-1">
@@ -185,12 +185,15 @@ export const PlantDetails = ({ userId }) => {
                 Maturity: {chosenPlant.maturity}
               </div>
               <div className="zones text-xl">
-                {chosenPlant.type.label === "Veggie"
+                {chosenPlant.type.label === "Veggie" || chosenPlant.annual
                   ? "Grows in zones:"
                   : "Winter hardy in zones:"}
-                {chosenPlant.zones.map((zone) => {
-                  return ` ${zone.name},`;
-                })}
+                {chosenPlant.zones
+                  .map((zone, index, array) => {
+                    const isLastItem = index === array.length - 1;
+                    return isLastItem ? ` ${zone.name}` : ` ${zone.name},`;
+                  })
+                  .join("")}
               </div>
               <div className="lists-container flex justify-between w-[30rem]">
                 <div className="companions text-xl">
