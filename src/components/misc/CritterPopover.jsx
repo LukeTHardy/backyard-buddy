@@ -13,16 +13,15 @@ export const CritterPopover = ({ critter }) => {
   };
 
   return (
-    <div
-      className="critter-popover-link relative"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
-      <Link
-        to={`/critters/${critter.id}`}
-        className="critter-name hover:font-bold focus:outline-none"
-      >
-        {critter.name}
+    <div className="critter-popover-link relative">
+      <Link to={`/critters/${critter.id}`} className="focus:outline-none">
+        <span
+          className="plant-name hover:font-bold hover:text-[1.5rem] hover:text-cyan-900"
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
+          {critter.name}
+        </span>
       </Link>
 
       {isPopoverVisible && (
@@ -30,7 +29,7 @@ export const CritterPopover = ({ critter }) => {
           className="popover-card -m-2.5 flex bg-white p-2 rounded-lg"
           style={{
             position: "absolute",
-            top: "-10.8rem",
+            top: "-10.7rem",
             left: "50%",
             transform: "translateX(-50%)",
             zIndex: "999",
@@ -51,6 +50,21 @@ export const CritterPopover = ({ critter }) => {
               {critter.type.label}
             </div>
           </div>
+          {/* <div
+            className="arrow"
+            style={{
+              position: "absolute",
+              top: "100%", // Adjusted top value
+              left: "50%",
+              transform: "translateX(-50%)",
+              width: "0",
+              height: "0",
+              borderTop: "10px solid white", // Flipped
+              borderLeft: "10px solid transparent",
+              borderRight: "10px solid transparent",
+              borderBottom: "10px solid transparent", // Flipped
+            }}
+          /> */}
         </div>
       )}
     </div>
