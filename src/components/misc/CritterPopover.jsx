@@ -30,8 +30,8 @@ export const CritterPopover = ({ critter }) => {
           className="popover-card -m-2.5 flex bg-white p-2 rounded-lg"
           style={{
             position: "absolute",
-            top: "-10.8rem", // Adjust this value to your preference
-            left: "50%", // Centered horizontally
+            top: "-10.8rem",
+            left: "50%",
             transform: "translateX(-50%)",
             zIndex: "999",
           }}

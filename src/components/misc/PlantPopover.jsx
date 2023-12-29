@@ -13,16 +13,14 @@ export const PlantPopover = ({ plant }) => {
   };
 
   return (
-    <div
-      className="plant-popover-link relative"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
+    <div className="plant-popover-link relative">
       <Link
         to={`/plants/${plant.id}`}
         className="plant-name hover:font-bold focus:outline-none"
       >
-        {plant.name}
+        <span onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+          {plant.name}
+        </span>
       </Link>
 
       {isPopoverVisible && (
@@ -30,8 +28,8 @@ export const PlantPopover = ({ plant }) => {
           className="popover-card -m-2.5 flex bg-white p-2 rounded-lg"
           style={{
             position: "absolute",
-            top: "-10.8rem", // Adjust this value to your preference
-            left: "50%", // Centered horizontally
+            top: "-10.8rem",
+            left: "50%",
             transform: "translateX(-50%)",
             zIndex: "999",
           }}
@@ -51,6 +49,21 @@ export const PlantPopover = ({ plant }) => {
               {plant.annual ? "Annual" : "Perennial"} {plant.type.label}
             </div>
           </div>
+          <div
+            className="arrow"
+            style={{
+              position: "absolute",
+              top: "100%", // Adjusted top value
+              left: "50%",
+              transform: "translateX(-50%)",
+              width: "0",
+              height: "0",
+              borderTop: "10px solid white", // Flipped
+              borderLeft: "10px solid transparent",
+              borderRight: "10px solid transparent",
+              borderBottom: "10px solid transparent", // Flipped
+            }}
+          />
         </div>
       )}
     </div>
