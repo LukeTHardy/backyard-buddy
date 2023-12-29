@@ -92,9 +92,10 @@ export const CritterDetails = () => {
     if (chosenCritter) {
       return (
         <>
-          <div className="navigate-btns flex justify-between items-center font-bold text-gray-700 text-lg h-12 w-3/4">
-            <button onClick={previousCritter}>﹤Prev</button>
-            <button onClick={nextCritter}>Next﹥</button>
+          <div className="navigate-btns flex justify-start items-center font-bold text-gray-700 text-lg h-12 w-3/4">
+            <button onClick={() => navigate("/critters")}>
+              ﹤Back to Critters
+            </button>
           </div>
           <div className="card-container flex justify-center">
             <div className="image-card flex flex-col w-[35rem] items-center">
@@ -114,8 +115,14 @@ export const CritterDetails = () => {
               )}
             </div>
             <div className="details-card flex flex-col items-center border-solid round-xl bg-amber-100 w-[40rem] rounded-3xl">
-              <div className="critter-name text-3xl underline">
-                {chosenCritter.name}
+              <div className="critter-name flex justify-between w-[40rem]">
+                <button className="text-xl" onClick={previousCritter}>
+                  ﹤Prev
+                </button>
+                <div className="underline text-3xl">{chosenCritter.name}</div>
+                <button className="text-xl" onClick={nextCritter}>
+                  Next﹥
+                </button>
               </div>
               <div className="critter-description text-lg">
                 {chosenCritter.description}

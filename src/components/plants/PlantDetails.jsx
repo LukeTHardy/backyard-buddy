@@ -15,7 +15,6 @@ import {
   PopoverHandler,
   PopoverContent,
 } from "@material-tailwind/react";
-import "./Details.css";
 
 export const PlantDetails = ({ userId }) => {
   const navigate = useNavigate();
@@ -128,9 +127,10 @@ export const PlantDetails = ({ userId }) => {
     if (chosenPlant) {
       return (
         <>
-          <div className="navigate-btns flex justify-between items-center font-bold text-xl h-12 w-3/4">
-            <button onClick={previousPlant}>﹤Prev</button>
-            <button onClick={nextPlant}>Next﹥</button>
+          <div className="navigate-btns flex justify-start items-center font-bold text-xl h-12 w-3/4">
+            <button onClick={() => navigate("/plants")}>
+              ﹤Back to Plants
+            </button>
           </div>
           <div className="card-container flex justify-center">
             <div className="image-card flex flex-col w-[35rem] items-center">
@@ -150,8 +150,14 @@ export const PlantDetails = ({ userId }) => {
               )}
             </div>
             <div className="details-card flex flex-col items-center border-solid round-xl bg-amber-100 w-[40rem] rounded-3xl">
-              <div className="plant-name text-3xl underline m-1">
-                {chosenPlant.name}
+              <div className="plant-name flex justify-between w-[40rem] m-1">
+                <button className="text-xl text-end" onClick={previousPlant}>
+                  ﹤Prev
+                </button>
+                <div className="underline text-3xl">{chosenPlant.name}</div>
+                <button className="text-xl" onClick={nextPlant}>
+                  Next﹥
+                </button>
               </div>
               <div className="annual-perennial text-xl m-1">
                 {chosenPlant.annual ? "(Annual)" : "(Perennial)"}
