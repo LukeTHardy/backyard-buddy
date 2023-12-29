@@ -113,70 +113,74 @@ export const CritterDetails = () => {
                 />
               )}
             </div>
-            <div className="details-card flex flex-col items-center border-solid round-xl bg-amber-100 w-[40rem] h-[30rem] rounded-3xl">
-              <div className="critter-name text-3xl underline m-4">
+            <div className="details-card flex flex-col items-center border-solid round-xl bg-amber-100 w-[40rem] rounded-3xl">
+              <div className="critter-name text-3xl underline">
                 {chosenCritter.name}
               </div>
-              <div className="critter-description text-2xl italic m-4">
-                -{chosenCritter.description}
+              <div className="critter-description text-lg">
+                {chosenCritter.description}
               </div>
-              <div className="critter-status text-2xl m-4">
+              <div className="critter-status text-2xl">
                 Status: {chosenCritter.type.label}
               </div>
-              <div className="critter-size text-2xl m-4">
+              <div className="critter-size text-2xl">
                 Size: {chosenCritter.size} in.
               </div>
-              <div className="critter-management text-2xl italic m-4">
+              <div className="critter-management text-lg">
                 -{chosenCritter.management}
               </div>
               <br></br>
               <div className="critter-plants text-2xl">
-                May be found on: <br></br>
-                {chosenCritter.plants.map((plant) => {
-                  const isOpen = popoverStates[plant.id];
-                  return (
-                    <div key={plant.id} className="plant-popover-link">
-                      <Popover
-                        offset={7}
-                        open={isOpen}
-                        handler={() => handleMouseLeave(plant.id)}
-                        transitionDuration={0}
-                      >
-                        <PopoverHandler
-                          onMouseEnter={() => handleMouseEnter(plant.id)}
-                          onMouseLeave={() => handleMouseLeave(plant.id)}
+                May be found on: <br />
+                {chosenCritter.plants.length === 0 ? (
+                  <div className="italic text-center">All plants!</div>
+                ) : (
+                  chosenCritter.plants.map((plant) => {
+                    const isOpen = popoverStates[plant.id];
+                    return (
+                      <div key={plant.id} className="plant-popover-link">
+                        <Popover
+                          offset={7}
+                          open={isOpen}
+                          handler={() => handleMouseLeave(plant.id)}
+                          transitionDuration={0}
                         >
-                          <Link
-                            to={`/plants/${plant.id}`}
-                            className="plant-name hover:font-bold focus:outline-none"
+                          <PopoverHandler
+                            onMouseEnter={() => handleMouseEnter(plant.id)}
+                            onMouseLeave={() => handleMouseLeave(plant.id)}
                           >
-                            {plant.name}
-                          </Link>
-                        </PopoverHandler>
-                        <PopoverContent>
-                          <div className="popover-card -m-2.5 flex">
-                            <div className="image-container w-[10rem] h-[10rem]">
-                              <img
-                                src={plant.image}
-                                alt={`${plant.name}`}
-                                className="h-full w-full rounded-md object-cover"
-                              />
-                            </div>
-                            <div className="plant-details flex flex-col items-center justify-evenly">
-                              <div className="plant-name w-[10rem] px-1 text-3xl font-bold text-center text-gray-dark font-pixel">
-                                {plant.name}
+                            <Link
+                              to={`/plants/${plant.id}`}
+                              className="plant-name hover:font-bold focus:outline-none"
+                            >
+                              {plant.name}
+                            </Link>
+                          </PopoverHandler>
+                          <PopoverContent>
+                            <div className="popover-card -m-2.5 flex">
+                              <div className="image-container w-[10rem] h-[10rem]">
+                                <img
+                                  src={plant.image}
+                                  alt={`${plant.name}`}
+                                  className="h-full w-full rounded-md object-cover"
+                                />
                               </div>
-                              <div className="plant-type w-[8rem] text-2xl italic font-bold text-center text-gray-dark font-pixel">
-                                {plant.annual ? "Annual" : "Perennial"}{" "}
-                                {plant.type.label}
+                              <div className="plant-details flex flex-col items-center justify-evenly">
+                                <div className="plant-name w-[10rem] px-1 text-3xl font-bold text-center text-gray-dark font-pixel">
+                                  {plant.name}
+                                </div>
+                                <div className="plant-type w-[8rem] text-2xl italic font-bold text-center text-gray-dark font-pixel">
+                                  {plant.annual ? "Annual" : "Perennial"}{" "}
+                                  {plant.type.label}
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        </PopoverContent>
-                      </Popover>
-                    </div>
-                  );
-                })}
+                          </PopoverContent>
+                        </Popover>
+                      </div>
+                    );
+                  })
+                )}
               </div>
             </div>
           </div>

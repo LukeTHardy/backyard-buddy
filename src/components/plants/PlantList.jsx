@@ -16,7 +16,10 @@ export const PlantList = () => {
 
   const fetchAndSetAllPlants = async () => {
     const plantArray = await fetchAllPlants();
-    setAllPlants(plantArray);
+    const alphabetizedPlants = plantArray
+      .slice()
+      .sort((a, b) => a.name.localeCompare(b.name));
+    setAllPlants(alphabetizedPlants);
   };
 
   useEffect(() => {
@@ -108,7 +111,7 @@ export const PlantList = () => {
       <div className="title search-bar flex w-3/4 mb-6 relative">
         <div className="title text-2xl mx-auto font-bold">Browse Plants</div>
         <button
-          className="add-plant-button text-2xl text-green-700 absolute left-0 underline"
+          className="add-plant-button text-2xl text-light-green-800 absolute left-0 underline"
           onClick={() => {
             navigate("/plants/newplant");
           }}

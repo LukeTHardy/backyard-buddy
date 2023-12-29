@@ -15,6 +15,7 @@ import {
   PopoverHandler,
   PopoverContent,
 } from "@material-tailwind/react";
+import "./Details.css";
 
 export const PlantDetails = ({ userId }) => {
   const navigate = useNavigate();
@@ -148,15 +149,15 @@ export const PlantDetails = ({ userId }) => {
                 />
               )}
             </div>
-            <div className="details-card flex flex-col items-center border-solid round-xl bg-amber-100 w-[40rem] h-[30rem] rounded-3xl">
+            <div className="details-card flex flex-col items-center border-solid round-xl bg-amber-100 w-[40rem] rounded-3xl">
               <div className="plant-name text-3xl underline m-1">
                 {chosenPlant.name}
               </div>
               <div className="annual-perennial text-xl m-1">
                 {chosenPlant.annual ? "(Annual)" : "(Perennial)"}
               </div>
-              <div className="plant-description text-xl italic m-1">
-                -[{chosenPlant.description}]
+              <div className="plant-description text-lg m-1">
+                {chosenPlant.description}
               </div>
               <div className="growing-needs flex justify-evenly">
                 <div className="plant-status text-xl m-1">
@@ -185,61 +186,68 @@ export const PlantDetails = ({ userId }) => {
                 Maturity: {chosenPlant.maturity}
               </div>
               <div className="zones text-xl">
-                {chosenPlant.type.label === "Veggie"
+                {chosenPlant.type.label === "Veggie" || chosenPlant.annual
                   ? "Grows in zones:"
                   : "Winter hardy in zones:"}
-                {chosenPlant.zones.map((zone) => {
-                  return ` ${zone.name},`;
-                })}
+                {chosenPlant.zones
+                  .map((zone, index, array) => {
+                    const isLastItem = index === array.length - 1;
+                    return isLastItem ? ` ${zone.name}` : ` ${zone.name},`;
+                  })
+                  .join("")}
               </div>
               <div className="lists-container flex justify-between w-[30rem]">
                 <div className="companions text-xl">
                   Companion Plants: <br />
-                  {chosenPlant.companions.map((plant) => {
-                    const isOpen = popoverStates[plant.id];
-                    return (
-                      <div key={plant.id} className="plant-popover-link">
-                        <Popover
-                          offset={7}
-                          open={isOpen}
-                          handler={() => handleMouseLeave(plant.id)}
-                          transitionDuration={0}
-                        >
-                          <PopoverHandler
-                            onMouseEnter={() => handleMouseEnter(plant.id)}
-                            onMouseLeave={() => handleMouseLeave(plant.id)}
+                  {chosenPlant.companions.length === 0 ? (
+                    <div className="italic text-center">None to show</div>
+                  ) : (
+                    chosenPlant.companions.map((plant) => {
+                      const isOpen = popoverStates[plant.id];
+                      return (
+                        <div key={plant.id} className="plant-popover-link">
+                          <Popover
+                            offset={7}
+                            open={isOpen}
+                            handler={() => handleMouseLeave(plant.id)}
+                            transitionDuration={0}
                           >
-                            <Link
-                              to={`/plants/${plant.id}`}
-                              className="plant-name hover:font-bold focus:outline-none"
+                            <PopoverHandler
+                              onMouseEnter={() => handleMouseEnter(plant.id)}
+                              onMouseLeave={() => handleMouseLeave(plant.id)}
                             >
-                              {plant.name}
-                            </Link>
-                          </PopoverHandler>
-                          <PopoverContent>
-                            <div className="popover-card -m-2.5 flex">
-                              <div className="image-container w-[10rem] h-[10rem]">
-                                <img
-                                  src={`http://localhost:8000/${plant.image}`}
-                                  alt={`${plant.name}`}
-                                  className="h-full w-full rounded-md object-cover"
-                                />
-                              </div>
-                              <div className="plant-details flex flex-col items-center justify-evenly">
-                                <div className="plant-name w-[10rem] px-1 text-3xl font-bold text-center text-gray-dark font-pixel">
-                                  {plant.name}
+                              <Link
+                                to={`/plants/${plant.id}`}
+                                className="plant-name hover:font-bold focus:outline-none"
+                              >
+                                {plant.name}
+                              </Link>
+                            </PopoverHandler>
+                            <PopoverContent>
+                              <div className="popover-card -m-2.5 flex">
+                                <div className="image-container w-[10rem] h-[10rem]">
+                                  <img
+                                    src={`http://localhost:8000/${plant.image}`}
+                                    alt={`${plant.name}`}
+                                    className="h-full w-full rounded-md object-cover"
+                                  />
                                 </div>
-                                <div className="plant-type w-[8rem] text-2xl italic font-bold text-center text-gray-dark font-pixel">
-                                  {plant.annual ? "Annual" : "Perennial"}{" "}
-                                  {plant.type.label}
+                                <div className="plant-details flex flex-col items-center justify-evenly">
+                                  <div className="plant-name w-[10rem] px-1 text-3xl font-bold text-center text-gray-dark font-pixel">
+                                    {plant.name}
+                                  </div>
+                                  <div className="plant-type w-[8rem] text-2xl italic font-bold text-center text-gray-dark font-pixel">
+                                    {plant.annual ? "Annual" : "Perennial"}{" "}
+                                    {plant.type.label}
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                          </PopoverContent>
-                        </Popover>
-                      </div>
-                    );
-                  })}
+                            </PopoverContent>
+                          </Popover>
+                        </div>
+                      );
+                    })
+                  )}
                 </div>
                 <div className="plant-critters text-xl">
                   Potential Critters: <br></br>
