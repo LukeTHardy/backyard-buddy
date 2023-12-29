@@ -37,7 +37,7 @@ export const PlantPopover = ({ plant }) => {
         >
           <div className="image-container w-[10rem] h-[10rem]">
             <img
-              src={`http://localhost:8000/${plant.image}`}
+              src={plant.image}
               alt={`${plant.name}`}
               className="h-full w-full rounded-md object-cover"
             />
