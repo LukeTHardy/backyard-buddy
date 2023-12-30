@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import searchSymbol from "/assets/graphics/search_symbol.png";
+import onSwitch from "/assets/graphics/on_switch.png";
+import offSwitch from "/assets/graphics/off_switch.png";
 
 export const PlantList = () => {
   const navigate = useNavigate();
@@ -10,6 +12,7 @@ export const PlantList = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchTermPlants, setSearchTermPlants] = useState([]);
   const [typePlants, setTypePlants] = useState([]);
+  const [zoneToggle, setZoneToggle] = useState(false);
   const [filterTypeSwitch, setFilterTypeSwitch] = useState("");
   // const [categoryPlants, setCategoryPlants] = useState([]);
   const [renderedPlants, setRenderedPlants] = useState([]);
@@ -67,6 +70,10 @@ export const PlantList = () => {
     setFilterTypeSwitch("");
   };
 
+  const toggleZoneSwitch = () => {
+    setZoneToggle((prevState) => !prevState);
+  };
+
   const displayPlants = () => {
     if (renderedPlants && renderedPlants.length) {
       return (
@@ -108,8 +115,8 @@ export const PlantList = () => {
 
   return (
     <div className="comp-container flex flex-col justify-center items-center mt-4">
-      <div className="title search-bar flex w-3/4 mb-6 relative">
-        <div className="title text-2xl mx-auto font-bold">Browse Plants</div>
+      <div className="title search-bar flex w-3/4 mb-4 relative">
+        <div className="title text-3xl mx-auto font-bold">Browse Plants</div>
         <button
           className="add-plant-button text-2xl text-light-green-900 absolute left-0 underline"
           onClick={() => {
@@ -135,35 +142,52 @@ export const PlantList = () => {
           />
         </div>
       </div>
-      <div className="buttons-container">
-        <button
-          name="veggie"
-          className="text-xl border-double border-4 border-green-900 rounded-xl p-2 mx-8"
-          onClick={handleTypeFilter}
-        >
-          Veggies
-        </button>
-        <button
-          name="herb"
-          className="text-xl border-double border-4 border-green-900 rounded-xl p-2 mx-8"
-          onClick={handleTypeFilter}
-        >
-          Herbs
-        </button>
-        <button
-          name="flower"
-          className="text-xl border-double border-4 border-green-900 rounded-xl p-2 mx-8"
-          onClick={handleTypeFilter}
-        >
-          Flowers
-        </button>
-        <button
-          name="fruit"
-          className="text-xl border-double border-4 border-green-900 rounded-xl p-2 mx-8"
-          onClick={handleTypeFilter}
-        >
-          Fruit
-        </button>
+      <div className="buttons-container flex justify-center relative w-3/4">
+        <div className="type-buttons flex">
+          <button
+            name="veggie"
+            className="text-xl border-double border-4 border-green-900 rounded-xl p-2 mx-8"
+            onClick={handleTypeFilter}
+          >
+            Veggies
+          </button>
+          <button
+            name="herb"
+            className="text-xl border-double border-4 border-green-900 rounded-xl p-2 mx-8"
+            onClick={handleTypeFilter}
+          >
+            Herbs
+          </button>
+          <button
+            name="flower"
+            className="text-xl border-double border-4 border-green-900 rounded-xl p-2 mx-8"
+            onClick={handleTypeFilter}
+          >
+            Flowers
+          </button>
+          <button
+            name="fruit"
+            className="text-xl border-double border-4 border-green-900 rounded-xl p-2 mx-8"
+            onClick={handleTypeFilter}
+          >
+            Fruit
+          </button>
+        </div>
+        <div className="zone-toggle flex items-center absolute right-0">
+          <button
+            className="w-16 h-[1.85rem] static justify-end"
+            onClick={toggleZoneSwitch}
+          >
+            <img
+              className="w-full h-full object-cover"
+              src={zoneToggle ? onSwitch : offSwitch}
+              alt="zone toggle button"
+            />
+          </button>
+          <div className="w-[6rem] ml-3 text-lg font-bold">
+            Only plants in my zone
+          </div>
+        </div>
       </div>
       {searchTerm || filterTypeSwitch ? (
         <button
