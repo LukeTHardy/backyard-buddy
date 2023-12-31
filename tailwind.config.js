@@ -18,6 +18,9 @@ export default withMT({
       "gray-light": "#d3dce6",
     },
     extend: {
+      colors: {
+        "logo-green": "#63c32c",
+      },
       fontFamily: {
         body: ["VCR Mono", "sans-serif"],
         mono: ["Retro Mono", "serif"],

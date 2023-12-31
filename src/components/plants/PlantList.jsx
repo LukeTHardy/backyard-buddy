@@ -77,7 +77,7 @@ export const PlantList = () => {
   const displayPlants = () => {
     if (renderedPlants && renderedPlants.length) {
       return (
-        <div className="list-container w-3/4 grid grid-cols-5 gap-14 mt-4 p-8 rounded-xl bg-amber-100">
+        <div className="list-container w-3/4 grid grid-cols-5 gap-14 mt-4 p-8 rounded-xl bg-amber-200">
           {renderedPlants.map((plant) => {
             return (
               <div key={plant.id}>
@@ -100,13 +100,13 @@ export const PlantList = () => {
       );
     } else if (allPlants && allPlants.length && filterTypeSwitch) {
       return (
-        <h3 className="text-xl w-3/4 mt-4 p-8 rounded-xl bg-amber-100 text-center">
+        <h3 className="text-xl w-3/4 mt-4 p-8 rounded-xl bg-amber-200 text-center">
           No plants found :/
         </h3>
       );
     } else {
       return (
-        <h3 className="text-xl w-3/4 mt-4 p-8 rounded-xl bg-amber-100 text-center">
+        <h3 className="text-xl w-3/4 mt-4 p-8 rounded-xl bg-amber-200 text-center">
           Loading Plants...
         </h3>
       );
@@ -114,7 +114,7 @@ export const PlantList = () => {
   };
 
   return (
-    <div className="comp-container flex flex-col justify-center items-center mt-4">
+    <div className="comp-container bg-amber-100 flex flex-col justify-center items-center pt-4">
       <div className="title search-bar flex w-3/4 mb-4 relative">
         <div className="title text-3xl mx-auto font-bold">Browse Plants</div>
         <button
@@ -192,7 +192,7 @@ export const PlantList = () => {
       {searchTerm || filterTypeSwitch ? (
         <button
           onClick={clearFilters}
-          className="border border-solid border-black rounded-xl px-1 py-0.5 mt-4"
+          className="border border-solid border-black rounded-xl px-1 pt-1 pb-0.5 mt-4"
         >
           ⓧ clear filters
         </button>

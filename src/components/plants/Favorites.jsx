@@ -40,7 +40,7 @@ export const Favorites = () => {
   const displayFavorites = () => {
     if (renderedFavorites && renderedFavorites.length) {
       return (
-        <div className="list-container w-3/4 grid grid-cols-5 gap-14 mt-4 p-8 rounded-xl bg-amber-100">
+        <div className="list-container w-3/4 grid grid-cols-5 gap-14 mt-4 p-8 rounded-xl bg-amber-200">
           {renderedFavorites.map((favorite) => {
             return (
               <div key={favorite.id}>
@@ -64,13 +64,13 @@ export const Favorites = () => {
       );
     } else if (allFavorites && allFavorites.length && searchTerm) {
       return (
-        <h3 className="text-xl w-3/4 mt-4 p-8 rounded-xl bg-amber-100 text-center">
+        <h3 className="text-xl w-3/4 mt-4 p-8 rounded-xl bg-amber-200 text-center">
           No favorites found :/
         </h3>
       );
     } else {
       return (
-        <div className="text-xl w-3/4 mt-4 p-8 rounded-xl bg-amber-100 text-center">
+        <div className="text-xl w-3/4 mt-4 p-8 rounded-xl bg-amber-200 text-center">
           No favorites to show :/
         </div>
       );
@@ -78,7 +78,7 @@ export const Favorites = () => {
   };
 
   return (
-    <div className="comp-container flex flex-col justify-center items-center mt-4">
+    <div className="comp-container min-h-screen bg-amber-100 flex flex-col items-center pt-4">
       <div className="title search-bar flex w-3/4 mb-6 relative">
         <div className="title text-2xl mx-auto font-bold">My Saved Plants</div>
         <button

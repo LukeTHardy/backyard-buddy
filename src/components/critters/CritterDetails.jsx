@@ -98,7 +98,7 @@ export const CritterDetails = () => {
                 />
               )}
             </div>
-            <div className="details-card flex flex-col items-center border-solid round-xl bg-amber-100 w-[40rem] rounded-3xl">
+            <div className="details-card flex flex-col items-center border-solid round-xl bg-amber-200 w-[40rem] rounded-3xl">
               <div className="critter-name flex justify-between w-[40rem]">
                 <button className="text-xl" onClick={previousCritter}>
                   ﹤Prev
@@ -141,7 +141,7 @@ export const CritterDetails = () => {
   };
 
   return (
-    <div className="detail-comp-container flex flex-col items-center">
+    <div className="detail-comp-container bg-amber-100 flex flex-col items-center">
       {displayCritter()}
     </div>
   );

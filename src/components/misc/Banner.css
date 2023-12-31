@@ -1,0 +1,14 @@
+@keyframes move-background {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+.clouds {
+  position: absolute;
+  animation: move-background 10s linear infinite;
+  background: transparent url("/assets/graphics/scrollingclouds.svg") repeat;
+}
