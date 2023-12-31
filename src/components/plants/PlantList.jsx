@@ -192,7 +192,7 @@ export const PlantList = () => {
       {searchTerm || filterTypeSwitch ? (
         <button
           onClick={clearFilters}
-          className="border border-solid border-black rounded-xl px-1 py-0.5 mt-4"
+          className="border border-solid border-black rounded-xl px-1 pt-1 pb-0.5 mt-4"
         >
           ⓧ clear filters
         </button>

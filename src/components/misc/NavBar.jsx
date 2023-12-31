@@ -7,7 +7,7 @@ export const NavBar = ({ token }) => {
   return (
     <nav className="z-3" role="navigation" aria-label="main navigation">
       <div
-        className="navbar-container z-3 h-12 flex justify-evenly text-light-green-700 items-center bg-amber-100"
+        className="navbar-container z-3 h-12 flex justify-evenly text-logo-green items-center bg-amber-100"
         ref={navbar}
       >
         <div className="">

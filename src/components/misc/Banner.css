@@ -8,6 +8,7 @@
 }
 
 .clouds {
+  position: absolute;
   animation: move-background 10s linear infinite;
   background: transparent url("/assets/graphics/scrollingclouds.svg") repeat;
 }
