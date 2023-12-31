@@ -1,61 +1,12 @@
 .foldertab {
-  position: relative;
+  /* padding: 0px 50px 0px 50px; */
   width: 15rem;
-  height: 3rem; /* Adjust the height as needed */
-  overflow: hidden; /* Hide overflow content */
-}
-
-.foldertab::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 70%; /* Adjust the rounded portion height */
-  background-color: #e2ceb0;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  z-index: 1; /* Ensure it's behind the main content */
-}
-
-.foldertab::after {
-  content: "";
-  position: absolute;
-  top: 70%; /* Adjust the rounded portion height */
-  width: 50%;
-  height: 30%; /* Adjust the straight portion height */
-  background-color: #e2ceb0;
-  box-shadow: 5px -2px 0px 0px rgba(0, 0, 0, 0.1);
-  z-index: 1; /* Ensure it's behind the main content */
-}
-
-.foldertab-content {
-  position: relative;
-  z-index: 2; /* Ensure it's on top of the pseudo-elements */
-  width: 100%;
-  height: 100%;
-  border: 2px solid #d8be96;
-  background-color: #e2ceb0;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-}
-
-/* .folderbehind {
-  background-color: #e2ceb0;
-  border: 2px solid #d8be96;
-} */
-
-.folderactive {
-  background-color: #fcf6cd;
-  z-index: 1;
-  border: 2px solid #fcf6cd;
-}
-
-/* .foldertab {
-  padding: 0px 50px 0px 50px;
+  height: 3rem;
   border-top-right-radius: 5px;
   border-top-left-radius: 5px;
+  /* overflow: hidden; */
   transform: perspective(4px) rotateX(1deg);
+  /* clip-path: polygon(0% 100%, 100% 100%, 95% 0, 5% 0); */
   white-space: nowrap;
   box-shadow: 5px -2px 0px 0px rgba(0, 0, 0, 0.1);
 }
@@ -73,4 +24,4 @@
   background-color: #fcf6cd;
   z-index: 1;
   border: 2px solid #fcf6cd;
-} */
+}

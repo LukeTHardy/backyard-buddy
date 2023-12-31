@@ -12,7 +12,7 @@ export const NavBar = ({ token }) => {
       aria-label="main navigation"
     >
       <nav
-        className="navbar-container z-3 h-12 flex w-3/4 justify-evenly text-darker-green items-center"
+        className="navbar-container z-3 h-12 flex w-7/8 justify-evenly text-darker-green items-center"
         ref={navbar}
       >
         <TabLink path="/" text="Home" />

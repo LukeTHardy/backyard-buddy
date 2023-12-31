@@ -9,9 +9,9 @@ export const TabLink = ({ path, text }) => {
       onClick={() => {
         navigate(path);
       }}
-      className="text-3xl mx-2 foldertab folderbehind"
+      className="text-3xl foldertab folderbehind"
     >
-      <p className="text-center transform-none pt-1">{text}</p>
+      <p className="text-center pt-1">{text}</p>
     </span>
   );
 };
