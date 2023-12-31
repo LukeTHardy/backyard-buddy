@@ -114,7 +114,7 @@ export const PlantList = () => {
   };
 
   return (
-    <div className="comp-container bg-amber-100 flex flex-col justify-center items-center pt-4">
+    <div className="comp-container bg-amber-100 flex flex-col justify-center items-center relative z-4">
       <div className="title search-bar flex w-3/4 mb-4 relative">
         <div className="title text-3xl mx-auto font-bold">Browse Plants</div>
         <button
