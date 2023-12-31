@@ -74,7 +74,7 @@ export const CritterList = () => {
   const displayCritters = () => {
     if (renderedCritters && renderedCritters.length) {
       return (
-        <div className="list-container w-3/4 grid grid-cols-5 gap-14 mt-4 p-8 rounded-xl bg-amber-100">
+        <div className="list-container w-3/4 grid grid-cols-5 gap-14 mt-4 p-8 rounded-xl bg-amber-200">
           {renderedCritters.map((critter) => {
             return (
               <div key={critter.id}>
@@ -99,13 +99,13 @@ export const CritterList = () => {
       );
     } else if (allCritters && allCritters.length && filterTypeSwitch) {
       return (
-        <h3 className="text-xl w-3/4 mt-4 p-8 rounded-xl bg-amber-100 text-center">
+        <h3 className="text-xl w-3/4 mt-4 p-8 rounded-xl bg-amber-200 text-center">
           No critters found :/
         </h3>
       );
     } else {
       return (
-        <h3 className="text-xl w-3/4 mt-4 p-8 rounded-xl bg-amber-100 text-center">
+        <h3 className="text-xl w-3/4 mt-4 p-8 rounded-xl bg-amber-200 text-center">
           Loading Critters...
         </h3>
       );
@@ -113,7 +113,7 @@ export const CritterList = () => {
   };
 
   return (
-    <div className="comp-container flex flex-col justify-center items-center mt-4">
+    <div className="comp-container bg-amber-100 flex flex-col justify-center items-center pt-4">
       <div className="title search-bar flex w-3/4 mb-6 relative">
         <div className="title text-2xl mx-auto font-bold">Browse Critters</div>
         <div className="search-bar-container absolute right-0">

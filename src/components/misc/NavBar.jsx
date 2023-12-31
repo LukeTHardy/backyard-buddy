@@ -5,9 +5,9 @@ export const NavBar = ({ token }) => {
   const navbar = useRef();
 
   return (
-    <nav className="" role="navigation" aria-label="main navigation">
+    <nav className="z-3" role="navigation" aria-label="main navigation">
       <div
-        className="navbar-container h-12 flex justify-evenly items-center bg-amber-100"
+        className="navbar-container z-3 h-12 flex justify-evenly text-light-green-700 items-center bg-amber-100"
         ref={navbar}
       >
         <div className="">

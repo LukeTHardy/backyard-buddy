@@ -134,7 +134,7 @@ export const PlantDetails = ({ userId }) => {
                 />
               )}
             </div>
-            <div className="details-card flex flex-col items-center border-solid round-xl bg-amber-100 w-[40rem] rounded-3xl">
+            <div className="details-card flex flex-col items-center border-solid round-xl bg-amber-200 w-[40rem] rounded-3xl">
               <div className="plant-name flex justify-between w-[40rem] m-1">
                 <button className="text-xl text-end" onClick={previousPlant}>
                   ﹤Prev
@@ -259,7 +259,7 @@ export const PlantDetails = ({ userId }) => {
   };
 
   return (
-    <div className="detail-comp-container flex flex-col items-center">
+    <div className="detail-comp-container bg-amber-100 flex flex-col items-center">
       {displayPlant()}
     </div>
   );
