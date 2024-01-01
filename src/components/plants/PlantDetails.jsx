@@ -11,6 +11,10 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { PlantPopover } from "../misc/PlantPopover";
 import { CritterPopover } from "../misc/CritterPopover";
+import "./Plants.css";
+import sunicon from "/assets/graphics/sun.png";
+import watericon from "/assets/graphics/water.png";
+import soilicon from "/assets/graphics/soil.png";
 
 export const PlantDetails = ({ userId }) => {
   const navigate = useNavigate();
@@ -122,7 +126,7 @@ export const PlantDetails = ({ userId }) => {
               <button onClick={openLightbox}>
                 <img
                   src={chosenPlant.image}
-                  className="plant-image border-double border-4 border-brown-600 rounded-xl w-[30rem] h-[30rem] object-cover"
+                  className="plant-image pixel-border w-[30rem] h-[30rem] object-cover"
                   alt="Plant Image"
                 />
               </button>
@@ -134,8 +138,8 @@ export const PlantDetails = ({ userId }) => {
                 />
               )}
             </div>
-            <div className="details-card flex flex-col items-center border-solid round-xl bg-amber-200 w-[40rem] rounded-3xl">
-              <div className="plant-name flex justify-between w-[40rem] m-1">
+            <div className="details-card pixel-border flex flex-col items-center w-[40rem] px-2 mb-6">
+              <div className="plant-name flex justify-between w-full m-1">
                 <button className="text-xl text-end" onClick={previousPlant}>
                   ﹤Prev
                 </button>
@@ -144,52 +148,69 @@ export const PlantDetails = ({ userId }) => {
                   Next﹥
                 </button>
               </div>
-              <div className="annual-perennial text-xl m-1">
+              <div className="annual-perennial text-xl">
                 {chosenPlant.annual ? "(Annual)" : "(Perennial)"}
               </div>
-              <div className="plant-description text-lg m-1">
+              <div className="plant-description text-[1.2rem] m-1">
                 {chosenPlant.description}
               </div>
-              <div className="growing-needs flex justify-evenly">
-                <div className="plant-status text-xl m-1">
-                  Soil: {chosenPlant.soil.soil_type}
+              <div className="middle-section w-full my-2 flex justify-between ml-10">
+                <div className="growing-needs w-1/3 flex items-center">
+                  <div className="growing-needs-images flex flex-col justify-center items-center">
+                    <img src={sunicon} className="h-[1.6rem] mr-2 my-1" />
+                    <img src={watericon} className="h-[1.6rem] mr-2 my-1" />
+                    <img src={soilicon} className="h-[1.6rem] mr-2 my-1" />
+                  </div>
+                  <div className="growing-needs-data">
+                    <div className="plant-sun text-xl m-1">
+                      {chosenPlant.light.label}
+                    </div>
+                    <div className="plant-water text-xl m-1">
+                      {chosenPlant.water.frequency}
+                    </div>
+                    <div className="plant-soil text-xl m-1">
+                      {chosenPlant.soil.soil_type}
+                    </div>
+                  </div>
                 </div>
-                <div className="plant-status text-xl m-1">
-                  Water: {chosenPlant.water.frequency}
+                <div className="more-deets w-1/3 flex flex-col items-start">
+                  <div className="plant-size text-xl m-1">
+                    Spacing:{" "}
+                    {chosenPlant.spacing >= 48
+                      ? `${chosenPlant.spacing / 12} ft.`
+                      : `${chosenPlant.spacing} in.`}
+                  </div>
+                  <div className="plant-size text-xl m-1">
+                    Height:{" "}
+                    {chosenPlant.height >= 48
+                      ? `${chosenPlant.height / 12} ft.`
+                      : `${chosenPlant.height} in.`}
+                  </div>
+                  <div className="plant-management text-xl m-1">
+                    Maturity: {chosenPlant.maturity}
+                  </div>
                 </div>
-                <div className="plant-status text-xl m-1">
-                  Light: {chosenPlant.light.label}
+                <div className="zones w-1/3 pl-2 text-xl">
+                  <div className="flex flex-col">
+                    {chosenPlant.type.label === "Veggie" || chosenPlant.annual
+                      ? "Grows in zones:"
+                      : "Winter hardy in zones:"}
+                  </div>
+                  <div className="w-[10rem]">
+                    {chosenPlant.zones
+                      .map((zone, index, array) => {
+                        const isLastItem = index === array.length - 1;
+                        return isLastItem ? ` ${zone.name}` : ` ${zone.name},`;
+                      })
+                      .join("")}
+                  </div>
                 </div>
               </div>
-              <div className="plant-size text-xl m-1">
-                Spacing:{" "}
-                {chosenPlant.spacing >= 48
-                  ? `${chosenPlant.spacing / 12} ft.`
-                  : `${chosenPlant.spacing} in.`}
-              </div>
-              <div className="plant-size text-xl m-1">
-                Height:{" "}
-                {chosenPlant.height >= 48
-                  ? `${chosenPlant.height / 12} ft.`
-                  : `${chosenPlant.height} in.`}
-              </div>
-              <div className="plant-management text-xl m-1">
-                Maturity: {chosenPlant.maturity}
-              </div>
-              <div className="zones text-xl">
-                {chosenPlant.type.label === "Veggie" || chosenPlant.annual
-                  ? "Grows in zones:"
-                  : "Winter hardy in zones:"}
-                {chosenPlant.zones
-                  .map((zone, index, array) => {
-                    const isLastItem = index === array.length - 1;
-                    return isLastItem ? ` ${zone.name}` : ` ${zone.name},`;
-                  })
-                  .join("")}
-              </div>
-              <div className="lists-container flex justify-between w-[30rem]">
-                <div className="companions text-xl">
-                  Companion Plants: <br />
+              <div className="lists-container flex justify-between w-full pb-4">
+                <div className="companions w-1/2 flex flex-col items-center text-xl">
+                  <div className="text-center font-bold text-2xl">
+                    Companion Plants:
+                  </div>
                   {chosenPlant.companions.length === 0 ? (
                     <div className="italic text-center">None to show</div>
                   ) : (
@@ -198,8 +219,10 @@ export const PlantDetails = ({ userId }) => {
                     ))
                   )}
                 </div>
-                <div className="plant-critters text-xl">
-                  Potential Critters: <br />
+                <div className="plant-critters w-1/2 flex flex-col items-center text-xl">
+                  <div className="text-center font-bold text-2xl">
+                    Potential Critters:
+                  </div>
                   {chosenPlant.critters.length === 0 ? (
                     <div className="italic text-center">None to show</div>
                   ) : (
@@ -209,16 +232,31 @@ export const PlantDetails = ({ userId }) => {
                   )}
                 </div>
               </div>
-              <div className="buttons-container w-[15rem] flex justify-evenly">
+              <div className="buttons-container w-[23rem] flex justify-evenly">
                 {userId == chosenPlant.user ? (
                   <>
+                    {foundFavorite ? (
+                      <button
+                        className="delete-favorite-button text-xl border-double border-4 border-green-900 rounded-xl p-1"
+                        onClick={handleRemoveFavoriteClick}
+                      >
+                        Un-favorite 💔
+                      </button>
+                    ) : (
+                      <button
+                        className="favorite-button text-xl border-double border-4 border-green-900 rounded-xl p-1"
+                        onClick={handleAddFavoriteClick}
+                      >
+                        Favorite 🌻
+                      </button>
+                    )}
                     <button
                       className="text-xl border-double border-4 border-green-900 rounded-xl p-1"
                       onClick={() => {
                         navigate(`/plants/${plantId}/edit`);
                       }}
                     >
-                      Edit Plant
+                      Edit 🔧
                     </button>
                     <button
                       className="text-xl border-double border-4 border-green-900 rounded-xl p-1"
@@ -227,28 +265,13 @@ export const PlantDetails = ({ userId }) => {
                         navigate("/plants");
                       }}
                     >
-                      Delete
+                      Delete 🗑️
                     </button>
                   </>
                 ) : (
                   ""
                 )}
               </div>
-              {foundFavorite ? (
-                <button
-                  className="delete-favorite-button text-xl border-double border-4 border-green-900 rounded-xl mt-2 p-1"
-                  onClick={handleRemoveFavoriteClick}
-                >
-                  Remove from Favorites 💔
-                </button>
-              ) : (
-                <button
-                  className="favorite-button text-xl border-double border-4 border-green-900 rounded-xl mt-2 p-1"
-                  onClick={handleAddFavoriteClick}
-                >
-                  Save To Favorites 🌻
-                </button>
-              )}
             </div>
           </div>
         </>
@@ -259,7 +282,7 @@ export const PlantDetails = ({ userId }) => {
   };
 
   return (
-    <div className="detail-comp-container bg-amber-100 flex flex-col items-center">
+    <div className="detail-comp-container relative bg-amber-100 flex flex-col items-center">
       {displayPlant()}
     </div>
   );

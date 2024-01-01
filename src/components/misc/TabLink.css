@@ -25,3 +25,11 @@
   z-index: 1;
   border: 2px solid #fcf6cd;
 }
+
+.foldercontent {
+  transform: perspective(4px) rotateX(1deg);
+}
+
+.folder-text {
+  transform: none !important;
+}

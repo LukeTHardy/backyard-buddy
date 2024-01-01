@@ -141,7 +141,7 @@ export const CritterDetails = () => {
   };
 
   return (
-    <div className="detail-comp-container bg-amber-100 flex flex-col items-center">
+    <div className="detail-comp-container relative bg-amber-100 flex flex-col items-center">
       {displayCritter()}
     </div>
   );

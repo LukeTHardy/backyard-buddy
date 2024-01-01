@@ -11,7 +11,7 @@ export const TabLink = ({ path, text }) => {
       }}
       className="text-3xl foldertab folderbehind"
     >
-      <p className="text-center pt-1">{text}</p>
+      <p className="folder-text text-center pt-1">{text}</p>
     </span>
   );
 };
