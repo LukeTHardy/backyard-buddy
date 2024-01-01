@@ -114,8 +114,8 @@ export const PlantList = () => {
   };
 
   return (
-    <div className="comp-container bg-amber-100 flex flex-col justify-center items-center pt-4">
-      <div className="title search-bar flex w-3/4 mb-4 relative">
+    <div className="comp-container bg-amber-100 flex flex-col justify-center items-center relative z-4">
+      <div className="title search-bar flex w-3/4 mb-2 mt-2 relative">
         <div className="title text-3xl mx-auto font-bold">Browse Plants</div>
         <button
           className="add-plant-button text-2xl text-light-green-900 absolute left-0 underline"
@@ -192,7 +192,7 @@ export const PlantList = () => {
       {searchTerm || filterTypeSwitch ? (
         <button
           onClick={clearFilters}
-          className="border border-solid border-black rounded-xl px-1 pt-1 pb-0.5 mt-4"
+          className="border border-solid border-black rounded-xl px-1 pt-0.5 mt-4"
         >
           ⓧ clear filters
         </button>

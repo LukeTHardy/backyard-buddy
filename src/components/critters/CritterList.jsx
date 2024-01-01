@@ -113,9 +113,9 @@ export const CritterList = () => {
   };
 
   return (
-    <div className="comp-container bg-amber-100 flex flex-col justify-center items-center pt-4">
-      <div className="title search-bar flex w-3/4 mb-6 relative">
-        <div className="title text-2xl mx-auto font-bold">Browse Critters</div>
+    <div className="comp-container bg-amber-100 flex flex-col justify-center items-center relative">
+      <div className="title search-bar flex w-3/4 mb-2 mt-2 relative">
+        <div className="title text-3xl mx-auto font-bold">Browse Critters</div>
         <div className="search-bar-container absolute right-0">
           <input
             className="search-bar border text-2xl border-solid border-black rounded-md w-[14rem] h-[1.85rem]"

@@ -1,21 +1,24 @@
-import { useRef } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import "./NavBar.css";
 
 export const NavBar = ({ token }) => {
-  const navbar = useRef();
-
+  const navigate = useNavigate();
   return (
-    <nav className="z-3" role="navigation" aria-label="main navigation">
-      <div
-        className="navbar-container z-3 h-12 flex justify-evenly text-logo-green items-center bg-amber-100"
-        ref={navbar}
-      >
+    <nav
+      className="z-3 flex justify-center w-full"
+      role="navigation"
+      aria-label="main navigation"
+    >
+      <div className="navbar-container z-3 w-full h-12 flex justify-evenly text-logo-green items-center">
         <div className="">
           {token ? (
             <>
-              <Link to="/" className="text-3xl">
+              <div
+                onClick={() => navigate("/")}
+                className="text-3xl hover:scale-105 cursor-pointer ease-in duration-75"
+              >
                 Home
-              </Link>
+              </div>
             </>
           ) : (
             ""
@@ -24,9 +27,12 @@ export const NavBar = ({ token }) => {
         <div className="">
           {token ? (
             <>
-              <Link to="/plants" className="text-3xl">
+              <div
+                onClick={() => navigate("/plants")}
+                className="text-3xl hover:scale-105 cursor-pointer ease-in duration-75"
+              >
                 Plants
-              </Link>
+              </div>
             </>
           ) : (
             ""
@@ -35,9 +41,12 @@ export const NavBar = ({ token }) => {
         <div className="">
           {token ? (
             <>
-              <Link to="/critters" className="text-3xl">
+              <div
+                onClick={() => navigate("/critters")}
+                className="text-3xl hover:scale-105 cursor-pointer ease-in duration-75"
+              >
                 Critters
-              </Link>
+              </div>
             </>
           ) : (
             ""
@@ -45,18 +54,24 @@ export const NavBar = ({ token }) => {
         </div>
         <div className="">
           {token ? (
-            <Link to="/plants/favorites" className="text-3xl">
+            <div
+              onClick={() => navigate("/plants/favorites")}
+              className="text-3xl hover:scale-105 cursor-pointer ease-in duration-75"
+            >
               Favorites
-            </Link>
+            </div>
           ) : (
             ""
           )}
         </div>
         <div className="">
           {token ? (
-            <Link to="/gardenbuilder" className="text-3xl">
+            <div
+              onClick={() => navigate("/gardenbuilder")}
+              className="text-3xl hover:scale-105 cursor-pointer ease-in duration-75"
+            >
               Garden Builder
-            </Link>
+            </div>
           ) : (
             ""
           )}

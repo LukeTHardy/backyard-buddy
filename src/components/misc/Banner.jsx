@@ -8,7 +8,7 @@ export const Banner = ({ token, setToken }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="banner-container h-[12rem] bg-light-blue-200 items-center z-0">
+    <div className="banner-container h-[11rem] bg-light-blue-200 items-center z-0">
       <img className="bg-cover z-2" src={banner}></img>
       {/* <div className="z-1 clouds"></div> */}
       <img

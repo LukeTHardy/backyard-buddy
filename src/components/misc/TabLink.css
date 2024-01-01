@@ -1,0 +1,35 @@
+.foldertab {
+  /* padding: 0px 50px 0px 50px; */
+  width: 15rem;
+  height: 3rem;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  /* overflow: hidden; */
+  transform: perspective(4px) rotateX(1deg);
+  /* clip-path: polygon(0% 100%, 100% 100%, 95% 0, 5% 0); */
+  white-space: nowrap;
+  box-shadow: 5px -2px 0px 0px rgba(0, 0, 0, 0.1);
+}
+
+.foldertab:hover {
+  cursor: pointer;
+}
+
+.folderbehind {
+  background-color: #e2ceb0;
+  border: 2px solid #d8be96;
+}
+
+.folderactive {
+  background-color: #fcf6cd;
+  z-index: 1;
+  border: 2px solid #fcf6cd;
+}
+
+.foldercontent {
+  transform: perspective(4px) rotateX(1deg);
+}
+
+.folder-text {
+  transform: none !important;
+}
