@@ -14,7 +14,6 @@ export const PlantList = () => {
   const [typePlants, setTypePlants] = useState([]);
   const [zoneToggle, setZoneToggle] = useState(false);
   const [filterTypeSwitch, setFilterTypeSwitch] = useState("");
-  // const [categoryPlants, setCategoryPlants] = useState([]);
   const [renderedPlants, setRenderedPlants] = useState([]);
 
   const fetchAndSetAllPlants = async () => {
@@ -72,6 +71,11 @@ export const PlantList = () => {
 
   const toggleZoneSwitch = () => {
     setZoneToggle((prevState) => !prevState);
+  };
+
+  const seeRandomPlant = () => {
+    const randomId = Math.floor(Math.random() * allPlants.length);
+    navigate(`/plants/${randomId}`);
   };
 
   const displayPlants = () => {
@@ -187,6 +191,9 @@ export const PlantList = () => {
           <div className="w-[6rem] ml-3 text-lg font-bold">
             Only plants in my zone
           </div>
+        </div>
+        <div className="absolute left-0">
+          <button onClick={seeRandomPlant}>Randomize me baby</button>
         </div>
       </div>
       {searchTerm || filterTypeSwitch ? (
