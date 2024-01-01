@@ -8,7 +8,7 @@ export const Banner = ({ token, setToken }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="banner-container h-[11rem] bg-light-blue-200 items-center">
+    <div className="banner-container h-[11.5rem] bg-light-blue-200 items-center">
       <div className="infinite-scroll-wrapper">
         <img
           src={clouds}
@@ -27,7 +27,7 @@ export const Banner = ({ token, setToken }) => {
         src={birdbath}
       ></img>
 
-      <div className="self-end">
+      <div className="self-end absolute top-0 right-1 text-logo-green text-lg">
         {token ? (
           <button
             className="z-2"
