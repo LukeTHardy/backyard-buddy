@@ -1,4 +1,4 @@
-@keyframes move-background {
+/* @keyframes move-background {
   from {
     transform: translate3d(0, 0, 0);
   }
@@ -11,4 +11,30 @@
   position: absolute;
   animation: move-background 10s linear infinite;
   background: transparent url("/assets/graphics/scrollingclouds.svg") repeat;
+} */
+
+.banner-container {
+  width: 100%; /* Set the width of your display */
+}
+
+.infinite-scroll-wrapper {
+  display: flex;
+  width: 200%; /* Double the width to accommodate two images */
+  animation: scrollRight 10s linear infinite; /* Adjust the duration as needed */
+}
+
+.infinite-scroll-image {
+  flex: 1;
+  width: 50%; /* Each image takes half of the wrapper's width */
+}
+
+@keyframes scrollRight {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(
+      -50%
+    ); /* Move the images to the right by their full width */
+  }
 }
