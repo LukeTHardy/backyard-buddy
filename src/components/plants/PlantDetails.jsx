@@ -20,6 +20,7 @@ export const PlantDetails = ({ userId }) => {
   const navigate = useNavigate();
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [favorites, setFavorites] = useState([]);
+  const [favoriteSwitch, setFavoriteSwitch] = useState(false);
   const [foundFavorite, setFoundFavorite] = useState({});
   const [plants, setPlants] = useState([]);
   const [chosenPlant, setChosenPlant] = useState({
@@ -49,10 +50,14 @@ export const PlantDetails = ({ userId }) => {
   }, []);
 
   useEffect(() => {
-    fetchMyFavorites().then((favsArray) => {
-      setFavorites(favsArray);
-    });
-  }, []);
+    const fetchData = async () => {
+      await fetchMyFavorites().then((favsArray) => {
+        setFavorites(favsArray);
+      });
+    };
+
+    fetchData();
+  }, [favoriteSwitch]);
 
   useEffect(() => {
     const thisFavorite = favorites.find(
@@ -61,16 +66,18 @@ export const PlantDetails = ({ userId }) => {
     setFoundFavorite(thisFavorite);
   }, [userId, favorites, plantId]);
 
-  const handleAddFavoriteClick = () => {
+  const handleAddFavoriteClick = async () => {
     const newFavorite = {
       plant: parseInt(plantId),
     };
-    createFavorite(newFavorite).then(window.location.reload());
+    await createFavorite(newFavorite);
+    setFavoriteSwitch((prevFavoriteSwitch) => !prevFavoriteSwitch);
   };
 
-  const handleRemoveFavoriteClick = () => {
+  const handleRemoveFavoriteClick = async () => {
     const favoriteId = foundFavorite.id;
-    deleteFavoriteById(favoriteId).then(window.location.reload());
+    await deleteFavoriteById(favoriteId);
+    setFavoriteSwitch((prevFavoriteSwitch) => !prevFavoriteSwitch);
   };
 
   const openLightbox = () => setLightboxOpen(true);
@@ -233,23 +240,23 @@ export const PlantDetails = ({ userId }) => {
                 </div>
               </div>
               <div className="buttons-container w-[23rem] flex justify-evenly">
+                {foundFavorite ? (
+                  <button
+                    className="delete-favorite-button text-xl border-double border-4 border-green-900 rounded-xl p-1"
+                    onClick={handleRemoveFavoriteClick}
+                  >
+                    Un-favorite 💔
+                  </button>
+                ) : (
+                  <button
+                    className="favorite-button text-xl border-double border-4 border-green-900 rounded-xl p-1"
+                    onClick={handleAddFavoriteClick}
+                  >
+                    Favorite 🌻
+                  </button>
+                )}
                 {userId == chosenPlant.user ? (
                   <>
-                    {foundFavorite ? (
-                      <button
-                        className="delete-favorite-button text-xl border-double border-4 border-green-900 rounded-xl p-1"
-                        onClick={handleRemoveFavoriteClick}
-                      >
-                        Un-favorite 💔
-                      </button>
-                    ) : (
-                      <button
-                        className="favorite-button text-xl border-double border-4 border-green-900 rounded-xl p-1"
-                        onClick={handleAddFavoriteClick}
-                      >
-                        Favorite 🌻
-                      </button>
-                    )}
                     <button
                       className="text-xl border-double border-4 border-green-900 rounded-xl p-1"
                       onClick={() => {

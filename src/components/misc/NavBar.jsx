@@ -5,7 +5,7 @@ export const NavBar = ({ token }) => {
   const navigate = useNavigate();
   return (
     <nav
-      className="z-3 flex justify-center w-full"
+      className="z-3 flex justify-center w-full relative"
       role="navigation"
       aria-label="main navigation"
     >
