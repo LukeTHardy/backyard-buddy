@@ -20,7 +20,7 @@
 .infinite-scroll-wrapper {
   display: flex;
   width: 200%; /* Double the width to accommodate two images */
-  animation: scrollRight 200s linear infinite; /* Adjust the duration as needed */
+  animation: scrollRight 220s linear infinite; /* Adjust the duration as needed */
 }
 
 .infinite-scroll-image {
