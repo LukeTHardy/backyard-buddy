@@ -14,6 +14,7 @@ export const PlantList = () => {
   const [veggiesSelected, setVeggiesSelected] = useState(false);
   const [typePlants, setTypePlants] = useState([]);
   const [zoneToggle, setZoneToggle] = useState(false);
+  const [zoneSwitch, setZoneSwitch] = useState(false);
   const [filterTypeSwitch, setFilterTypeSwitch] = useState("");
   const [selectedVeggieCategory, setSelectedVeggieCategory] = useState("");
   const [renderedPlants, setRenderedPlants] = useState([]);
@@ -45,7 +46,21 @@ export const PlantList = () => {
     } else {
       setRenderedPlants(allPlants);
     }
-  }, [searchTerm, allPlants, searchTermPlants, filterTypeSwitch, typePlants]);
+
+    if (zoneSwitch) {
+      const zoneFilteredPlants = renderedPlants.filter((plant) => {
+        return plant.zones.some((zone) => zone.name.includes("3"));
+      });
+      setRenderedPlants(zoneFilteredPlants);
+    }
+  }, [
+    searchTerm,
+    allPlants,
+    searchTermPlants,
+    filterTypeSwitch,
+    typePlants,
+    zoneSwitch,
+  ]);
 
   const handleTypeFilter = (e) => {
     setFilterTypeSwitch("type");
@@ -106,6 +121,7 @@ export const PlantList = () => {
 
   const toggleZoneSwitch = () => {
     setZoneToggle((prevState) => !prevState);
+    setZoneSwitch((prevState) => !prevState);
   };
 
   const seeRandomPlant = () => {
