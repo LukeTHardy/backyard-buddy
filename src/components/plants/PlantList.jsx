@@ -11,9 +11,11 @@ export const PlantList = () => {
   const [allPlants, setAllPlants] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchTermPlants, setSearchTermPlants] = useState([]);
+  const [veggiesSelected, setVeggiesSelected] = useState(false);
   const [typePlants, setTypePlants] = useState([]);
   const [zoneToggle, setZoneToggle] = useState(false);
   const [filterTypeSwitch, setFilterTypeSwitch] = useState("");
+  const [selectedVeggieCategory, setSelectedVeggieCategory] = useState("");
   const [renderedPlants, setRenderedPlants] = useState([]);
 
   const fetchAndSetAllPlants = async () => {
@@ -45,6 +47,47 @@ export const PlantList = () => {
     }
   }, [searchTerm, allPlants, searchTermPlants, filterTypeSwitch, typePlants]);
 
+  const handleTypeFilter = (e) => {
+    setFilterTypeSwitch("type");
+    const filteredPlants = allPlants.filter(
+      (plant) => plant.type.label.toLowerCase() === e.target.name
+    );
+    setTypePlants(filteredPlants);
+    setSelectedVeggieCategory("");
+    setVeggiesSelected(false);
+  };
+
+  const handleVeggieClick = (e) => {
+    setFilterTypeSwitch("type");
+    const filteredPlants = allPlants.filter(
+      (plant) => plant.type.label.toLowerCase() === e.target.name
+    );
+    setTypePlants(filteredPlants);
+    setSelectedVeggieCategory("");
+    setVeggiesSelected(true);
+  };
+
+  const veggieCategories = [
+    "Tomato",
+    "Root",
+    "Green",
+    "Pepper",
+    "Squash",
+    "Legume",
+    "Misc",
+  ];
+
+  const handleVeggieCategoryFilter = (category) => {
+    setSelectedVeggieCategory(category);
+
+    // Filter renderedPlants based on the selected veggie category
+    const filteredPlants = typePlants.filter(
+      (plant) => plant.veggie_cat.label.toLowerCase() === category.toLowerCase()
+    );
+
+    setRenderedPlants(filteredPlants);
+  };
+
   useEffect(() => {
     if (!searchTerm) {
       setFilterTypeSwitch("");
@@ -54,14 +97,6 @@ export const PlantList = () => {
   const handleSearch = (e) => {
     setFilterTypeSwitch("search");
     setSearchTerm(e.target.value);
-  };
-
-  const handleTypeFilter = (e) => {
-    setFilterTypeSwitch("type");
-    const filteredPlants = allPlants.filter(
-      (plant) => plant.type.label.toLowerCase() === e.target.name
-    );
-    setTypePlants(filteredPlants);
   };
 
   const clearFilters = () => {
@@ -79,9 +114,9 @@ export const PlantList = () => {
   };
 
   const displayPlants = () => {
-    if (renderedPlants && renderedPlants.length) {
+    if (renderedPlants.length > 0) {
       return (
-        <div className="list-container w-3/4 grid grid-cols-5 gap-14 mt-4 p-8 rounded-xl bg-amber-200">
+        <div className="list-container w-3/4 grid grid-cols-5 gap-14 my-4 px-8 pt-8 pb-12 rounded-xl bg-amber-200">
           {renderedPlants.map((plant) => {
             return (
               <div key={plant.id}>
@@ -99,13 +134,12 @@ export const PlantList = () => {
               </div>
             );
           })}
-          ;
         </div>
       );
     } else if (allPlants && allPlants.length && filterTypeSwitch) {
       return (
         <h3 className="text-xl w-3/4 mt-4 p-8 rounded-xl bg-amber-200 text-center">
-          No plants found :/
+          No plants found :(
         </h3>
       );
     } else {
@@ -146,12 +180,12 @@ export const PlantList = () => {
           />
         </div>
       </div>
-      <div className="buttons-container flex justify-center relative w-3/4">
+      <div className="primary-buttons-container flex justify-center relative w-3/4">
         <div className="type-buttons flex">
           <button
             name="veggie"
             className="text-xl border-double border-4 border-green-900 rounded-xl p-2 mx-8"
-            onClick={handleTypeFilter}
+            onClick={handleVeggieClick}
           >
             Veggies
           </button>
@@ -196,10 +230,28 @@ export const PlantList = () => {
           <button onClick={seeRandomPlant}>Randomize me baby</button>
         </div>
       </div>
+      {filterTypeSwitch === "type" && veggiesSelected && (
+        <div className="flex justify-around bg-amber-200">
+          {veggieCategories.map((category) => (
+            <button
+              key={category}
+              className={`px-4 py-2 ${
+                selectedVeggieCategory === category
+                  ? "bg-blue-500"
+                  : "bg-gray-300"
+              }`}
+              onClick={() => handleVeggieCategoryFilter(category)}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+      )}
+
       {searchTerm || filterTypeSwitch ? (
         <button
           onClick={clearFilters}
-          className="border border-solid border-black rounded-xl px-1 pt-0.5 mt-4"
+          className="border border-solid border-black rounded-xl px-1 pt-0.5"
         >
           ⓧ clear filters
         </button>
