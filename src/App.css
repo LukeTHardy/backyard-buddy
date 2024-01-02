@@ -5,4 +5,25 @@
   text-align: center; */
   font-family: "Pixel7", "sans-serif";
   color: rgb(40, 40, 40);
+
+  --blue1: lightblue; /* Inner background color */
+  --blue2: rgb(191, 215, 223); /* Inner background color */
+  --pixel-border: black; /* Inner border color: */
+  --pixel-border-2: white; /* Middle border color: */
+  --pixel-border-3: var(--pixel-border); /* Outer border color */
+  --pixel: 0.125rem; /* Pixel size */
+
+  --button-background: #92cd41;
+  --sec-button-background: #69b934;
+  --shadow-width: 3px;
+  --shadow-color: #4aa52e;
+  --outline-width: 3px;
+
+  --alt-button-background: #f7d51d;
+  --alt-sec-button-background: #f2c409;
+  --alt-shadow-color: #e59400;
+
+  --reset-button-background: #e76e55;
+  --reset-sec-button-background: #ce372b;
+  --reset-shadow-color: #8c2022;
 }

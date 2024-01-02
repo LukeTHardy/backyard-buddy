@@ -81,7 +81,7 @@ export const CritterList = () => {
   const displayCritters = () => {
     if (renderedCritters && renderedCritters.length) {
       return (
-        <div className="list-container w-3/4 grid grid-cols-5 gap-14 mt-4 p-8 rounded-xl bg-amber-200">
+        <div className="list-container pixel-border-blue2 w-3/4 grid grid-cols-5 gap-14 my-8 px-8 pt-1 pb-12">
           {renderedCritters.map((critter) => {
             return (
               <div key={critter.id}>
@@ -122,7 +122,7 @@ export const CritterList = () => {
   return (
     <div className="comp-container bg-amber-100 flex flex-col justify-start items-center relative min-h-[100vh]">
       <div className="title search-bar flex w-3/4 mb-2 mt-2 relative">
-        <div className="title text-3xl mx-auto font-bold">Browse Critters</div>
+        <div className="title text-3xl mx-auto font-bold">Browse Critters:</div>
         <div className="search-bar-container absolute right-0">
           <input
             className="search-bar border text-2xl border-solid border-black rounded-md w-[14rem] h-[1.85rem]"
