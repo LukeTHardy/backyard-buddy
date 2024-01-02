@@ -30,6 +30,10 @@
   font-family: "SV Bold";
   src: url("/assets/fonts/sv_bold.ttf") format("truetype");
 }
+@font-face {
+  font-family: "Press Start";
+  src: url("/assets/fonts/press_start_2p.ttf") format("truetype");
+}
 
 @tailwind base;
 @tailwind components;

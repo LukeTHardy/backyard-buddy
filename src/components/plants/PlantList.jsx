@@ -1,19 +1,21 @@
 import { fetchAllPlants } from "../../services/PlantServices";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import searchSymbol from "/assets/graphics/search_symbol.png";
 import onSwitch from "/assets/graphics/on_switch.png";
 import offSwitch from "/assets/graphics/off_switch.png";
+import seedling from "/assets/graphics/seedling.png";
 
 export const PlantList = () => {
   const navigate = useNavigate();
   const [allPlants, setAllPlants] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchTermPlants, setSearchTermPlants] = useState([]);
+  const [veggiesSelected, setVeggiesSelected] = useState(false);
   const [typePlants, setTypePlants] = useState([]);
   const [zoneToggle, setZoneToggle] = useState(false);
   const [filterTypeSwitch, setFilterTypeSwitch] = useState("");
+  const [selectedVeggieCategory, setSelectedVeggieCategory] = useState("");
   const [renderedPlants, setRenderedPlants] = useState([]);
 
   const fetchAndSetAllPlants = async () => {
@@ -45,6 +47,47 @@ export const PlantList = () => {
     }
   }, [searchTerm, allPlants, searchTermPlants, filterTypeSwitch, typePlants]);
 
+  const handleTypeFilter = (e) => {
+    setFilterTypeSwitch("type");
+    const filteredPlants = allPlants.filter(
+      (plant) => plant.type.label.toLowerCase() === e.target.name
+    );
+    setTypePlants(filteredPlants);
+    setSelectedVeggieCategory("");
+    setVeggiesSelected(false);
+  };
+
+  const handleVeggieClick = (e) => {
+    setFilterTypeSwitch("type");
+    const filteredPlants = allPlants.filter(
+      (plant) => plant.type.label.toLowerCase() === e.target.name
+    );
+    setTypePlants(filteredPlants);
+    setSelectedVeggieCategory("");
+    setVeggiesSelected(true);
+  };
+
+  const veggieCategories = [
+    "Tomato",
+    "Root",
+    "Green",
+    "Pepper",
+    "Squash",
+    "Legume",
+    "Misc",
+  ];
+
+  const handleVeggieCategoryFilter = (category) => {
+    setSelectedVeggieCategory(category);
+
+    // Filter renderedPlants based on the selected veggie category
+    const filteredPlants = typePlants.filter(
+      (plant) => plant.veggie_cat.label.toLowerCase() === category.toLowerCase()
+    );
+
+    setRenderedPlants(filteredPlants);
+  };
+
   useEffect(() => {
     if (!searchTerm) {
       setFilterTypeSwitch("");
@@ -54,14 +97,6 @@ export const PlantList = () => {
   const handleSearch = (e) => {
     setFilterTypeSwitch("search");
     setSearchTerm(e.target.value);
-  };
-
-  const handleTypeFilter = (e) => {
-    setFilterTypeSwitch("type");
-    const filteredPlants = allPlants.filter(
-      (plant) => plant.type.label.toLowerCase() === e.target.name
-    );
-    setTypePlants(filteredPlants);
   };
 
   const clearFilters = () => {
@@ -79,9 +114,9 @@ export const PlantList = () => {
   };
 
   const displayPlants = () => {
-    if (renderedPlants && renderedPlants.length) {
+    if (renderedPlants.length > 0) {
       return (
-        <div className="list-container w-3/4 grid grid-cols-5 gap-14 mt-4 p-8 rounded-xl bg-amber-200">
+        <div className="list-container pixel-border-blue2 w-3/4 grid grid-cols-5 gap-14 my-8 px-8 pt-1 pb-12">
           {renderedPlants.map((plant) => {
             return (
               <div key={plant.id}>
@@ -99,13 +134,12 @@ export const PlantList = () => {
               </div>
             );
           })}
-          ;
         </div>
       );
     } else if (allPlants && allPlants.length && filterTypeSwitch) {
       return (
         <h3 className="text-xl w-3/4 mt-4 p-8 rounded-xl bg-amber-200 text-center">
-          No plants found :/
+          No plants found :(
         </h3>
       );
     } else {
@@ -118,16 +152,21 @@ export const PlantList = () => {
   };
 
   return (
-    <div className="comp-container bg-amber-100 flex flex-col justify-center items-center relative z-4">
+    <div className="comp-container bg-amber-100 flex flex-col justify-start items-center relative z-4 min-h-[100vh]">
       <div className="title search-bar flex w-3/4 mb-2 mt-2 relative">
-        <div className="title text-3xl mx-auto font-bold">Browse Plants</div>
+        <div className="title text-3xl mx-auto font-bold">Browse Plants:</div>
         <button
-          className="add-plant-button text-2xl text-light-green-900 absolute left-0 underline"
+          className="add-plant-button text-2xl text-light-green-900 absolute left-0 underline flex justify-center items-center h-[2.5rem]"
           onClick={() => {
             navigate("/plants/newplant");
           }}
         >
-          ✚ Add Plant
+          + Add Plant
+          <img
+            className="h-[3rem] mb-1.5 -ml-1"
+            src={seedling}
+            alt="Seedling"
+          />
         </button>
         <div className="search-bar-container absolute right-0">
           <input
@@ -146,37 +185,47 @@ export const PlantList = () => {
           />
         </div>
       </div>
-      <div className="buttons-container flex justify-center relative w-3/4">
-        <div className="type-buttons flex">
+      <div className="primary-buttons-container flex justify-center relative w-3/4 h-9 mb-2">
+        <div className="type-buttons flex w-1/2 justify-evenly">
           <button
             name="veggie"
-            className="text-xl border-double border-4 border-green-900 rounded-xl p-2 mx-8"
-            onClick={handleTypeFilter}
+            className="text-xl eightbit-btn"
+            onClick={handleVeggieClick}
           >
             Veggies
           </button>
           <button
             name="herb"
-            className="text-xl border-double border-4 border-green-900 rounded-xl p-2 mx-8"
+            className="text-xl eightbit-btn"
             onClick={handleTypeFilter}
           >
             Herbs
           </button>
           <button
             name="flower"
-            className="text-xl border-double border-4 border-green-900 rounded-xl p-2 mx-8"
+            className="text-xl eightbit-btn"
             onClick={handleTypeFilter}
           >
             Flowers
           </button>
           <button
             name="fruit"
-            className="text-xl border-double border-4 border-green-900 rounded-xl p-2 mx-8"
+            className="text-xl eightbit-btn"
             onClick={handleTypeFilter}
           >
             Fruit
           </button>
         </div>
+        {searchTerm || filterTypeSwitch ? (
+          <button
+            onClick={clearFilters}
+            className="border border-solid border-black rounded-xl px-1 pt-0.5 mt-2 absolute top-[.4rem] right-[12rem]"
+          >
+            ⓧ clear filters
+          </button>
+        ) : (
+          ""
+        )}
         <div className="zone-toggle flex items-center absolute right-0">
           <button
             className="w-16 h-[1.85rem] static justify-end"
@@ -192,19 +241,26 @@ export const PlantList = () => {
             Only plants in my zone
           </div>
         </div>
-        <div className="absolute left-0">
-          <button onClick={seeRandomPlant}>Randomize me baby</button>
+        <div className="absolute left-0 top-4 w-28">
+          <button onClick={seeRandomPlant}>Surprise Me</button>
         </div>
       </div>
-      {searchTerm || filterTypeSwitch ? (
-        <button
-          onClick={clearFilters}
-          className="border border-solid border-black rounded-xl px-1 pt-0.5 mt-4"
-        >
-          ⓧ clear filters
-        </button>
-      ) : (
-        ""
+      {filterTypeSwitch === "type" && veggiesSelected && (
+        <div className="flex justify-evenly w-1/2 h-9 my-2">
+          {veggieCategories.map((category) => (
+            <button
+              key={category}
+              className={`eightbit-btn text-lg ${
+                selectedVeggieCategory === category
+                  ? "bg-blue-500"
+                  : "bg-gray-300"
+              }`}
+              onClick={() => handleVeggieCategoryFilter(category)}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
       )}
 
       {displayPlants()}

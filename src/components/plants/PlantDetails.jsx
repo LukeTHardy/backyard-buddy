@@ -123,7 +123,7 @@ export const PlantDetails = ({ userId }) => {
     if (chosenPlant) {
       return (
         <>
-          <div className="navigate-btns flex justify-start items-center font-bold text-xl h-12 w-3/4">
+          <div className="navigate-btns flex justify-start items-end text-lg h-8 w-3/4 italic">
             <button onClick={() => navigate("/plants")}>
               ﹤Back to Plants
             </button>
@@ -133,7 +133,7 @@ export const PlantDetails = ({ userId }) => {
               <button onClick={openLightbox}>
                 <img
                   src={chosenPlant.image}
-                  className="plant-image pixel-border w-[30rem] h-[30rem] object-cover"
+                  className="plant-image border-double border-4 border-brown-600 rounded-xl w-[30rem] h-[30rem] object-cover"
                   alt="Plant Image"
                 />
               </button>
@@ -145,7 +145,7 @@ export const PlantDetails = ({ userId }) => {
                 />
               )}
             </div>
-            <div className="details-card pixel-border flex flex-col items-center w-[40rem] px-2 mb-6">
+            <div className="details-card pixel-border-blue1 flex flex-col items-center w-[40rem] px-4 mb-12 top-4 relative">
               <div className="plant-name flex justify-between w-full m-1">
                 <button className="text-xl text-end" onClick={previousPlant}>
                   ﹤Prev
@@ -289,7 +289,7 @@ export const PlantDetails = ({ userId }) => {
   };
 
   return (
-    <div className="detail-comp-container relative bg-amber-100 flex flex-col items-center">
+    <div className="detail-comp-container relative bg-amber-100 flex flex-col items-center min-h-[80vh]">
       {displayPlant()}
     </div>
   );

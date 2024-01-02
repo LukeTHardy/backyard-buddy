@@ -33,6 +33,7 @@ export default withMT({
         pixeboy: ["Pixeboy", "sans-serif"],
         svthin: ["SV Thin", "sans-serif"],
         svbold: ["SV Bold", "sans-serif"],
+        press_start: ["Press Start", "sans-serif"],
       },
     },
   },
