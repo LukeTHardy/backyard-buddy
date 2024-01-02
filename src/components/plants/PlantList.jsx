@@ -1,7 +1,6 @@
 import { fetchAllPlants } from "../../services/PlantServices";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import searchSymbol from "/assets/graphics/search_symbol.png";
 import onSwitch from "/assets/graphics/on_switch.png";
 import offSwitch from "/assets/graphics/off_switch.png";
@@ -152,7 +151,7 @@ export const PlantList = () => {
   };
 
   return (
-    <div className="comp-container bg-amber-100 flex flex-col justify-center items-center relative z-4">
+    <div className="comp-container bg-amber-100 flex flex-col justify-start items-center relative z-4 min-h-[100vh]">
       <div className="title search-bar flex w-3/4 mb-2 mt-2 relative">
         <div className="title text-3xl mx-auto font-bold">Browse Plants</div>
         <button
@@ -180,37 +179,47 @@ export const PlantList = () => {
           />
         </div>
       </div>
-      <div className="primary-buttons-container flex justify-center relative w-3/4">
+      <div className="primary-buttons-container flex justify-center relative w-3/4 h-10">
         <div className="type-buttons flex">
           <button
             name="veggie"
-            className="text-xl border-double border-4 border-green-900 rounded-xl p-2 mx-8"
+            className="text-xl border-double border-4 border-green-900 rounded-xl px-2 mx-6"
             onClick={handleVeggieClick}
           >
             Veggies
           </button>
           <button
             name="herb"
-            className="text-xl border-double border-4 border-green-900 rounded-xl p-2 mx-8"
+            className="text-xl border-double border-4 border-green-900 rounded-xl px-2 mx-6"
             onClick={handleTypeFilter}
           >
             Herbs
           </button>
           <button
             name="flower"
-            className="text-xl border-double border-4 border-green-900 rounded-xl p-2 mx-8"
+            className="text-xl border-double border-4 border-green-900 rounded-xl px-2 mx-6"
             onClick={handleTypeFilter}
           >
             Flowers
           </button>
           <button
             name="fruit"
-            className="text-xl border-double border-4 border-green-900 rounded-xl p-2 mx-8"
+            className="text-xl border-double border-4 border-green-900 rounded-xl px-2 mx-6"
             onClick={handleTypeFilter}
           >
             Fruit
           </button>
         </div>
+        {searchTerm || filterTypeSwitch ? (
+          <button
+            onClick={clearFilters}
+            className="border border-solid border-black rounded-xl px-1 pt-0.5 mt-2 absolute top-[.4rem] right-[12rem]"
+          >
+            ⓧ clear filters
+          </button>
+        ) : (
+          ""
+        )}
         <div className="zone-toggle flex items-center absolute right-0">
           <button
             className="w-16 h-[1.85rem] static justify-end"
@@ -226,8 +235,8 @@ export const PlantList = () => {
             Only plants in my zone
           </div>
         </div>
-        <div className="absolute left-0">
-          <button onClick={seeRandomPlant}>Randomize me baby</button>
+        <div className="absolute left-0 top-4 w-28">
+          <button onClick={seeRandomPlant}>Surprise Me</button>
         </div>
       </div>
       {filterTypeSwitch === "type" && veggiesSelected && (
@@ -246,17 +255,6 @@ export const PlantList = () => {
             </button>
           ))}
         </div>
-      )}
-
-      {searchTerm || filterTypeSwitch ? (
-        <button
-          onClick={clearFilters}
-          className="border border-solid border-black rounded-xl px-1 pt-0.5"
-        >
-          ⓧ clear filters
-        </button>
-      ) : (
-        ""
       )}
 
       {displayPlants()}

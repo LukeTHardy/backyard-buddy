@@ -1,9 +1,10 @@
 import { fetchAllCritters } from "../../services/CritterServices";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import searchSymbol from "/assets/graphics/search_symbol.png";
 
 export const CritterList = () => {
+  const navigate = useNavigate();
   const [allCritters, setAllCritters] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchTermCritters, setSearchTermCritters] = useState([]);
@@ -71,6 +72,11 @@ export const CritterList = () => {
     setFilterTypeSwitch("");
   };
 
+  const seeRandomCritter = () => {
+    const randomId = Math.floor(Math.random() * allCritters.length);
+    navigate(`/plants/${randomId}`);
+  };
+
   const displayCritters = () => {
     if (renderedCritters && renderedCritters.length) {
       return (
@@ -113,7 +119,7 @@ export const CritterList = () => {
   };
 
   return (
-    <div className="comp-container bg-amber-100 flex flex-col justify-center items-center relative">
+    <div className="comp-container bg-amber-100 flex flex-col justify-start items-center relative min-h-[100vh]">
       <div className="title search-bar flex w-3/4 mb-2 mt-2 relative">
         <div className="title text-3xl mx-auto font-bold">Browse Critters</div>
         <div className="search-bar-container absolute right-0">
@@ -133,33 +139,36 @@ export const CritterList = () => {
           />
         </div>
       </div>
-      <div className="buttons-container">
+      <div className="buttons-container flex justify-center relative w-3/4 h-10">
         <button
           name="helpful"
-          className="text-xl border-double border-4 border-green-900 rounded-xl p-2 mx-8"
+          className="text-xl border-double border-4 border-green-900 rounded-xl px-2 mx-6"
           onClick={handleValueFilter}
         >
           Helpful
         </button>
         <button
           name="neutral"
-          className="text-xl border-double border-4 border-green-900 rounded-xl p-2 mx-8"
+          className="text-xl border-double border-4 border-green-900 rounded-xl px-2 mx-6"
           onClick={handleValueFilter}
         >
           Neutral
         </button>
         <button
           name="harmful"
-          className="text-xl border-double border-4 border-green-900 rounded-xl p-2 mx-8"
+          className="text-xl border-double border-4 border-green-900 rounded-xl px-2 mx-6"
           onClick={handleValueFilter}
         >
           Harmful
         </button>
+        <div className="absolute left-0 top-4 w-28">
+          <button onClick={seeRandomCritter}>Surprise Me</button>
+        </div>
       </div>
       {searchTerm || filterTypeSwitch ? (
         <button
           onClick={clearFilters}
-          className="border border-solid border-black rounded-xl px-1 py-0.5 mt-2"
+          className="border border-solid border-black rounded-xl px-1 pt-0.5 mt-2 top-[.4rem] right-[12rem]"
         >
           ⓧ clear filters
         </button>

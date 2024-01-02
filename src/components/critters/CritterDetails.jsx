@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Lightbox } from "../misc/Lightbox";
 import { PlantPopover } from "../misc/PlantPopover";
+import "./Critters.css";
 
 export const CritterDetails = () => {
   const navigate = useNavigate();
@@ -76,7 +77,7 @@ export const CritterDetails = () => {
     if (chosenCritter) {
       return (
         <>
-          <div className="navigate-btns flex justify-start items-center font-bold text-gray-700 text-lg h-12 w-3/4">
+          <div className="navigate-btns flex justify-start items-end italic text-gray-700 text-lg h-8 w-3/4">
             <button onClick={() => navigate("/critters")}>
               ﹤Back to Critters
             </button>
@@ -98,8 +99,8 @@ export const CritterDetails = () => {
                 />
               )}
             </div>
-            <div className="details-card flex flex-col items-center border-solid round-xl bg-amber-200 w-[40rem] rounded-3xl">
-              <div className="critter-name flex justify-between w-[40rem]">
+            <div className="details-card pixel-border flex flex-col items-center w-[40rem] px-4 mb-12 top-4 relative">
+              <div className="critter-name flex justify-between w-full">
                 <button className="text-xl" onClick={previousCritter}>
                   ﹤Prev
                 </button>
@@ -108,27 +109,31 @@ export const CritterDetails = () => {
                   Next﹥
                 </button>
               </div>
-              <div className="critter-description text-lg">
+              <div className="critter-description text-lg py-3">
                 {chosenCritter.description}
               </div>
-              <div className="critter-status text-2xl">
-                Status: {chosenCritter.type.label}
+              <div className="middle-section flex justify-evenly w-[30rem]">
+                <div className="critter-status text-2xl">
+                  Status: {chosenCritter.type.label}
+                </div>
+                <div className="critter-size text-2xl">
+                  Size: {chosenCritter.size} in.
+                </div>
               </div>
-              <div className="critter-size text-2xl">
-                Size: {chosenCritter.size} in.
-              </div>
-              <div className="critter-management text-lg">
+              <div className="critter-management text-lg py-3">
                 -{chosenCritter.management}
               </div>
-              <br></br>
-              <div className="critter-plants text-2xl">
-                May be found on: <br />
+
+              <div className="critter-plants flex flex-col items-center pb-4">
+                <div className="header text-2xl mb-2">May be found on: </div>
                 {chosenCritter.plants.length === 0 ? (
-                  <div className="italic text-center">All plants!</div>
+                  <div className="italic text-center text-xl">All plants!</div>
                 ) : (
-                  chosenCritter.plants.map((plant) => (
-                    <PlantPopover key={plant.id} plant={plant} />
-                  ))
+                  <div className="plant-names-list text-xl w-[30rem] flex flex-wrap flex-col items-evenly text-center max-h-[18rem]">
+                    {chosenCritter.plants.map((plant) => (
+                      <PlantPopover key={plant.id} plant={plant} />
+                    ))}{" "}
+                  </div>
                 )}
               </div>
             </div>
@@ -141,7 +146,7 @@ export const CritterDetails = () => {
   };
 
   return (
-    <div className="detail-comp-container relative bg-amber-100 flex flex-col items-center">
+    <div className="detail-comp-container relative bg-amber-100 flex flex-col items-center min-h-[80vh]">
       {displayCritter()}
     </div>
   );

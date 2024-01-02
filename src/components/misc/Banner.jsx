@@ -8,7 +8,7 @@ export const Banner = ({ token, setToken }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="banner-container h-[11.5rem] bg-light-blue-200 items-center">
+    <div className="banner-container h-[11.5rem] bg-light-blue-200 items-center overflow-hidden">
       <div className="infinite-scroll-wrapper">
         <img
           src={clouds}
