@@ -1,10 +1,23 @@
 :root {
-  /* --pixel-bg: lightblue; */
   --pixel-bg: lightblue; /* Inner background color */
   --pixel-border: black; /* Inner border color: */
   --pixel-border-2: white; /* Middle border color: */
   --pixel-border-3: var(--pixel-border); /* Outer border color */
   --pixel: 0.125rem; /* Pixel size */
+
+  --button-background: #92cd41;
+  --sec-button-background: #69b934;
+  --shadow-width: 3px;
+  --shadow-color: #4aa52e;
+  --outline-width: 3px;
+
+  --alt-button-background: #f7d51d;
+  --alt-sec-button-background: #f2c409;
+  --alt-shadow-color: #e59400;
+
+  --reset-button-background: #e76e55;
+  --reset-sec-button-background: #ce372b;
+  --reset-shadow-color: #8c2022;
 }
 
 .pixel-border {
@@ -63,4 +76,89 @@
     0 calc(var(--pixel) * 12) 0 calc(var(--pixel) * -4) var(--pixel-border-3),
     0 calc(var(--pixel) * -15) 0 calc(var(--pixel) * -6) var(--pixel-border-3),
     0 calc(var(--pixel) * 15) 0 calc(var(--pixel) * -6) var(--pixel-border-3);
+}
+
+.eightbit-btn {
+  background: var(--button-background);
+  display: inline-block;
+  position: relative;
+  text-align: center;
+  font-size: 30px;
+  padding: 4px 7px;
+  font-family: "Pixel7";
+  text-decoration: none;
+  color: white;
+  box-shadow: inset calc(-1 * var(--shadow-width))
+    calc(-1 * var(--shadow-width)) 0 0 var(--shadow-color);
+
+  /* &:hover, */
+  &:focus {
+    background: var(--sec-button-background);
+    box-shadow: inset (-calc(var(--shadow-width) * 1.5))
+      (-calc(var(--shadow-width) * 1.5)) 0px 0px var(--shadow-color);
+  }
+
+  /* &:active {
+    box-shadow: inset var(--shadow-width) var(--shadow-width) 0px 0px
+      var(--shadow-color);
+  } */
+
+  &:before,
+  &:after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    box-sizing: content-box;
+  }
+
+  &:before {
+    top: calc(-1 * var(--outline-width));
+    left: 0;
+    border-top: var(--outline-width) rgb(40, 40, 40) solid;
+    border-bottom: var(--outline-width) rgb(40, 40, 40) solid;
+  }
+
+  &:after {
+    left: calc(-1 * var(--outline-width));
+    top: 0;
+    border-left: var(--outline-width) rgb(40, 40, 40) solid;
+    border-right: var(--outline-width) rgb(40, 40, 40) solid;
+  }
+
+  &--reset {
+    background: var(--reset-button-background);
+    box-shadow: inset (-var(--shadow-width)) (-var(--shadow-width)) 0px 0px
+      var(--reset-shadow-color);
+
+    &:hover,
+    &:focus {
+      background: var(--reset-sec-button-background);
+      box-shadow: inset (-calc(var(--shadow-width) * 1.5))
+        (-calc(var(--shadow-width) * 1.5)) 0px 0px var(--reset-shadow-color);
+    }
+
+    &:active {
+      box-shadow: inset var(--shadow-width) var(--shadow-width) 0px 0px
+        var(--reset-shadow-color);
+    }
+  }
+
+  &--proceed {
+    background: var(--alt-button-background);
+    box-shadow: inset (var(--shadow-width)) (var(--shadow-width)) 0px 0px
+      var(--alt-shadow-color);
+
+    &:hover,
+    &:focus {
+      background: var(--alt-sec-button-background);
+      box-shadow: inset (-calc(var(--shadow-width) * 1.5))
+        (-calc(var(--shadow-width) * 1.5)) 0px 0px var(--alt-shadow-color);
+    }
+
+    &:active {
+      box-shadow: inset var(--shadow-width) var(--shadow-width) 0px 0px
+        var(--alt-shadow-color);
+    }
+  }
 }

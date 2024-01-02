@@ -2,6 +2,7 @@ import { fetchAllCritters } from "../../services/CritterServices";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import searchSymbol from "/assets/graphics/search_symbol.png";
+import "./Critters.css";
 
 export const CritterList = () => {
   const navigate = useNavigate();
@@ -139,24 +140,24 @@ export const CritterList = () => {
           />
         </div>
       </div>
-      <div className="buttons-container flex justify-center relative w-3/4 h-10">
+      <div className="buttons-container flex w-1/3 justify-evenly">
         <button
           name="helpful"
-          className="text-xl border-double border-4 border-green-900 rounded-xl px-2 mx-6"
+          className="text-lg eightbit-btn"
           onClick={handleValueFilter}
         >
           Helpful
         </button>
         <button
           name="neutral"
-          className="text-xl border-double border-4 border-green-900 rounded-xl px-2 mx-6"
+          className="text-lg eightbit-btn"
           onClick={handleValueFilter}
         >
           Neutral
         </button>
         <button
           name="harmful"
-          className="text-xl border-double border-4 border-green-900 rounded-xl px-2 mx-6"
+          className="text-lg eightbit-btn"
           onClick={handleValueFilter}
         >
           Harmful

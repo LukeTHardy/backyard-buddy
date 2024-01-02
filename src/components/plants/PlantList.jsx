@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import searchSymbol from "/assets/graphics/search_symbol.png";
 import onSwitch from "/assets/graphics/on_switch.png";
 import offSwitch from "/assets/graphics/off_switch.png";
+import seedling from "/assets/graphics/seedling.png";
 
 export const PlantList = () => {
   const navigate = useNavigate();
@@ -115,7 +116,7 @@ export const PlantList = () => {
   const displayPlants = () => {
     if (renderedPlants.length > 0) {
       return (
-        <div className="list-container w-3/4 grid grid-cols-5 gap-14 my-4 px-8 pt-8 pb-12 rounded-xl bg-amber-200">
+        <div className="list-container w-3/4 grid grid-cols-5 gap-14 my-2 px-8 pt-8 pb-12 rounded-xl bg-amber-200">
           {renderedPlants.map((plant) => {
             return (
               <div key={plant.id}>
@@ -155,12 +156,17 @@ export const PlantList = () => {
       <div className="title search-bar flex w-3/4 mb-2 mt-2 relative">
         <div className="title text-3xl mx-auto font-bold">Browse Plants</div>
         <button
-          className="add-plant-button text-2xl text-light-green-900 absolute left-0 underline"
+          className="add-plant-button text-2xl text-light-green-900 absolute left-0 underline flex justify-center items-center h-[2.5rem]"
           onClick={() => {
             navigate("/plants/newplant");
           }}
         >
-          ✚ Add Plant
+          + Add Plant
+          <img
+            className="h-[3rem] mb-1.5 -ml-1"
+            src={seedling}
+            alt="Seedling"
+          />
         </button>
         <div className="search-bar-container absolute right-0">
           <input
@@ -179,32 +185,32 @@ export const PlantList = () => {
           />
         </div>
       </div>
-      <div className="primary-buttons-container flex justify-center relative w-3/4 h-10">
-        <div className="type-buttons flex">
+      <div className="primary-buttons-container flex justify-center relative w-3/4 h-9 mb-2">
+        <div className="type-buttons flex w-1/2 justify-evenly">
           <button
             name="veggie"
-            className="text-xl border-double border-4 border-green-900 rounded-xl px-2 mx-6"
+            className="text-lg eightbit-btn"
             onClick={handleVeggieClick}
           >
             Veggies
           </button>
           <button
             name="herb"
-            className="text-xl border-double border-4 border-green-900 rounded-xl px-2 mx-6"
+            className="text-xl eightbit-btn"
             onClick={handleTypeFilter}
           >
             Herbs
           </button>
           <button
             name="flower"
-            className="text-xl border-double border-4 border-green-900 rounded-xl px-2 mx-6"
+            className="text-xl eightbit-btn"
             onClick={handleTypeFilter}
           >
             Flowers
           </button>
           <button
             name="fruit"
-            className="text-xl border-double border-4 border-green-900 rounded-xl px-2 mx-6"
+            className="text-xl eightbit-btn"
             onClick={handleTypeFilter}
           >
             Fruit
