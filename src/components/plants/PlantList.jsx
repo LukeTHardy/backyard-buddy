@@ -39,20 +39,25 @@ export const PlantList = () => {
   }, [searchTerm, allPlants]);
 
   useEffect(() => {
+    // Apply other filters
+    let filteredPlants;
     if (filterTypeSwitch === "search") {
-      setRenderedPlants(searchTermPlants);
+      filteredPlants = searchTermPlants;
     } else if (filterTypeSwitch === "type") {
-      setRenderedPlants(typePlants);
+      filteredPlants = typePlants;
     } else {
-      setRenderedPlants(allPlants);
+      filteredPlants = allPlants;
     }
 
+    // Apply zone switch filter if enabled
     if (zoneSwitch) {
-      const zoneFilteredPlants = renderedPlants.filter((plant) => {
+      filteredPlants = filteredPlants.filter((plant) => {
         return plant.zones.some((zone) => zone.name.includes("3"));
       });
-      setRenderedPlants(zoneFilteredPlants);
     }
+
+    // Update renderedPlants
+    setRenderedPlants(filteredPlants);
   }, [
     searchTerm,
     allPlants,
@@ -258,7 +263,7 @@ export const PlantList = () => {
           </div>
         </div>
         <div className="absolute left-0 top-4 w-28">
-          <button onClick={seeRandomPlant}>Surprise Me</button>
+          <button onClick={seeRandomPlant}>Random Plant!</button>
         </div>
       </div>
       {filterTypeSwitch === "type" && veggiesSelected && (

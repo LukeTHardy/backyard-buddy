@@ -163,7 +163,7 @@ export const CritterList = () => {
           Harmful
         </button>
         <div className="absolute left-0 top-4 w-28">
-          <button onClick={seeRandomCritter}>Surprise Me</button>
+          <button onClick={seeRandomCritter}>Random Critter!</button>
         </div>
       </div>
       {searchTerm || filterTypeSwitch ? (
