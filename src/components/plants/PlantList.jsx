@@ -5,6 +5,7 @@ import searchSymbol from "/assets/graphics/search_symbol.png";
 import onSwitch from "/assets/graphics/on_switch.png";
 import offSwitch from "/assets/graphics/off_switch.png";
 import seedling from "/assets/graphics/seedling.png";
+import sparkle from "/assets/graphics/sparkle.png";
 
 export const PlantList = () => {
   const navigate = useNavigate();
@@ -145,10 +146,10 @@ export const PlantList = () => {
                   <div className="plant-image">
                     <img
                       src={`${plant.image}`}
-                      className="border-double w-[169.2px] h-[169.2px] object-cover border-4 border-brown-600 rounded-xl"
+                      className="border-solid w-[169.2px] h-[169.2px] object-cover border-[2px] border-dark-gray rounded-xl"
                     />
                   </div>
-                  <div className="plant-name text-center absolute w-[180px]">
+                  <div className="plant-name leading-5 text-[1.2rem] text-center absolute w-[180px] mt-1">
                     {plant.name}
                   </div>
                 </Link>
@@ -253,8 +254,15 @@ export const PlantList = () => {
             Only plants in my zone
           </div>
         </div>
-        <div className="absolute left-0 top-4 w-28">
-          <button onClick={seeRandomPlant}>Random Plant!</button>
+        <div className="random-btn absolute left-6 top-7 flex justify-center items-center">
+          <button onClick={seeRandomPlant}>
+            Random Plant
+            <img
+              className="h-[1.3rem] ml-1.5 inline-block"
+              src={sparkle}
+              alt="sparkle"
+            />
+          </button>
         </div>
       </div>
       {filterTypeSwitch === "type" && veggiesSelected && (

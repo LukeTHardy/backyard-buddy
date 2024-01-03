@@ -2,6 +2,8 @@ import { fetchAllCritters } from "../../services/CritterServices";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import searchSymbol from "/assets/graphics/search_symbol.png";
+import sparkle from "/assets/graphics/sparkle.png";
+
 import "./Critters.css";
 
 export const CritterList = () => {
@@ -90,10 +92,10 @@ export const CritterList = () => {
                     <div className="critter-image">
                       <img
                         src={`${critter.image}`}
-                        className="border-double border-4 border-brown-600 rounded-xl"
+                        className="border-solid w-[169.2px] h-[169.2px] object-cover border-[2px] border-dark-gray rounded-xl"
                       />
                     </div>
-                    <div className="critter-name text-center absolute w-[180px]">
+                    <div className="critter-name leading-5 text-[1.2rem] text-center absolute w-[180px] mt-1">
                       {critter.name}
                     </div>
                   </Link>
@@ -162,8 +164,15 @@ export const CritterList = () => {
         >
           Harmful
         </button>
-        <div className="absolute left-0 top-4 w-28">
-          <button onClick={seeRandomCritter}>Random Critter!</button>
+        <div className="random-btn absolute left-6 top-7 flex justify-center items-center">
+          <button onClick={seeRandomCritter}>
+            Random Critter
+            <img
+              className="h-[1.3rem] ml-1.5 inline-block"
+              src={sparkle}
+              alt="sparkle"
+            />
+          </button>
         </div>
       </div>
       {searchTerm || filterTypeSwitch ? (

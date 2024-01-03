@@ -1,15 +1,16 @@
 import { useNavigate } from "react-router-dom";
+import "/src/components/plants/Plants.css";
 
 export const Home = () => {
   const navigate = useNavigate();
   return (
     <div className="comp-container bg-amber-100 flex justify-center relative min-h-[100vh]">
-      <div className="home-comp h-[16rem] flex flex-col mt-10 p-12 bg-light-green-200 items-center rounded-3xl">
+      <div className="home-comp h-[10rem] flex flex-col mt-12 px-8 py-4 pixel-border-green1 items-center">
         <div className="text-2xl">Welcome to Backyard Buddy</div>
         <div className="text-xl">blah blah blah blah</div>
         <br></br>
         <button
-          className="text-3xl border-double border-4 border-green-900 rounded-xl p-4"
+          className="text-xl eightbit-btn"
           onClick={() => {
             navigate("/plants");
           }}

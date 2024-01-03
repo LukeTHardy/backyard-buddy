@@ -246,10 +246,10 @@
       (-calc(var(--shadow-width) * 1.5)) 0px 0px var(--shadow-color);
   }
 
-  /* &:active {
+  &:active {
     box-shadow: inset var(--shadow-width) var(--shadow-width) 0px 0px
       var(--shadow-color);
-  } */
+  }
 
   &:before,
   &:after {
@@ -274,7 +274,7 @@
     border-right: var(--outline-width) rgb(40, 40, 40) solid;
   }
 
-  &--reset {
+  /* &--reset {
     background: var(--reset-button-background);
     box-shadow: inset (-var(--shadow-width)) (-var(--shadow-width)) 0px 0px
       var(--reset-shadow-color);
@@ -308,67 +308,115 @@
       box-shadow: inset var(--shadow-width) var(--shadow-width) 0px 0px
         var(--alt-shadow-color);
     }
-  }
-}
-.base-text {
-  text-align: center;
-  margin: 1em;
-  font: 1.4em "Press start 2P";
-  font-weight: 700;
+  } */
 }
 
-box {
-  box-sizing: border-box;
+.red {
+  --button_background: #a53030;
+  --button_dark_shadow: #730d0d;
+  --button_light_shadow: #e87d7d;
 }
 
-.base-div {
-  margin: 0 auto;
+.blue {
+  --button_background: #4f8fba;
+  --button_dark_shadow: #253a5e;
+  --button_light_shadow: #a4dddb;
+}
+
+.green {
+  --button_background: #75a743;
+  --button_dark_shadow: #25562e;
+  --button_light_shadow: #d0da91;
+}
+
+.yellow {
+  --button_background: #be772b;
+  --button_dark_shadow: #602c2c;
+  --button_light_shadow: #e8c170;
+}
+
+.button {
+  font-size: 1rem;
   display: inline-block;
-  text-align: center;
-  padding: 0.4em 1.3em;
+  padding: 0 calc(var(--border_width) * 2);
+  width: 100%;
+}
+.button button {
+  /*  font size and padding  */
+  font-size: 1em;
+  line-height: 1.3em;
+  /*   padding: 0 calc(var(--button_padding)*2); */
+  width: 100%;
+  height: var(--button_height);
+
+  /*  colours  */
+  background: var(--button_background);
+  color: var(--text_color);
+
+  /*  text  */
+  font-family: var(--font);
+  text-shadow: calc(var(--text_stroke) * -1) calc(var(--text_stroke) * -1) 0
+      #000,
+    var(--text_stroke) calc(var(--text_stroke) * -1) 0 #000,
+    calc(var(--text_stroke) * -1) var(--text_stroke) 0 #000,
+    var(--text_stroke) var(--text_stroke) 0 #000;
+
+  /*  border  */
+  border: none;
+  border-top: var(--border_width) solid var(--border_color);
+  border-bottom: var(--border_width) solid var(--border_color);
+
+  /*  box-shadow  */
+  box-shadow: 0 calc(var(--border_width) * -1) var(--button_dark_shadow) inset,
+    0 var(--border_width) var(--button_light_shadow) inset;
+
+  /*  cursor  */
+  cursor: pointer;
+
+  /*  position  */
+  position: relative;
 }
 
-.base-hr {
-  height: 10px;
-  visibility: hidden;
+.button button:focus {
+  outline: none;
 }
 
-.lvl1 {
-  box-shadow: 2px 0 black, -2px 0 black, 0 -2px black, 0 2px black,
-    2px 0 0 2px black, -2px 0 0 2px black, 0 2px 0 2px black, 0 -2px 0 2px black;
-  margin: 2px;
+.button button::after,
+.button button::before {
+  /*  content  */
+  content: "";
+
+  /*  dimensions  */
+  width: var(--border_width);
+  height: calc(100% - var(--border_width) * 2);
+
+  /*  colours  */
+  background: var(--button_background);
+
+  /*  border  */
+  border-top: var(--border_width) solid var(--border_color);
+  border-bottom: var(--border_width) solid var(--border_color);
+
+  /*  box-shadow */
+  box-shadow: 0 calc(var(--border_width) * -1) var(--button_dark_shadow) inset,
+    0 var(--border_width) var(--button_light_shadow) inset;
+
+  /*  positions  */
+  position: absolute;
+  top: 0;
 }
 
-.lvl2 {
-  box-shadow: 4px 0 white, -4px 0 white, 0 -4px white, 0 4px white, 8px 0 blue,
-    -8px 0 blue, 0 -8px blue, 0 8px blue, 0 0 0 4px blue;
-  margin: 8px auto;
+.button button::after {
+  right: calc(var(--border_width) * -2);
+  border-right: var(--border_width) solid var(--border_color);
+}
+.button button::before {
+  left: calc(var(--border_width) * -2);
+  border-left: var(--border_width) solid var(--border_color);
 }
 
-.lvl3 {
-  box-shadow: 3px 0 white, -3px 0 white, 0 -3px white, 0 3px white, 6px 0 white,
-    -6px 0 white, 0 -6px white, 0 6px white, 0 0 0 3px white, 9px 0 black,
-    -9px 0 black, 0 9px black, 0 -9px black, -6px -3px black, -3px -6px black,
-    3px -6px black, 6px -3px black, 6px 3px black, 3px 6px black, -3px 6px black,
-    -6px 3px black;
-  margin: 6px auto;
-}
-
-.lvl4 {
-  box-shadow: 5px 0 white, -5px 0 white, 0 -5px white, 0 5px white, 10px 0 white,
-    -10px 0 white, 0 -10px white, 0 10px white, 0 0 0 5px white, 10px 0 white,
-    -10px 0 white, 0 -10px white, 0 10px white, 20px 0 green, -20px 0 green,
-    0 -20px green, 0 20px green, 10px 0 0 10px green, -10px 0 0 10px green,
-    0 10px 0 10px green, 0 -10px 0 10px green, 5px 0 0 10px green,
-    -5px 0 0 10px green;
-  margin: 20px auto;
-}
-
-.other {
-  box-shadow: 24px 0 white, -24px 0 white, 0 -24px white, 0 24px white,
-    6px 0 0 12px white, -6px 0 0 12px white, 0 -6px 0 12px white,
-    0 6px 0 12px white, 30px 0 black, -30px 0 black, 0 -30px black, 0 30px black,
-    0 0 0 18px black, 0 12px 0 12px black, 0 -12px 0 12px black,
-    12px 0 0 12px black, -12px 0 0 12px black;
-  margin: 30px auto;
+.button button:active,
+.button button:active::after,
+.button button:active::before {
+  box-shadow: none;
 }

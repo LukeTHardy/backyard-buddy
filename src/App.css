@@ -6,6 +6,8 @@
   font-family: "Pixel7", "sans-serif";
   color: rgb(40, 40, 40);
 
+  /* Pixel Border Colors: */
+
   --blue1: lightblue; /* Inner background color */
   --blue2: rgb(191, 215, 223); /* Inner background color */
   --green1: rgb(176, 223, 164);
@@ -15,10 +17,12 @@
   --pixel-border-3: var(--pixel-border); /* Outer border color */
   --pixel: 0.125rem; /* Pixel size */
 
+  /* Button 1 Styling: */
+
   --button-background: #92cd41;
   --sec-button-background: #69b934;
   --shadow-width: 3px;
-  --shadow-color: #4aa52e;
+  --shadow-color: #53a33b;
   --outline-width: 3px;
 
   --alt-button-background: #f7d51d;
@@ -29,4 +33,17 @@
   --reset-sec-button-background: #ce372b;
   --reset-shadow-color: #8c2022;
   --step: 4px;
+
+  /* Button 2 Styling: */
+
+  --button_padding: 1em;
+  --text_stroke: 0.125em;
+  --border_width: 0.25em;
+
+  --border_color: #10141f;
+  --text_color: #ebede9;
+
+  --font: "Pixel7", display;
+
+  --button_height: 4em;
 }
