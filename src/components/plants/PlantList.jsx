@@ -237,16 +237,7 @@ export const PlantList = () => {
             Fruit
           </button>
         </div>
-        {searchTerm || filterTypeSwitch ? (
-          <button
-            onClick={clearFilters}
-            className="border border-solid border-black rounded-xl px-1 pt-0.5 mt-2 absolute top-[.4rem] right-[12rem]"
-          >
-            ⓧ clear filters
-          </button>
-        ) : (
-          ""
-        )}
+
         <div className="zone-toggle flex items-center absolute right-0">
           <button
             className="w-16 h-[1.85rem] static justify-end"
@@ -283,7 +274,16 @@ export const PlantList = () => {
           ))}
         </div>
       )}
-
+      {searchTerm || filterTypeSwitch ? (
+        <button
+          onClick={clearFilters}
+          className="border border-solid border-black rounded-xl px-1 pt-0.5 mt-2"
+        >
+          ⓧ clear filters
+        </button>
+      ) : (
+        ""
+      )}
       {displayPlants()}
     </div>
   );

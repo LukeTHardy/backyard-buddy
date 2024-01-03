@@ -75,7 +75,7 @@ export const CritterList = () => {
 
   const seeRandomCritter = () => {
     const randomId = Math.floor(Math.random() * allCritters.length);
-    navigate(`/plants/${randomId}`);
+    navigate(`/critters/${randomId}`);
   };
 
   const displayCritters = () => {
@@ -140,24 +140,24 @@ export const CritterList = () => {
           />
         </div>
       </div>
-      <div className="buttons-container flex w-1/3 justify-evenly">
+      <div className="buttons-container flex justify-center relative w- h-9 mb-2 w-3/4">
         <button
           name="helpful"
-          className="text-lg eightbit-btn"
+          className="text-lg eightbit-btn mx-8"
           onClick={handleValueFilter}
         >
           Helpful
         </button>
         <button
           name="neutral"
-          className="text-lg eightbit-btn"
+          className="text-lg eightbit-btn mx-8"
           onClick={handleValueFilter}
         >
           Neutral
         </button>
         <button
           name="harmful"
-          className="text-lg eightbit-btn"
+          className="text-lg eightbit-btn mx-8"
           onClick={handleValueFilter}
         >
           Harmful
