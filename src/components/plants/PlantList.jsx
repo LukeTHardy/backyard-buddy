@@ -14,6 +14,7 @@ export const PlantList = () => {
   const [veggiesSelected, setVeggiesSelected] = useState(false);
   const [typePlants, setTypePlants] = useState([]);
   const [zoneToggle, setZoneToggle] = useState(false);
+  const [zoneSwitch, setZoneSwitch] = useState(false);
   const [filterTypeSwitch, setFilterTypeSwitch] = useState("");
   const [selectedVeggieCategory, setSelectedVeggieCategory] = useState("");
   const [renderedPlants, setRenderedPlants] = useState([]);
@@ -38,14 +39,33 @@ export const PlantList = () => {
   }, [searchTerm, allPlants]);
 
   useEffect(() => {
+    // Apply other filters
+    let filteredPlants;
     if (filterTypeSwitch === "search") {
-      setRenderedPlants(searchTermPlants);
+      filteredPlants = searchTermPlants;
     } else if (filterTypeSwitch === "type") {
-      setRenderedPlants(typePlants);
+      filteredPlants = typePlants;
     } else {
-      setRenderedPlants(allPlants);
+      filteredPlants = allPlants;
     }
-  }, [searchTerm, allPlants, searchTermPlants, filterTypeSwitch, typePlants]);
+
+    // Apply zone switch filter if enabled
+    if (zoneSwitch) {
+      filteredPlants = filteredPlants.filter((plant) => {
+        return plant.zones.some((zone) => zone.name.includes("3"));
+      });
+    }
+
+    // Update renderedPlants
+    setRenderedPlants(filteredPlants);
+  }, [
+    searchTerm,
+    allPlants,
+    searchTermPlants,
+    filterTypeSwitch,
+    typePlants,
+    zoneSwitch,
+  ]);
 
   const handleTypeFilter = (e) => {
     setFilterTypeSwitch("type");
@@ -106,6 +126,7 @@ export const PlantList = () => {
 
   const toggleZoneSwitch = () => {
     setZoneToggle((prevState) => !prevState);
+    setZoneSwitch((prevState) => !prevState);
   };
 
   const seeRandomPlant = () => {
@@ -242,7 +263,7 @@ export const PlantList = () => {
           </div>
         </div>
         <div className="absolute left-0 top-4 w-28">
-          <button onClick={seeRandomPlant}>Surprise Me</button>
+          <button onClick={seeRandomPlant}>Random Plant!</button>
         </div>
       </div>
       {filterTypeSwitch === "type" && veggiesSelected && (

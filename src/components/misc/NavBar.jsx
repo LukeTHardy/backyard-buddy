@@ -9,13 +9,13 @@ export const NavBar = ({ token }) => {
       role="navigation"
       aria-label="main navigation"
     >
-      <div className="navbar-container z-3 w-full h-12 flex justify-evenly text-logo-green items-center">
+      <div className="z-3 w-full h-12 flex justify-evenly text-logo-green items-center">
         <div className="">
           {token ? (
             <>
               <div
                 onClick={() => navigate("/")}
-                className="text-3xl hover:scale-105 cursor-pointer ease-in duration-75"
+                className="text-3xl text-center hover:scale-105 cursor-pointer ease-in duration-75"
               >
                 Home
               </div>
@@ -29,7 +29,7 @@ export const NavBar = ({ token }) => {
             <>
               <div
                 onClick={() => navigate("/plants")}
-                className="text-3xl hover:scale-105 cursor-pointer ease-in duration-75"
+                className="text-3xl text-center hover:scale-105 cursor-pointer ease-in duration-75"
               >
                 Plants
               </div>
@@ -43,7 +43,7 @@ export const NavBar = ({ token }) => {
             <>
               <div
                 onClick={() => navigate("/critters")}
-                className="text-3xl hover:scale-105 cursor-pointer ease-in duration-75"
+                className="text-3xl text-center hover:scale-105 cursor-pointer ease-in duration-75"
               >
                 Critters
               </div>
@@ -56,7 +56,7 @@ export const NavBar = ({ token }) => {
           {token ? (
             <div
               onClick={() => navigate("/plants/favorites")}
-              className="text-3xl hover:scale-105 cursor-pointer ease-in duration-75"
+              className="text-3xl text-center hover:scale-105 cursor-pointer ease-in duration-75"
             >
               Favorites
             </div>
@@ -68,7 +68,7 @@ export const NavBar = ({ token }) => {
           {token ? (
             <div
               onClick={() => navigate("/gardenbuilder")}
-              className="text-3xl hover:scale-105 cursor-pointer ease-in duration-75"
+              className="text-3xl text-center hover:scale-105 cursor-pointer ease-in duration-75"
             >
               Garden Builder
             </div>
