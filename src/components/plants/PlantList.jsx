@@ -5,6 +5,7 @@ import searchSymbol from "/assets/graphics/search_symbol.png";
 import onSwitch from "/assets/graphics/on_switch.png";
 import offSwitch from "/assets/graphics/off_switch.png";
 import seedling from "/assets/graphics/seedling.png";
+import sparkle from "/assets/graphics/sparkle.png";
 
 export const PlantList = () => {
   const navigate = useNavigate();
@@ -137,7 +138,7 @@ export const PlantList = () => {
   const displayPlants = () => {
     if (renderedPlants.length > 0) {
       return (
-        <div className="list-container pixel-border-blue2 w-3/4 grid grid-cols-5 gap-14 my-8 px-8 pt-1 pb-12">
+        <div className="list-container pixel-border-green2 w-3/4 grid grid-cols-5 gap-14 my-8 px-8 pt-1 pb-6">
           {renderedPlants.map((plant) => {
             return (
               <div key={plant.id}>
@@ -145,10 +146,10 @@ export const PlantList = () => {
                   <div className="plant-image">
                     <img
                       src={`${plant.image}`}
-                      className="border-double w-[169.2px] h-[169.2px] object-cover border-4 border-brown-600 rounded-xl"
+                      className="border-solid w-[169.2px] h-[169.2px] object-cover border-[2px] border-dark-gray rounded-xl"
                     />
                   </div>
-                  <div className="plant-name text-center absolute w-[180px]">
+                  <div className="plant-name leading-5 text-[1.2rem] text-center absolute w-[180px] mt-1">
                     {plant.name}
                   </div>
                 </Link>
@@ -159,13 +160,13 @@ export const PlantList = () => {
       );
     } else if (allPlants && allPlants.length && filterTypeSwitch) {
       return (
-        <h3 className="text-xl w-3/4 mt-4 p-8 rounded-xl bg-amber-200 text-center">
+        <h3 className="text-xl w-3/4 my-8 p-8 pixel-border-green2 text-center">
           No plants found :(
         </h3>
       );
     } else {
       return (
-        <h3 className="text-xl w-3/4 mt-4 p-8 rounded-xl bg-amber-200 text-center">
+        <h3 className="text-xl w-3/4 my-8 p-8 pixel-border-green2 text-center">
           Loading Plants...
         </h3>
       );
@@ -174,7 +175,7 @@ export const PlantList = () => {
 
   return (
     <div className="comp-container bg-amber-100 flex flex-col justify-start items-center relative z-4 min-h-[100vh]">
-      <div className="title search-bar flex w-3/4 mb-2 mt-2 relative">
+      <div className="title search-bar flex w-3/4 my-2 relative">
         <div className="title text-3xl mx-auto font-bold">Browse Plants:</div>
         <button
           className="add-plant-button text-2xl text-light-green-900 absolute left-0 underline flex justify-center items-center h-[2.5rem]"
@@ -253,8 +254,15 @@ export const PlantList = () => {
             Only plants in my zone
           </div>
         </div>
-        <div className="absolute left-0 top-4 w-28">
-          <button onClick={seeRandomPlant}>Random Plant!</button>
+        <div className="random-btn absolute left-6 top-7 flex justify-center items-center">
+          <button onClick={seeRandomPlant}>
+            Random Plant
+            <img
+              className="h-[1.3rem] ml-1.5 inline-block"
+              src={sparkle}
+              alt="sparkle"
+            />
+          </button>
         </div>
       </div>
       {filterTypeSwitch === "type" && veggiesSelected && (

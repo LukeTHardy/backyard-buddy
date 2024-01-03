@@ -187,9 +187,9 @@ export const NewPlant = () => {
   };
 
   return (
-    <div className="comp-container flex flex-col justify-center items-center">
-      <h2 className="form-title mt-8 text-2xl">New Plant</h2>
-      <div className="fields-container flex justify-center mt-4">
+    <div className="comp-container flex flex-col justify-start items-center bg-amber-100 min-h-[80vh] relative">
+      <h2 className="form-title my-2 text-3xl">New Plant:</h2>
+      <div className="fields-container flex justify-center">
         <div className="left-side-fields flex flex-col mx-4 w-[20rem]">
           <div className="name-field flex">
             <label htmlFor="name" className="mr-2">
@@ -413,6 +413,7 @@ export const NewPlant = () => {
                 isMulti
                 closeMenuOnSelect={false}
                 onChange={handleZoneSelect}
+                maxMenuHeight={160}
               />
             </div>
           </div>
@@ -424,6 +425,7 @@ export const NewPlant = () => {
                 isMulti
                 closeMenuOnSelect={false}
                 onChange={handleCompanionSelect}
+                maxMenuHeight={160}
               />
             </div>
           </div>
@@ -435,6 +437,7 @@ export const NewPlant = () => {
                 isMulti
                 closeMenuOnSelect={false}
                 onChange={handleCritterSelect}
+                maxMenuHeight={160}
               />
             </div>
           </div>
