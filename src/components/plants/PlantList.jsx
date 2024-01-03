@@ -6,6 +6,7 @@ import onSwitch from "/assets/graphics/on_switch.png";
 import offSwitch from "/assets/graphics/off_switch.png";
 import seedling from "/assets/graphics/seedling.png";
 import sparkle from "/assets/graphics/sparkle.png";
+import "./PlantsCritters.css";
 
 export const PlantList = () => {
   const navigate = useNavigate();
@@ -209,34 +210,34 @@ export const PlantList = () => {
       </div>
       <div className="primary-buttons-container flex justify-center relative w-3/4 h-9 mb-2">
         <div className="type-buttons flex w-1/2 justify-evenly">
-          <button
-            name="veggie"
-            className="text-xl eightbit-btn"
-            onClick={handleVeggieClick}
-          >
-            Veggies
-          </button>
-          <button
-            name="herb"
-            className="text-xl eightbit-btn"
-            onClick={handleTypeFilter}
-          >
-            Herbs
-          </button>
-          <button
-            name="flower"
-            className="text-xl eightbit-btn"
-            onClick={handleTypeFilter}
-          >
-            Flowers
-          </button>
-          <button
-            name="fruit"
-            className="text-xl eightbit-btn"
-            onClick={handleTypeFilter}
-          >
-            Fruit
-          </button>
+          <div className="button2 yellow">
+            <button
+              name="veggie"
+              className="text-xl"
+              onClick={handleVeggieClick}
+            >
+              Veggies
+            </button>
+          </div>
+          <div className="button2 green">
+            <button name="herb" className="text-xl" onClick={handleTypeFilter}>
+              Herbs
+            </button>
+          </div>
+          <div className="button2 blue">
+            <button
+              name="flower"
+              className="text-xl"
+              onClick={handleTypeFilter}
+            >
+              Flowers
+            </button>
+          </div>
+          <div className="button2 red">
+            <button name="fruit" className="text-xl" onClick={handleTypeFilter}>
+              Fruit
+            </button>
+          </div>
         </div>
 
         <div className="zone-toggle flex items-center absolute right-0">

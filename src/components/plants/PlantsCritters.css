@@ -226,7 +226,7 @@
     0 calc(var(--pixel) * -15) 0 calc(var(--pixel) * -6) var(--pixel-border-3),
     0 calc(var(--pixel) * 15) 0 calc(var(--pixel) * -6) var(--pixel-border-3);
 }
-.eightbit-btn {
+/* .eightbit-btn {
   background: var(--button-background);
   display: inline-block;
   position: relative;
@@ -239,7 +239,7 @@
   box-shadow: inset calc(-1 * var(--shadow-width))
     calc(-1 * var(--shadow-width)) 0 0 var(--shadow-color);
 
-  /* &:hover, */
+  
   &:focus {
     background: var(--sec-button-background);
     box-shadow: inset (-calc(var(--shadow-width) * 1.5))
@@ -274,41 +274,43 @@
     border-right: var(--outline-width) rgb(40, 40, 40) solid;
   }
 
-  /* &--reset {
-    background: var(--reset-button-background);
-    box-shadow: inset (-var(--shadow-width)) (-var(--shadow-width)) 0px 0px
-      var(--reset-shadow-color);
+  background: var(--reset-button-background);
+  box-shadow: inset (-var(--shadow-width)) (-var(--shadow-width)) 0px 0px
+    var(--reset-shadow-color);
 
-    &:hover,
-    &:focus {
-      background: var(--reset-sec-button-background);
-      box-shadow: inset (-calc(var(--shadow-width) * 1.5))
-        (-calc(var(--shadow-width) * 1.5)) 0px 0px var(--reset-shadow-color);
-    }
-
-    &:active {
-      box-shadow: inset var(--shadow-width) var(--shadow-width) 0px 0px
-        var(--reset-shadow-color);
-    }
+  &:hover,
+  &:focus {
+    background: var(--reset-sec-button-background);
+    box-shadow: inset (-calc(var(--shadow-width) * 1.5))
+      (-calc(var(--shadow-width) * 1.5)) 0px 0px var(--reset-shadow-color);
   }
 
-  &--proceed {
-    background: var(--alt-button-background);
-    box-shadow: inset (var(--shadow-width)) (var(--shadow-width)) 0px 0px
+  &:active {
+    box-shadow: inset var(--shadow-width) var(--shadow-width) 0px 0px
+      var(--reset-shadow-color);
+  }
+}
+
+&--proceed {
+  background: var(--alt-button-background);
+  box-shadow: inset (var(--shadow-width)) (var(--shadow-width)) 0px 0px
+    var(--alt-shadow-color);
+
+  &:hover,
+  &:focus {
+    background: var(--alt-sec-button-background);
+    box-shadow: inset (-calc(var(--shadow-width) * 1.5))
+      (-calc(var(--shadow-width) * 1.5)) 0px 0px var(--alt-shadow-color);
+  }
+
+  &:active {
+    box-shadow: inset var(--shadow-width) var(--shadow-width) 0px 0px
       var(--alt-shadow-color);
+  }
+} */
 
-    &:hover,
-    &:focus {
-      background: var(--alt-sec-button-background);
-      box-shadow: inset (-calc(var(--shadow-width) * 1.5))
-        (-calc(var(--shadow-width) * 1.5)) 0px 0px var(--alt-shadow-color);
-    }
-
-    &:active {
-      box-shadow: inset var(--shadow-width) var(--shadow-width) 0px 0px
-        var(--alt-shadow-color);
-    }
-  } */
+* {
+  box-sizing: content-box;
 }
 
 .red {
@@ -335,17 +337,19 @@
   --button_light_shadow: #e8c170;
 }
 
-.button {
-  font-size: 1rem;
+.button2 {
+  /* font-size: 1rem; */
   display: inline-block;
-  padding: 0 calc(var(--border_width) * 2);
-  width: 100%;
+  /* padding: 0 calc(var(--border_width) * 2); */
+  width: 5rem;
+  /* z-index: 10; */
+  /* overflow: visible; */
 }
-.button button {
+.button2 button {
   /*  font size and padding  */
-  font-size: 1em;
+  /* font-size: 1em; */
   line-height: 1.3em;
-  /*   padding: 0 calc(var(--button_padding)*2); */
+  /* padding: 0 calc(var(--button_padding) * 2); */
   width: 100%;
   height: var(--button_height);
 
@@ -355,11 +359,11 @@
 
   /*  text  */
   font-family: var(--font);
-  text-shadow: calc(var(--text_stroke) * -1) calc(var(--text_stroke) * -1) 0
+  /* text-shadow: calc(var(--text_stroke) * -1) calc(var(--text_stroke) * -1) 0
       #000,
     var(--text_stroke) calc(var(--text_stroke) * -1) 0 #000,
     calc(var(--text_stroke) * -1) var(--text_stroke) 0 #000,
-    var(--text_stroke) var(--text_stroke) 0 #000;
+    var(--text_stroke) var(--text_stroke) 0 #000; */
 
   /*  border  */
   border: none;
@@ -377,17 +381,17 @@
   position: relative;
 }
 
-.button button:focus {
+.button2 button:focus {
   outline: none;
 }
 
-.button button::after,
-.button button::before {
+.button2 button::after,
+.button2 button::before {
   /*  content  */
   content: "";
 
   /*  dimensions  */
-  width: var(--border_width);
+  /* width: 7rem; */
   height: calc(100% - var(--border_width) * 2);
 
   /*  colours  */
@@ -406,17 +410,23 @@
   top: 0;
 }
 
-.button button::after {
-  right: calc(var(--border_width) * -2);
+.button2 button::after {
+  right: calc(var(--border_width) * -0.8);
   border-right: var(--border_width) solid var(--border_color);
+  height: 2.02rem;
+  /* width: 3px; */
+  /* position: absolute; */
 }
-.button button::before {
-  left: calc(var(--border_width) * -2);
+.button2 button::before {
+  left: calc(var(--border_width) * -0.8);
   border-left: var(--border_width) solid var(--border_color);
+  height: 2.02rem;
+  /* width: 3px; */
+  /* position: absolute; */
 }
 
-.button button:active,
-.button button:active::after,
-.button button:active::before {
+.button2 button:active,
+.button2 button:active::after,
+.button2 button:active::before {
   box-shadow: none;
 }

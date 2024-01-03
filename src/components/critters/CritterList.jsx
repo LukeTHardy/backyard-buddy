@@ -3,8 +3,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import searchSymbol from "/assets/graphics/search_symbol.png";
 import sparkle from "/assets/graphics/sparkle.png";
-
-import "./Critters.css";
+import "/src/components/plants/PlantsCritters.css";
 
 export const CritterList = () => {
   const navigate = useNavigate();

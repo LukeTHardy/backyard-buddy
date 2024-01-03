@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Lightbox } from "../misc/Lightbox";
 import { PlantPopover } from "../misc/PlantPopover";
-import "./Critters.css";
+import "/src/components/plants/PlantsCritters.css";
 
 export const CritterDetails = () => {
   const navigate = useNavigate();

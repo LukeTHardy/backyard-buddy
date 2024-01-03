@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import "/src/components/plants/Plants.css";
+import "/src/components/plants/PlantsCritters.css";
 
 export const Home = () => {
   const navigate = useNavigate();

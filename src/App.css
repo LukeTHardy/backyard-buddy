@@ -38,12 +38,12 @@
 
   --button_padding: 1em;
   --text_stroke: 0.125em;
-  --border_width: 0.25em;
+  --border_width: 0.17rem;
 
   --border_color: #10141f;
   --text_color: #ebede9;
 
   --font: "Pixel7", display;
 
-  --button_height: 4em;
+  --button_height: 2.3rem;
 }
