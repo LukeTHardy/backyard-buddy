@@ -1,1 +1,7 @@
-
+.navbar-container {
+  /* display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  justify-content: space-evenly;
+  align-items: center; */
+  height: 12rem; /* Adjust the height as needed */
+}
