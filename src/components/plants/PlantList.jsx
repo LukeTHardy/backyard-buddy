@@ -210,7 +210,7 @@ export const PlantList = () => {
       </div>
       <div className="primary-buttons-container flex justify-center relative w-3/4 h-9 mb-2">
         <div className="type-buttons flex w-1/2 justify-evenly">
-          <div className="button2 yellow">
+          <div className="button2 brown">
             <button
               name="veggie"
               className="text-xl"
@@ -224,7 +224,7 @@ export const PlantList = () => {
               Herbs
             </button>
           </div>
-          <div className="button2 blue">
+          <div className="button2 yellow">
             <button
               name="flower"
               className="text-xl"
@@ -267,7 +267,7 @@ export const PlantList = () => {
         </div>
       </div>
       {filterTypeSwitch === "type" && veggiesSelected && (
-        <div className="flex justify-evenly w-1/2 h-9 my-2">
+        <div className="flex justify-evenly w-[40rem] h-7 my-2">
           {veggieCategories.map((category) => (
             <button
               key={category}

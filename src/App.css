@@ -23,15 +23,15 @@
   --sec-button-background: #69b934;
   --shadow-width: 3px;
   --shadow-color: #53a33b;
-  --outline-width: 3px;
+  --outline-width: 2.5px;
 
   --alt-button-background: #f7d51d;
   --alt-sec-button-background: #f2c409;
   --alt-shadow-color: #e59400;
 
-  --reset-button-background: #e76e55;
-  --reset-sec-button-background: #ce372b;
-  --reset-shadow-color: #8c2022;
+  --reset-button-background: #92cd41;
+  --reset-sec-button-background: #69b934;
+  --reset-shadow-color: #53a33b;
   --step: 4px;
 
   /* Button 2 Styling: */
@@ -41,7 +41,7 @@
   --border_width: 0.17rem;
 
   --border_color: #10141f;
-  --text_color: #ebede9;
+  --text_color: #262626;
 
   --font: "Pixel7", display;
 
