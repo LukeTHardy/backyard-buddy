@@ -106,13 +106,13 @@ export const CritterList = () => {
       );
     } else if (allCritters && allCritters.length && filterTypeSwitch) {
       return (
-        <h3 className="text-xl w-3/4 mt-4 p-8 rounded-xl bg-amber-200 text-center">
+        <h3 className="text-xl w-3/4 my-8 p-8 pixel-border-blue2 text-center">
           No critters found :/
         </h3>
       );
     } else {
       return (
-        <h3 className="text-xl w-3/4 mt-4 p-8 rounded-xl bg-amber-200 text-center">
+        <h3 className="text-xl w-3/4 my-8 p-8 pixel-border-blue2 text-center">
           Loading Critters...
         </h3>
       );

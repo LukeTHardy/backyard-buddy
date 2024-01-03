@@ -145,7 +145,7 @@ export const PlantDetails = ({ userId }) => {
                 />
               )}
             </div>
-            <div className="details-card pixel-border-blue1 flex flex-col items-center w-[40rem] px-4 mb-12 top-4 relative">
+            <div className="details-card pixel-border-green1 flex flex-col items-center w-[40rem] px-3 mb-12 top-4 relative">
               <div className="plant-name flex justify-between w-full">
                 <button className="text-xl text-end" onClick={previousPlant}>
                   ﹤Prev
@@ -289,7 +289,7 @@ export const PlantDetails = ({ userId }) => {
   };
 
   return (
-    <div className="detail-comp-container relative bg-amber-100 flex flex-col items-center min-h-[80vh]">
+    <div className="detail-comp-container relative flex flex-col items-center bg-amber-100 min-h-[80vh]">
       {displayPlant()}
     </div>
   );

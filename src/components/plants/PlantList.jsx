@@ -137,7 +137,7 @@ export const PlantList = () => {
   const displayPlants = () => {
     if (renderedPlants.length > 0) {
       return (
-        <div className="list-container pixel-border-blue2 w-3/4 grid grid-cols-5 gap-14 my-8 px-8 pt-1 pb-12">
+        <div className="list-container pixel-border-green2 w-3/4 grid grid-cols-5 gap-14 my-8 px-8 pt-1 pb-6">
           {renderedPlants.map((plant) => {
             return (
               <div key={plant.id}>
@@ -159,13 +159,13 @@ export const PlantList = () => {
       );
     } else if (allPlants && allPlants.length && filterTypeSwitch) {
       return (
-        <h3 className="text-xl w-3/4 mt-4 p-8 rounded-xl bg-amber-200 text-center">
+        <h3 className="text-xl w-3/4 my-8 p-8 pixel-border-green2 text-center">
           No plants found :(
         </h3>
       );
     } else {
       return (
-        <h3 className="text-xl w-3/4 mt-4 p-8 rounded-xl bg-amber-200 text-center">
+        <h3 className="text-xl w-3/4 my-8 p-8 pixel-border-green2 text-center">
           Loading Plants...
         </h3>
       );
@@ -174,7 +174,7 @@ export const PlantList = () => {
 
   return (
     <div className="comp-container bg-amber-100 flex flex-col justify-start items-center relative z-4 min-h-[100vh]">
-      <div className="title search-bar flex w-3/4 mb-2 mt-2 relative">
+      <div className="title search-bar flex w-3/4 my-2 relative">
         <div className="title text-3xl mx-auto font-bold">Browse Plants:</div>
         <button
           className="add-plant-button text-2xl text-light-green-900 absolute left-0 underline flex justify-center items-center h-[2.5rem]"

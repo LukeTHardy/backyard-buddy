@@ -223,9 +223,9 @@ export const EditPlant = () => {
   };
 
   return (
-    <div className="comp-container flex flex-col justify-center items-center">
-      <h2 className="form-title mt-8 text-2xl">Edit {plantToEdit.name}</h2>
-      <div className="fields-container flex justify-center mt-4">
+    <div className="comp-container flex flex-col justify-start items-center bg-amber-100 min-h-[80vh] relative">
+      <h2 className="form-title my-2 text-3xl">Edit {plantToEdit.name}:</h2>
+      <div className="fields-container flex justify-center">
         <div className="left-side-fields flex flex-col mx-4 w-[20rem]">
           <div className="name-field flex">
             <label htmlFor="name" className="mr-2">
@@ -459,6 +459,7 @@ export const EditPlant = () => {
                 value={selectedZones}
                 isMulti
                 onChange={handleZonesChange}
+                maxMenuHeight={160}
                 key="zones"
               />
             </div>
@@ -474,6 +475,7 @@ export const EditPlant = () => {
                 value={selectedCompanions}
                 isMulti
                 onChange={handleCompanionsChange}
+                maxMenuHeight={160}
                 key="companions"
               />
             </div>
@@ -489,6 +491,7 @@ export const EditPlant = () => {
                 value={selectedCritters}
                 isMulti
                 onChange={handleCrittersChange}
+                maxMenuHeight={160}
                 key="critters"
               />
             </div>

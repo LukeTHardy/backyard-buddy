@@ -8,6 +8,8 @@
 
   --blue1: lightblue; /* Inner background color */
   --blue2: rgb(191, 215, 223); /* Inner background color */
+  --green1: rgb(176, 223, 164);
+  --green2: #b6d7a2;
   --pixel-border: black; /* Inner border color: */
   --pixel-border-2: white; /* Middle border color: */
   --pixel-border-3: var(--pixel-border); /* Outer border color */

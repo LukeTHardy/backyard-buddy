@@ -22,6 +22,7 @@ export default withMT({
         "logo-green": "#63c32c",
         "dark-green": "#2e7d32",
         "darker-green": "#1b5e20",
+        green2: "#b6d7a2",
       },
       fontFamily: {
         body: ["VCR Mono", "sans-serif"],
