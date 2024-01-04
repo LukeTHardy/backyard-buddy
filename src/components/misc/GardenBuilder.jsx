@@ -13,6 +13,11 @@ export const GardenBuilder = () => {
           <img src={testpic} alt="Test Image" />
         </div>
       </div>
+      <div className="test-container">
+        <div className="image-container">
+          <img src={testpic} alt="Test Image" />
+        </div>
+      </div>
     </div>
   );
 };
