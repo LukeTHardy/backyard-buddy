@@ -1,6 +1,6 @@
 import "/src/components/plants/PlantsCritters.css";
 import "/src/components/plants/PixelBorder.scss";
-import testpic from "/assets/graphics/lavender.png";
+import testpic from "/assets/graphics/not_bad.png";
 
 export const GardenBuilder = () => {
   return (
