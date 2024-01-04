@@ -148,7 +148,7 @@ export const PlantList = () => {
   const displayPlants = () => {
     if (renderedPlants.length > 0) {
       return (
-        <div className="list-container pixel-border-green2 w-3/4 grid grid-cols-5 gap-14 my-8 px-8 pt-1 pb-6">
+        <div className="list-container pixel-border-green2 w-[85%] grid grid-cols-6 gap-14 my-8 px-8 pt-1 pb-6">
           {renderedPlants.map((plant) => {
             return (
               <div key={plant.id}>

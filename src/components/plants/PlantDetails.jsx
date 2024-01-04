@@ -123,13 +123,13 @@ export const PlantDetails = ({ userId }) => {
     if (chosenPlant) {
       return (
         <>
-          <div className="navigate-btns flex justify-start items-end text-lg h-8 w-3/4 italic">
+          <div className="navigate-btn flex justify-start items-end text-lg h-8 w-[75%] italic">
             <button onClick={() => navigate("/plants")}>
               ﹤Back to Plants
             </button>
           </div>
-          <div className="card-container flex justify-center">
-            <div className="image-card flex flex-col w-[35rem] items-center">
+          <div className="card-container flex justify-evenly w-[80%]">
+            <div className="image-card items-start">
               <button onClick={openLightbox}>
                 <img
                   src={chosenPlant.image}
