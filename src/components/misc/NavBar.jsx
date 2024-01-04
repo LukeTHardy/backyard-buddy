@@ -9,7 +9,7 @@ export const NavBar = ({ token }) => {
       role="navigation"
       aria-label="main navigation"
     >
-      <div className="z-3 w-full h-12 flex justify-evenly text-logo-green items-center">
+      <div className="z-5 w-full h-12 flex justify-evenly text-logo-green items-center">
         <div className="">
           {token ? (
             <>

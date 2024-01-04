@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { PlantPopover } from "../misc/PlantPopover";
 import { CritterPopover } from "../misc/CritterPopover";
-import "./Plants.css";
+import "./PlantsCritters.css";
 import sunicon from "/assets/graphics/sun.png";
 import watericon from "/assets/graphics/water.png";
 import soilicon from "/assets/graphics/soil.png";

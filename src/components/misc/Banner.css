@@ -1,31 +1,33 @@
-/* @keyframes move-background {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(100%, 0, 0);
-  }
-}
-
-.clouds {
-  position: absolute;
-  animation: move-background 10s linear infinite;
-  background: transparent url("/assets/graphics/scrollingclouds.svg") repeat;
-} */
-
 .banner-container {
-  width: 100%; /* Set the width of your display */
+  width: 100%;
+  /* position: relative; */
+  z-index: 1;
 }
 
 .infinite-scroll-wrapper {
   display: flex;
-  width: 200%; /* Double the width to accommodate two images */
-  animation: scrollRight 210s linear infinite; /* Adjust the duration as needed */
+  width: 200%;
+  animation: scrollRight 210s linear infinite;
 }
 
 .infinite-scroll-image {
   flex: 1;
-  width: 50%; /* Each image takes half of the wrapper's width */
+  width: 50%;
+}
+
+.bird-wrapper {
+  animation: scrollLeft 10s linear infinite; /* Adjust duration as needed */
+  width: 100%;
+  position: absolute;
+  top: 5.5rem;
+  right: 0; /* Adjust the initial left position as needed */
+  z-index: 1;
+}
+
+.flying-bird {
+  height: 1.2rem;
+  z-index: 1;
+  position: absolute;
 }
 
 @keyframes scrollRight {
@@ -33,8 +35,15 @@
     transform: translateX(-50%);
   }
   100% {
-    transform: translateX(
-      0%
-    ); /* Move the images to the right by their full width */
+    transform: translateX(0%);
+  }
+}
+
+@keyframes scrollLeft {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
   }
 }

@@ -3,11 +3,11 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import searchSymbol from "/assets/graphics/search_symbol.png";
 import sparkle from "/assets/graphics/sparkle.png";
-
-import "./Critters.css";
+import "/src/components/plants/PlantsCritters.css";
 
 export const CritterList = () => {
   const navigate = useNavigate();
+  const [lastClicked, setLastClicked] = useState(null);
   const [allCritters, setAllCritters] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchTermCritters, setSearchTermCritters] = useState([]);
@@ -60,6 +60,7 @@ export const CritterList = () => {
   const handleSearch = (e) => {
     setFilterTypeSwitch("search");
     setSearchTerm(e.target.value);
+    setLastClicked(0);
   };
 
   const handleValueFilter = (e) => {
@@ -78,6 +79,11 @@ export const CritterList = () => {
   const seeRandomCritter = () => {
     const randomId = Math.floor(Math.random() * allCritters.length);
     navigate(`/critters/${randomId}`);
+  };
+
+  const handleButtonClick = (buttonId) => {
+    // Update the state to the id of the last clicked button
+    setLastClicked(buttonId);
   };
 
   const displayCritters = () => {
@@ -122,7 +128,7 @@ export const CritterList = () => {
   };
 
   return (
-    <div className="comp-container bg-amber-100 flex flex-col justify-start items-center relative min-h-[100vh]">
+    <div className="comp-container bg-amber-100 flex flex-col justify-start items-center relative min-h-[80vh]">
       <div className="title search-bar flex w-3/4 mb-2 mt-2 relative">
         <div className="title text-3xl mx-auto font-bold">Browse Critters:</div>
         <div className="search-bar-container absolute right-0">
@@ -142,37 +148,54 @@ export const CritterList = () => {
           />
         </div>
       </div>
-      <div className="buttons-container flex justify-center relative w- h-9 mb-2 w-3/4">
-        <button
-          name="helpful"
-          className="text-lg eightbit-btn mx-8"
-          onClick={handleValueFilter}
-        >
-          Helpful
-        </button>
-        <button
-          name="neutral"
-          className="text-lg eightbit-btn mx-8"
-          onClick={handleValueFilter}
-        >
-          Neutral
-        </button>
-        <button
-          name="harmful"
-          className="text-lg eightbit-btn mx-8"
-          onClick={handleValueFilter}
-        >
-          Harmful
-        </button>
-        <div className="random-btn absolute left-6 top-7 flex justify-center items-center">
-          <button onClick={seeRandomCritter}>
-            Random Critter
-            <img
-              className="h-[1.3rem] ml-1.5 inline-block"
-              src={sparkle}
-              alt="sparkle"
-            />
-          </button>
+      <div className="buttons-container flex justify-center items-center relative w-3/4 h-9 mb-2">
+        <div className="type-buttons flex w-[28rem] justify-evenly">
+          <div className="button2 green">
+            <button
+              name="helpful"
+              className={`text-xl ${lastClicked === 1 ? "clicked" : ""}`}
+              onClick={(e) => {
+                handleValueFilter(e);
+                handleButtonClick(1);
+              }}
+            >
+              Helpful
+            </button>
+          </div>
+          <div className="button2 blue">
+            <button
+              name="neutral"
+              className={`text-xl ${lastClicked === 2 ? "clicked" : ""}`}
+              onClick={(e) => {
+                handleValueFilter(e);
+                handleButtonClick(2);
+              }}
+            >
+              Neutral
+            </button>
+          </div>
+          <div className="button2 red">
+            <button
+              name="harmful"
+              className={`text-xl ${lastClicked === 3 ? "clicked" : ""}`}
+              onClick={(e) => {
+                handleValueFilter(e);
+                handleButtonClick(3);
+              }}
+            >
+              Harmful
+            </button>
+          </div>
+          <div className="random-btn absolute left-6 top-7 flex justify-center items-center">
+            <button onClick={seeRandomCritter}>
+              Random Critter
+              <img
+                className="h-[1.3rem] ml-1.5 inline-block"
+                src={sparkle}
+                alt="sparkle"
+              />
+            </button>
+          </div>
         </div>
       </div>
       {searchTerm || filterTypeSwitch ? (
