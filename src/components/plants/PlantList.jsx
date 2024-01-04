@@ -7,6 +7,7 @@ import offSwitch from "/assets/graphics/off_switch.png";
 import seedling from "/assets/graphics/seedling.png";
 import sparkle from "/assets/graphics/sparkle.png";
 import "./PlantsCritters.css";
+import "/src/components/plants/PixelBorder.scss";
 
 export const PlantList = () => {
   const navigate = useNavigate();
@@ -152,11 +153,10 @@ export const PlantList = () => {
             return (
               <div key={plant.id}>
                 <Link to={`/plants/${plant.id}`} className="">
-                  <div className="plant-image">
-                    <img
-                      src={`${plant.image}`}
-                      className="border-solid w-[169.2px] h-[169.2px] object-cover border-[2px] border-dark-gray rounded-xl"
-                    />
+                  <div className="border-step4">
+                    <div className="image-container">
+                      <img src={plant.image} alt="Test Image" />
+                    </div>
                   </div>
                   <div className="plant-name leading-5 text-[1.2rem] text-center absolute w-[180px] mt-1">
                     {plant.name}
