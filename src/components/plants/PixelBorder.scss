@@ -31,15 +31,14 @@ $c64LightGrey: #959595;
 // }
 
 div {
-  // IE8 fallback
-  background: $c64White;
-  color: $c64Black;
-  font-size: 2em;
+  //   background: $c64White;
+  //   color: $c64Black;
+  //   font-size: 2em;
 
-  line-height: 1.25;
-  margin-bottom: 0.5em !important;
-  margin-top: 0.5em !important;
-  text-transform: uppercase;
+  //   line-height: 1.25;
+  //   margin-bottom: 0.5em !important;
+  //   margin-top: 0.5em !important;
+  // text-transform: uppercase;
 }
 
 .border-step1 {
@@ -144,9 +143,12 @@ div {
   padding: 0.5em 0.125em;
   position: relative;
   z-index: 1;
+  width: 8rem;
+  height: 10rem;
 
   &:before {
     background-color: inherit;
+    // background-size: cover;
     border: inherit;
     border-width: 0 0.125em;
     bottom: 0.375em;
@@ -156,11 +158,12 @@ div {
     position: absolute;
     top: 0.375em;
     right: -0.5em;
-    z-index: -1;
+    z-index: 0;
   }
 
   &:after {
     background-color: inherit;
+    // background-size: cover;
     border: inherit;
     border-width: 0 0.125em;
     bottom: 0.125em;
@@ -169,7 +172,7 @@ div {
     position: absolute;
     top: 0.125em;
     right: -0.375em;
-    z-index: -2;
+    z-index: -1;
   }
 }
 
@@ -221,22 +224,4 @@ div {
 #color4:checked ~ div {
   background-color: $c64LightGrey;
   color: $c64DarkGrey;
-}
-
-// many retro
-ul {
-  list-style-type: square;
-  padding-left: 2em;
-}
-
-li {
-  margin-bottom: 1em;
-}
-
-// so hack, much effective
-input:checked ~ input:checked ~ div#browser-support {
-  font-size: 2em;
-  width: 30em;
-  background-color: $c64Brown;
-  color: $c64LightGreen;
 }

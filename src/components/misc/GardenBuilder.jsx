@@ -8,7 +8,20 @@ export const GardenBuilder = () => {
       <div className="home-comp text-xl italic mt-12 px-8 mb-8 py-4 h-[4rem] pixel-border-green1">
         in development
       </div>
-      <div className="border-step3">testing</div>
+      <div
+        className="border-step4"
+        style={{
+          backgroundImage: `url(${testpic})`,
+          backgroundSize: "cover",
+        }}
+      ></div>
     </div>
   );
 };
+
+{
+  /* testing */
+}
+{
+  /* <img src={testpic} className="relative z-5 w-[10rem] h-[10rem]" /> */
+}
