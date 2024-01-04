@@ -1,6 +1,6 @@
 .banner-container {
   width: 100%;
-  position: relative;
+  /* position: relative; */
   z-index: 1;
 }
 

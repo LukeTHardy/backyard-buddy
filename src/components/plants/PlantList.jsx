@@ -120,6 +120,7 @@ export const PlantList = () => {
   const handleSearch = (e) => {
     setFilterTypeSwitch("search");
     setSearchTerm(e.target.value);
+    setLastClicked(0);
   };
 
   const clearFilters = () => {
@@ -182,7 +183,7 @@ export const PlantList = () => {
   };
 
   return (
-    <div className="comp-container bg-amber-100 flex flex-col justify-start items-center relative z-4 min-h-[100vh]">
+    <div className="comp-container bg-amber-100 flex flex-col justify-start items-center relative z-4 min-h-[80vh]">
       <div className="title search-bar flex w-3/4 my-2 relative">
         <div className="title text-3xl mx-auto font-bold">Browse Plants:</div>
         <button

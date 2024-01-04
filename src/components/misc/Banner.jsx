@@ -27,9 +27,9 @@ export const Banner = ({ token, setToken }) => {
         className="z-4 absolute left-[36.4rem] top-[1.85rem] h-[7.33rem]"
         src={birdbath}
       ></img>
-      <div className="bird-wrapper">
+      {/* <div className="bird-wrapper">
         <img className="flying-bird z-2" src={flyingbird} />
-      </div>
+      </div> */}
       <div className="self-end absolute top-0 right-1 text-logo-green text-lg">
         {token ? (
           <button
