@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import banner from "/assets/graphics/bannernoclouds.svg";
 import clouds from "/assets/graphics/scrollingclouds.svg";
 import birdbath from "/assets/graphics/croppedbath.gif";
+import flyingbird from "/assets/graphics/flying_bird2.gif";
 import "./Banner.css";
 
 export const Banner = ({ token, setToken }) => {
@@ -21,12 +22,14 @@ export const Banner = ({ token, setToken }) => {
           className="infinite-scroll-image z-1"
         />
       </div>
-      <img className="bg-cover z-2 absolute top-0 left-0" src={banner}></img>
+      <img className="bg-cover z-5 absolute top-0 left-0" src={banner}></img>
       <img
-        className="z-3 absolute left-[36.4rem] top-[1.85rem] h-[7.33rem]"
+        className="z-4 absolute left-[36.4rem] top-[1.85rem] h-[7.33rem]"
         src={birdbath}
       ></img>
-
+      <div className="bird-wrapper">
+        <img className="flying-bird z-2" src={flyingbird} />
+      </div>
       <div className="self-end absolute top-0 right-1 text-logo-green text-lg">
         {token ? (
           <button

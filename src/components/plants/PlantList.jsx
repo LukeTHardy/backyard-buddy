@@ -10,6 +10,7 @@ import "./PlantsCritters.css";
 
 export const PlantList = () => {
   const navigate = useNavigate();
+  const [lastClicked, setLastClicked] = useState(null);
   const [allPlants, setAllPlants] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchTermPlants, setSearchTermPlants] = useState([]);
@@ -124,6 +125,7 @@ export const PlantList = () => {
   const clearFilters = () => {
     setSearchTerm("");
     setFilterTypeSwitch("");
+    setLastClicked(0);
   };
 
   const toggleZoneSwitch = () => {
@@ -134,6 +136,11 @@ export const PlantList = () => {
   const seeRandomPlant = () => {
     const randomId = Math.floor(Math.random() * allPlants.length);
     navigate(`/plants/${randomId}`);
+  };
+
+  const handleButtonClick = (buttonId) => {
+    // Update the state to the id of the last clicked button
+    setLastClicked(buttonId);
   };
 
   const displayPlants = () => {
@@ -208,39 +215,59 @@ export const PlantList = () => {
           />
         </div>
       </div>
-      <div className="primary-buttons-container flex justify-center relative w-3/4 h-9 mb-2">
+      <div className="primary-buttons-container flex justify-center items-center relative w-3/4 h-9 mb-2">
         <div className="type-buttons flex w-1/2 justify-evenly">
           <div className="button2 brown">
             <button
               name="veggie"
-              className="text-xl"
-              onClick={handleVeggieClick}
+              className={`text-xl ${lastClicked === 1 ? "clicked" : ""}`}
+              onClick={(e) => {
+                handleVeggieClick(e);
+                handleButtonClick(1);
+              }}
             >
               Veggies
             </button>
           </div>
           <div className="button2 green">
-            <button name="herb" className="text-xl" onClick={handleTypeFilter}>
+            <button
+              name="herb"
+              className={`text-xl ${lastClicked === 2 ? "clicked" : ""}`}
+              onClick={(e) => {
+                handleTypeFilter(e);
+                handleButtonClick(2);
+              }}
+            >
               Herbs
             </button>
           </div>
-          <div className="button2 yellow">
+          <div className="button2 blue">
             <button
               name="flower"
-              className="text-xl"
-              onClick={handleTypeFilter}
+              className={`text-xl ${lastClicked === 3 ? "clicked" : ""}`}
+              onClick={(e) => {
+                handleTypeFilter(e);
+                handleButtonClick(3);
+              }}
             >
               Flowers
             </button>
           </div>
           <div className="button2 red">
-            <button name="fruit" className="text-xl" onClick={handleTypeFilter}>
+            <button
+              name="fruit"
+              className={`text-xl ${lastClicked === 4 ? "clicked" : ""}`}
+              onClick={(e) => {
+                handleTypeFilter(e);
+                handleButtonClick(4);
+              }}
+            >
               Fruit
             </button>
           </div>
         </div>
 
-        <div className="zone-toggle flex items-center absolute right-0">
+        <div className="zone-toggle flex items-center absolute right-0 ">
           <button
             className="w-16 h-[1.85rem] static justify-end"
             onClick={toggleZoneSwitch}
@@ -267,26 +294,43 @@ export const PlantList = () => {
         </div>
       </div>
       {filterTypeSwitch === "type" && veggiesSelected && (
-        <div className="flex justify-evenly w-[40rem] h-7 my-2">
-          {veggieCategories.map((category) => (
-            <button
-              key={category}
-              className={`eightbit-btn text-lg ${
-                selectedVeggieCategory === category
-                  ? "bg-blue-500"
-                  : "bg-gray-300"
-              }`}
-              onClick={() => handleVeggieCategoryFilter(category)}
-            >
-              {category}
-            </button>
-          ))}
-        </div>
+        <>
+          <div
+            className="arrow"
+            style={{
+              position: "absolute",
+              top: "5.85rem", // Adjusted top value
+              left: "35.1rem",
+              transform: "translateX(-50%)",
+              width: "0",
+              height: "0",
+              borderTop: "8px solid rgb(40, 40, 40)", // Flipped
+              borderLeft: "8px solid transparent",
+              borderRight: "8px solid transparent",
+              borderBottom: "8px solid transparent", // Flipped
+            }}
+          />
+          <div className="absolute left-[15.34rem] top-[6.2rem] flex justify-evenly w-[40rem] h-7 my-2">
+            {veggieCategories.map((category) => (
+              <button
+                key={category}
+                className={`eightbit-btn text-lg ${
+                  selectedVeggieCategory === category
+                    ? "bg-blue-500"
+                    : "bg-gray-300"
+                }`}
+                onClick={() => handleVeggieCategoryFilter(category)}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+        </>
       )}
       {searchTerm || filterTypeSwitch ? (
         <button
           onClick={clearFilters}
-          className="border border-solid border-black rounded-xl px-1 pt-0.5 mt-2"
+          className="border border-solid border-black rounded-xl px-1 pt-0.5 mt-1"
         >
           ⓧ clear filters
         </button>

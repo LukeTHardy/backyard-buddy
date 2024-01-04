@@ -235,20 +235,22 @@
   padding: 1px 7px;
   font-family: "Pixel7";
   text-decoration: none;
-  color: white;
+  color: #39261a;
   box-shadow: inset calc(-1 * var(--shadow-width))
     calc(-1 * var(--shadow-width)) 0 0 var(--shadow-color);
 
+  &:hover,
   &:focus {
-    background: var(--sec-button-background);
-    box-shadow: inset (-calc(var(--shadow-width) * 1.5))
-      (-calc(var(--shadow-width) * 1.5)) 0px 0px var(--shadow-color);
+    /* background: var(--sec-button-background); */
+    /* box-shadow: inset (-calc(var(--shadow-width) * 1.5))
+      (-calc(var(--shadow-width) * 1.5)) 0px 0px var(--shadow-color); */
+    color: rgb(255, 254, 230);
   }
 
-  &:active {
+  /* &:active {
     box-shadow: inset var(--shadow-width) var(--shadow-width) 0px 0px
       var(--shadow-color);
-  }
+  } */
 
   &:before,
   &:after {
@@ -277,20 +279,20 @@
   box-shadow: inset (-var(--shadow-width)) (-var(--shadow-width)) 0px 0px
     var(--reset-shadow-color);
 
-  &:hover,
+  /* &:hover,
   &:focus {
     background: var(--reset-sec-button-background);
     box-shadow: inset (-calc(var(--shadow-width) * 1.5))
       (-calc(var(--shadow-width) * 1.5)) 0px 0px var(--reset-shadow-color);
-  }
+  } */
 
-  &:active {
+  /* &:active {
     box-shadow: inset var(--shadow-width) var(--shadow-width) 0px 0px
       var(--reset-shadow-color);
-  }
+  } */
 }
 
-&--proceed {
+/* &--proceed {
   background: var(--alt-button-background);
   box-shadow: inset (var(--shadow-width)) (var(--shadow-width)) 0px 0px
     var(--alt-shadow-color);
@@ -306,7 +308,7 @@
     box-shadow: inset var(--shadow-width) var(--shadow-width) 0px 0px
       var(--alt-shadow-color);
   }
-}
+} */
 
 * {
   box-sizing: content-box;
@@ -314,8 +316,8 @@
 
 .red {
   --button_background: #d85858;
-  --button_dark_shadow: #762020;
-  --button_light_shadow: #ea9090;
+  --button_dark_shadow: #8e2e2e;
+  --button_light_shadow: #edaaaa;
 }
 .brown {
   --button_background: #be8662;
@@ -325,13 +327,13 @@
 
 .blue {
   --button_background: #4f8fba;
-  --button_dark_shadow: #253a5e;
+  --button_dark_shadow: #39537f;
   --button_light_shadow: #a4dddb;
 }
 
 .green {
   --button_background: #75a743;
-  --button_dark_shadow: #25562e;
+  --button_dark_shadow: #2d6136;
   --button_light_shadow: #d0da91;
 }
 
@@ -380,8 +382,8 @@
   border-bottom: var(--border_width) solid var(--border_color);
 
   /*  box-shadow  */
-  box-shadow: 0 calc(var(--border_width) * -0.8) var(--button_dark_shadow) inset,
-    0 2px var(--button_light_shadow) inset;
+  box-shadow: 0 calc(var(--border_width) * -1) var(--button_dark_shadow) inset,
+    0 2.75px var(--button_light_shadow) inset;
 
   /*  cursor  */
   cursor: pointer;
@@ -438,4 +440,9 @@
 .button2 button:active::after,
 .button2 button:active::before {
   box-shadow: none;
+}
+
+.button2 button.clicked {
+  box-shadow: none;
+  /* Add any other styles you want for the clicked state */
 }
