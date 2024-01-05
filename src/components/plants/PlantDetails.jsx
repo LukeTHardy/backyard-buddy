@@ -12,6 +12,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { PlantPopover } from "../misc/PlantPopover";
 import { CritterPopover } from "../misc/CritterPopover";
 import "./PlantsCritters.css";
+import "./ImageBorder.scss";
 import sunicon from "/assets/graphics/sun.png";
 import watericon from "/assets/graphics/water.png";
 import soilicon from "/assets/graphics/soil.png";
@@ -70,16 +71,21 @@ export const PlantDetails = ({ userId, setFavoriteClicked }) => {
     const newFavorite = {
       plant: parseInt(plantId),
     };
+
     await createFavorite(newFavorite);
     setFavoriteSwitch((prevFavoriteSwitch) => !prevFavoriteSwitch);
     setFavoriteClicked(true);
+
+    // Set a timeout to reset favoriteClicked to false after 2000 milliseconds (2 seconds)
+    setTimeout(() => {
+      setFavoriteClicked(false);
+    }, 1900);
   };
 
   const handleRemoveFavoriteClick = async () => {
     const favoriteId = foundFavorite.id;
     await deleteFavoriteById(favoriteId);
     setFavoriteSwitch((prevFavoriteSwitch) => !prevFavoriteSwitch);
-    setFavoriteClicked(false);
   };
 
   const openLightbox = () => setLightboxOpen(true);
