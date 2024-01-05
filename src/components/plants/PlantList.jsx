@@ -194,7 +194,7 @@ export const PlantList = () => {
         >
           + Add Plant
           <img
-            className="h-[3rem] mb-1.5 -ml-1"
+            className="h-[1.8rem] ml-1 mb-1.5"
             src={seedling}
             alt="Seedling"
           />

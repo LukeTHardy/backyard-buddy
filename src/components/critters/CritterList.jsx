@@ -90,7 +90,7 @@ export const CritterList = () => {
   const displayCritters = () => {
     if (renderedCritters && renderedCritters.length) {
       return (
-        <div className="list-container pixel-border-blue2 w-[85%] grid grid-cols-6 gap-14 mt-8 mb-12 px-8 pt-4 pb-6">
+        <div className="list-container pixel-border-blue2 w-[85%] grid grid-cols-6 gap-14 mt-8 mb-12 px-8 pt-4 pb-8">
           {renderedCritters.map((critter) => {
             return (
               <div key={critter.id}>
@@ -109,7 +109,6 @@ export const CritterList = () => {
               </div>
             );
           })}
-          ;
         </div>
       );
     } else if (allCritters && allCritters.length && filterTypeSwitch) {
