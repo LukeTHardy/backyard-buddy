@@ -79,7 +79,7 @@ export const PlantDetails = ({ userId, setFavoriteClicked }) => {
     // Set a timeout to reset favoriteClicked to false after 2000 milliseconds (2 seconds)
     setTimeout(() => {
       setFavoriteClicked(false);
-    }, 1900);
+    }, 3000);
   };
 
   const handleRemoveFavoriteClick = async () => {
@@ -163,7 +163,7 @@ export const PlantDetails = ({ userId, setFavoriteClicked }) => {
                 />
               )}
             </div>
-            <div className="details-card pixel-border-green1 flex flex-col items-center w-[40rem] px-3 mb-12 top-4 relative">
+            <div className="details-card pixel-border-green1 flex flex-col items-center w-[40rem] px-3 mb-12 top-4 mt-[0.2rem] relative min-h-[27.6rem]">
               <div className="plant-name flex justify-between w-full">
                 <button className="text-xl text-end" onClick={previousPlant}>
                   ﹤Prev
