@@ -211,52 +211,46 @@ $c64LightGrey: #959595;
   height: 10rem;
 }
 
-/*
-* SIZE
-*/
-#px1:checked ~ div {
-  font-size: 1em; // 8px = 1px border
-}
+// #px1:checked ~ div {
+//   font-size: 1em; // 8px = 1px border
+// }
 
-#px2:checked ~ div {
-  font-size: 2em; // 16px = 2px border
-}
+// #px2:checked ~ div {
+//   font-size: 2em; // 16px = 2px border
+// }
 
-#px3:checked ~ div {
-  font-size: 3em; // 24px = 3px border
-}
+// #px3:checked ~ div {
+//   font-size: 3em; // 24px = 3px border
+// }
 
-#px4:checked ~ div {
-  font-size: 4em; // 32px = 4px border
-}
+// #px4:checked ~ div {
+//   font-size: 4em; // 32px = 4px border
+// }
 
-#px5:checked ~ div {
-  font-size: 5em; // 40px = 5px border
-}
+// #px5:checked ~ div {
+//   font-size: 5em; // 40px = 5px border
+// }
 
-#px6:checked ~ div {
-  font-size: 6em; // 48px = 6px border
-}
+// #px6:checked ~ div {
+//   font-size: 6em; // 48px = 6px border
+// }
 
-/*
-* COLOR
-*/
-#color1:checked ~ div {
-  background-color: #fff;
-  color: #000;
-}
+// #color1:checked ~ div {
+//   background-color: #fff;
+//   color: #000;
+// }
 
-#color2:checked ~ div {
-  background-color: $c64LightBlue;
-  color: $c64Blue;
-}
+// #color2:checked ~ div {
+//   background-color: $c64LightBlue;
+//   color: $c64Blue;
+// }
 
-#color3:checked ~ div {
-  background-color: $c64LightRed;
-  color: $c64Red;
-}
+// #color3:checked ~ div {
+//   background-color: $c64LightRed;
+//   color: $c64Red;
+// }
 
-#color4:checked ~ div {
-  background-color: $c64LightGrey;
-  color: $c64DarkGrey;
-}
+// #color4:checked ~ div {
+//   background-color: $c64LightGrey;
+//   color: $c64DarkGrey;
+// }

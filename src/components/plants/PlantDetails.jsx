@@ -84,19 +84,29 @@ export const PlantDetails = ({ userId }) => {
   const closeLightbox = () => setLightboxOpen(false);
 
   const getNextPlantId = (currentPlantId) => {
-    const sortedIds = plants.map((plant) => plant.id).sort((a, b) => a - b);
-    const currentIndex = sortedIds.indexOf(currentPlantId);
-    if (currentIndex !== -1 && currentIndex < sortedIds.length - 1) {
-      return sortedIds[currentIndex + 1];
+    const alphabetizedPlants = plants
+      .slice()
+      .sort((a, b) => a.name.localeCompare(b.name));
+    const currentIndex = alphabetizedPlants.findIndex(
+      (plant) => plant.id === currentPlantId
+    );
+
+    if (currentIndex !== -1 && currentIndex < alphabetizedPlants.length - 1) {
+      return alphabetizedPlants[currentIndex + 1].id;
     }
     return null;
   };
 
   const getPreviousPlantId = (currentPlantId) => {
-    const sortedIds = plants.map((plant) => plant.id).sort((a, b) => a - b);
-    const currentIndex = sortedIds.indexOf(currentPlantId);
+    const alphabetizedPlants = plants
+      .slice()
+      .sort((a, b) => a.name.localeCompare(b.name));
+    const currentIndex = alphabetizedPlants.findIndex(
+      (plant) => plant.id === currentPlantId
+    );
+
     if (currentIndex > 0) {
-      return sortedIds[currentIndex - 1];
+      return alphabetizedPlants[currentIndex - 1].id;
     }
     return null;
   };

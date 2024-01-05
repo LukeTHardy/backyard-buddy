@@ -12,11 +12,15 @@ export const PlantPopover = ({ plant }) => {
     setPopoverVisible(false);
   };
 
+  const shouldUseReducedFontSize = plant.name
+    .split(" ")
+    .some((word) => word.length > 10);
+
   return (
     <div className="plant-popover-link relative">
       <Link to={`/plants/${plant.id}`} className="focus:outline-none">
         <span
-          className="plant-name hover:font-bold hover:text-light-green-900"
+          className="plant-name hover:text-eggshell ease-in duration-100"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
@@ -35,7 +39,7 @@ export const PlantPopover = ({ plant }) => {
             zIndex: "999",
           }}
         >
-          <div className="image-container w-[10rem] h-[10rem]">
+          <div className="popover-container w-[10rem] h-[10rem]">
             <img
               src={plant.image}
               alt={`${plant.name}`}
@@ -43,28 +47,18 @@ export const PlantPopover = ({ plant }) => {
             />
           </div>
           <div className="plant-details w-1/2 flex flex-col items-center justify-evenly">
-            <div className="plant-name w-[10rem] px-1 text-3xl font-bold text-center text-gray-dark font-pixel">
+            <div
+              className={`plant-name w-[10rem] underline underline-offset-[3px] px-1 ${
+                shouldUseReducedFontSize ? "text-2xl" : "text-3xl"
+              } font-bold text-center text-gray-dark font-pixel`}
+            >
               {plant.name}
             </div>
             <div className="plant-type w-[8rem] text-xl italic font-bold text-center text-gray-dark font-pixel">
-              {plant.annual ? "Annual" : "Perennial"} {plant.type.label}
+              {plant.annual ? "Annual" : "Perennial"} <br />
+              {plant.type.label}
             </div>
           </div>
-          {/* <div
-            className="arrow"
-            style={{
-              position: "absolute",
-              top: "100%", // Adjusted top value
-              left: "50%",
-              transform: "translateX(-50%)",
-              width: "0",
-              height: "0",
-              borderTop: "10px solid white", // Flipped
-              borderLeft: "10px solid transparent",
-              borderRight: "10px solid transparent",
-              borderBottom: "10px solid transparent", // Flipped
-            }}
-          /> */}
         </div>
       )}
     </div>

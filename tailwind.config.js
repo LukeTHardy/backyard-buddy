@@ -16,6 +16,7 @@ export default withMT({
       "gray-dark": "#273444",
       gray: "#8492a6",
       "gray-light": "#d3dce6",
+      eggshell: "rgb(251, 251, 239)",
     },
     extend: {
       colors: {
