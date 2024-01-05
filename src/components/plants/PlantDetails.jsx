@@ -16,7 +16,7 @@ import sunicon from "/assets/graphics/sun.png";
 import watericon from "/assets/graphics/water.png";
 import soilicon from "/assets/graphics/soil.png";
 
-export const PlantDetails = ({ userId }) => {
+export const PlantDetails = ({ userId, setFavoriteClicked }) => {
   const navigate = useNavigate();
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [favorites, setFavorites] = useState([]);
@@ -72,12 +72,14 @@ export const PlantDetails = ({ userId }) => {
     };
     await createFavorite(newFavorite);
     setFavoriteSwitch((prevFavoriteSwitch) => !prevFavoriteSwitch);
+    setFavoriteClicked(true);
   };
 
   const handleRemoveFavoriteClick = async () => {
     const favoriteId = foundFavorite.id;
     await deleteFavoriteById(favoriteId);
     setFavoriteSwitch((prevFavoriteSwitch) => !prevFavoriteSwitch);
+    setFavoriteClicked(false);
   };
 
   const openLightbox = () => setLightboxOpen(true);

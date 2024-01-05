@@ -88,7 +88,7 @@ export const PlantList = () => {
     );
     setTypePlants(filteredPlants);
     setSelectedVeggieCategory("");
-    setVeggiesSelected(true);
+    setVeggiesSelected((prevState) => !prevState);
   };
 
   const veggieCategories = [
@@ -148,17 +148,17 @@ export const PlantList = () => {
   const displayPlants = () => {
     if (renderedPlants.length > 0) {
       return (
-        <div className="list-container pixel-border-green2 w-[85%] grid grid-cols-6 gap-14 my-8 px-8 pt-1 pb-6">
+        <div className="list-container pixel-border-green2 w-[85%] grid grid-cols-6 justify-center gap-14 mt-8 mb-12 px-8 pt-4 pb-6">
           {renderedPlants.map((plant) => {
             return (
-              <div key={plant.id}>
+              <div className="" key={plant.id}>
                 <Link to={`/plants/${plant.id}`} className="">
                   <div className="border-step4">
                     <div className="image-container">
-                      <img src={plant.image} alt="Test Image" />
+                      <img src={plant.image} alt="Plant Image" />
                     </div>
                   </div>
-                  <div className="plant-name leading-5 text-[1.2rem] text-center absolute w-[180px] mt-1">
+                  <div className="plant-name leading-5 text-[1.2rem] text-center -mb-8 mt-1">
                     {plant.name}
                   </div>
                 </Link>
@@ -194,7 +194,7 @@ export const PlantList = () => {
         >
           + Add Plant
           <img
-            className="h-[3rem] mb-1.5 -ml-1"
+            className="h-[1.8rem] ml-1 mb-1.5"
             src={seedling}
             alt="Seedling"
           />

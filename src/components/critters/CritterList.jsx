@@ -74,6 +74,7 @@ export const CritterList = () => {
   const clearFilters = () => {
     setSearchTerm("");
     setFilterTypeSwitch("");
+    setLastClicked(0);
   };
 
   const seeRandomCritter = () => {
@@ -89,7 +90,7 @@ export const CritterList = () => {
   const displayCritters = () => {
     if (renderedCritters && renderedCritters.length) {
       return (
-        <div className="list-container pixel-border-blue2 w-[85%] grid grid-cols-6 gap-14 my-8 px-8 pt-1 pb-6">
+        <div className="list-container pixel-border-blue2 w-[85%] grid grid-cols-6 gap-14 mt-8 mb-12 px-8 pt-4 pb-8">
           {renderedCritters.map((critter) => {
             return (
               <div key={critter.id}>
@@ -100,7 +101,7 @@ export const CritterList = () => {
                         <img src={critter.image} alt="Test Image" />
                       </div>
                     </div>
-                    <div className="critter-name leading-5 text-[1.2rem] text-center absolute w-[180px] mt-1">
+                    <div className="critter-name leading-5 text-[1.2rem] text-center -mb-8 mt-1">
                       {critter.name}
                     </div>
                   </Link>
@@ -108,7 +109,6 @@ export const CritterList = () => {
               </div>
             );
           })}
-          ;
         </div>
       );
     } else if (allCritters && allCritters.length && filterTypeSwitch) {
@@ -202,7 +202,7 @@ export const CritterList = () => {
           onClick={clearFilters}
           className="border border-solid border-black rounded-xl px-1 pt-0.5 mt-2 top-[.4rem] right-[12rem]"
         >
-          ⓧ clear filters
+          ⓧ clear filter
         </button>
       ) : (
         ""

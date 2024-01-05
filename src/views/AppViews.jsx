@@ -12,7 +12,13 @@ import { CritterList } from "../components/critters/CritterList";
 import { CritterDetails } from "../components/critters/CritterDetails";
 import { GardenBuilder } from "../components/misc/GardenBuilder";
 
-export const AppViews = ({ token, setToken, userId, setCurrentUserId }) => {
+export const AppViews = ({
+  token,
+  setToken,
+  userId,
+  setCurrentUserId,
+  setFavoriteClicked,
+}) => {
   return (
     <Routes>
       <Route
@@ -33,7 +39,15 @@ export const AppViews = ({ token, setToken, userId, setCurrentUserId }) => {
           <Route index element={<PlantList userId={userId} />} />
           <Route path="newplant" element={<NewPlant userId={userId} />} />
           <Route path="favorites" element={<Favorites />} />
-          <Route path=":plantId" element={<PlantDetails userId={userId} />} />
+          <Route
+            path=":plantId"
+            element={
+              <PlantDetails
+                userId={userId}
+                setFavoriteClicked={setFavoriteClicked}
+              />
+            }
+          />
           <Route path=":plantId/edit" element={<EditPlant />} />
         </Route>
         <Route path="critters">

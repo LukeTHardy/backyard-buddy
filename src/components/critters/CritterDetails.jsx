@@ -83,13 +83,13 @@ export const CritterDetails = () => {
     if (chosenCritter) {
       return (
         <>
-          <div className="navigate-btns flex justify-start items-end italic text-gray-700 text-lg h-8 w-3/4">
+          <div className="navigate-btn flex justify-start items-end text-lg h-8 w-[75%] italic">
             <button onClick={() => navigate("/critters")}>
               ﹤Back to Critters
             </button>
           </div>
-          <div className="card-container flex justify-center">
-            <div className="image-card flex flex-col w-[35rem] items-center">
+          <div className="card-container flex justify-evenly w-[80%]">
+            <div className="image-card items-start">
               <button onClick={openLightbox}>
                 <img
                   src={chosenCritter.image}
@@ -105,7 +105,7 @@ export const CritterDetails = () => {
                 />
               )}
             </div>
-            <div className="details-card pixel-border-blue1 flex flex-col items-center w-[40rem] px-3 mb-12 top-4 relative">
+            <div className="details-card pixel-border-blue1 flex flex-col items-center w-[40rem] px-3 mb-12 top-4 mt-[0.2rem] relative min-h-[27.6rem]">
               <div className="critter-name flex justify-between w-full">
                 <button className="text-xl" onClick={previousCritter}>
                   ﹤Prev
