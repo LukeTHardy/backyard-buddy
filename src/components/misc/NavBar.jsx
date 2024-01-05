@@ -1,22 +1,9 @@
 import { useNavigate, Link } from "react-router-dom";
 import "./NavBar.css";
 import plantdude from "/assets/graphics/plant_homie.gif";
-import { useEffect } from "react";
 
-export const NavBar = ({ token, favoriteClicked, setFavoriteClicked }) => {
+export const NavBar = ({ token, favoriteClicked }) => {
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (favoriteClicked) {
-      // Set a timeout to hide the image after 2000 milliseconds (2 seconds)
-      const timeoutId = setTimeout(() => {
-        setFavoriteClicked((prevFavoriteClicked) => !prevFavoriteClicked);
-      }, 1900);
-
-      // Clean up the timeout when the component unmounts or when favoriteClicked changes
-      return () => clearTimeout(timeoutId);
-    }
-  }, [favoriteClicked, setFavoriteClicked]);
 
   return (
     <nav
@@ -53,7 +40,11 @@ export const NavBar = ({ token, favoriteClicked, setFavoriteClicked }) => {
           <div className="relative">
             <div
               onClick={() => navigate("/plants/favorites")}
-              className="text-3xl text-center hover:scale-105 cursor-pointer ease-in duration-75"
+              className={`text-3xl text-center hover:scale-105 cursor-pointer ease-in duration-75 ${
+                favoriteClicked
+                  ? "text-super-green text-[1.95rem] transition-all ease-in-out duration-2000"
+                  : ""
+              }`}
             >
               Favorites
             </div>

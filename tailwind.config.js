@@ -20,10 +20,12 @@ export default withMT({
     },
     extend: {
       colors: {
-        "logo-green": "#63c32c",
+        "logo-green": "#6ad431",
         "dark-green": "#2e7d32",
         "darker-green": "#1b5e20",
         green2: "#b6d7a2",
+        "super-green": "rgb(45, 253, 45)",
+        gold: "#f7d51d",
       },
       fontFamily: {
         body: ["VCR Mono", "sans-serif"],
@@ -36,6 +38,10 @@ export default withMT({
         svthin: ["SV Thin", "sans-serif"],
         svbold: ["SV Bold", "sans-serif"],
         press_start: ["Press Start", "sans-serif"],
+      },
+      transitionDuration: {
+        700: "700ms",
+        2000: "2000ms",
       },
     },
   },

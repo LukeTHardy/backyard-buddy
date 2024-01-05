@@ -30,7 +30,7 @@ export const PlantPopover = ({ plant }) => {
 
       {isPopoverVisible && (
         <div
-          className="popover-card -m-2.5 flex bg-amber-50 p-1.5 border-solid border-2 border-gray-dark rounded-lg"
+          className="popover-card -m-2.5 flex bg-amber-50 py-1.5 pl-1.5 border-solid border-2 border-gray-dark rounded-lg"
           style={{
             position: "absolute",
             top: "-10.7rem",
