@@ -34,23 +34,29 @@ export const CritterDetails = () => {
   const closeLightbox = () => setLightboxOpen(false);
 
   const getNextCritterId = (currentCritterId) => {
-    const sortedIds = critters
-      .map((critter) => critter.id)
-      .sort((a, b) => a - b);
-    const currentIndex = sortedIds.indexOf(currentCritterId);
-    if (currentIndex !== -1 && currentIndex < sortedIds.length - 1) {
-      return sortedIds[currentIndex + 1];
+    const alphabetizedCritters = critters
+      .slice()
+      .sort((a, b) => a.name.localeCompare(b.name));
+    const currentIndex = alphabetizedCritters.findIndex(
+      (critter) => critter.id === currentCritterId
+    );
+
+    if (currentIndex !== -1 && currentIndex < alphabetizedCritters.length - 1) {
+      return alphabetizedCritters[currentIndex + 1].id;
     }
     return null;
   };
 
   const getPreviousCritterId = (currentCritterId) => {
-    const sortedIds = critters
-      .map((critter) => critter.id)
-      .sort((a, b) => a - b);
-    const currentIndex = sortedIds.indexOf(currentCritterId);
+    const alphabetizedCritters = critters
+      .slice()
+      .sort((a, b) => a.name.localeCompare(b.name));
+    const currentIndex = alphabetizedCritters.findIndex(
+      (critter) => critter.id === currentCritterId
+    );
+
     if (currentIndex > 0) {
-      return sortedIds[currentIndex - 1];
+      return alphabetizedCritters[currentIndex - 1].id;
     }
     return null;
   };

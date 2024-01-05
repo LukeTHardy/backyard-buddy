@@ -84,19 +84,29 @@ export const PlantDetails = ({ userId }) => {
   const closeLightbox = () => setLightboxOpen(false);
 
   const getNextPlantId = (currentPlantId) => {
-    const sortedIds = plants.map((plant) => plant.id).sort((a, b) => a - b);
-    const currentIndex = sortedIds.indexOf(currentPlantId);
-    if (currentIndex !== -1 && currentIndex < sortedIds.length - 1) {
-      return sortedIds[currentIndex + 1];
+    const alphabetizedPlants = plants
+      .slice()
+      .sort((a, b) => a.name.localeCompare(b.name));
+    const currentIndex = alphabetizedPlants.findIndex(
+      (plant) => plant.id === currentPlantId
+    );
+
+    if (currentIndex !== -1 && currentIndex < alphabetizedPlants.length - 1) {
+      return alphabetizedPlants[currentIndex + 1].id;
     }
     return null;
   };
 
   const getPreviousPlantId = (currentPlantId) => {
-    const sortedIds = plants.map((plant) => plant.id).sort((a, b) => a - b);
-    const currentIndex = sortedIds.indexOf(currentPlantId);
+    const alphabetizedPlants = plants
+      .slice()
+      .sort((a, b) => a.name.localeCompare(b.name));
+    const currentIndex = alphabetizedPlants.findIndex(
+      (plant) => plant.id === currentPlantId
+    );
+
     if (currentIndex > 0) {
-      return sortedIds[currentIndex - 1];
+      return alphabetizedPlants[currentIndex - 1].id;
     }
     return null;
   };
@@ -123,13 +133,13 @@ export const PlantDetails = ({ userId }) => {
     if (chosenPlant) {
       return (
         <>
-          <div className="navigate-btns flex justify-start items-end text-lg h-8 w-3/4 italic">
+          <div className="navigate-btn flex justify-start items-end text-lg h-8 w-[75%] italic">
             <button onClick={() => navigate("/plants")}>
               ﹤Back to Plants
             </button>
           </div>
-          <div className="card-container flex justify-center">
-            <div className="image-card flex flex-col w-[35rem] items-center">
+          <div className="card-container flex justify-evenly w-[80%]">
+            <div className="image-card items-start">
               <button onClick={openLightbox}>
                 <img
                   src={chosenPlant.image}

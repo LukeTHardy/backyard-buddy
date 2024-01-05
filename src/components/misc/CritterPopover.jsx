@@ -12,11 +12,15 @@ export const CritterPopover = ({ critter }) => {
     setPopoverVisible(false);
   };
 
+  const shouldUseReducedFontSize = critter.name
+    .split(" ")
+    .some((word) => word.length > 10);
+
   return (
     <div className="critter-popover-link relative">
       <Link to={`/critters/${critter.id}`} className="focus:outline-none">
         <span
-          className="plant-name hover:font-bold hover:text-[1.5rem] hover:text-cyan-900"
+          className="critter-name hover:text-eggshell ease-in duration-100"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
@@ -35,7 +39,7 @@ export const CritterPopover = ({ critter }) => {
             zIndex: "999",
           }}
         >
-          <div className="image-container w-[10rem] h-[10rem]">
+          <div className="popover-container w-[10rem] h-[10rem]">
             <img
               src={critter.image}
               alt={`${critter.name}`}
@@ -43,28 +47,17 @@ export const CritterPopover = ({ critter }) => {
             />
           </div>
           <div className="critter-details flex flex-col items-center justify-evenly">
-            <div className="critter-name w-[10rem] px-1 text-3xl font-bold text-center text-gray-dark font-pixel">
+            <div
+              className={`critter-name w-[10rem] underline underline-offset-[3px] px-1 ${
+                shouldUseReducedFontSize ? "text-2xl" : "text-3xl"
+              } font-bold text-center text-gray-dark font-pixel`}
+            >
               {critter.name}
             </div>
             <div className="critter-type w-[8rem] text-2xl italic font-bold text-center text-gray-dark font-pixel">
               {critter.type.label}
             </div>
           </div>
-          {/* <div
-            className="arrow"
-            style={{
-              position: "absolute",
-              top: "100%", // Adjusted top value
-              left: "50%",
-              transform: "translateX(-50%)",
-              width: "0",
-              height: "0",
-              borderTop: "10px solid white", // Flipped
-              borderLeft: "10px solid transparent",
-              borderRight: "10px solid transparent",
-              borderBottom: "10px solid transparent", // Flipped
-            }}
-          /> */}
         </div>
       )}
     </div>

@@ -89,17 +89,16 @@ export const CritterList = () => {
   const displayCritters = () => {
     if (renderedCritters && renderedCritters.length) {
       return (
-        <div className="list-container pixel-border-blue2 w-3/4 grid grid-cols-5 gap-14 my-8 px-8 pt-1 pb-12">
+        <div className="list-container pixel-border-blue2 w-[85%] grid grid-cols-6 gap-14 my-8 px-8 pt-1 pb-6">
           {renderedCritters.map((critter) => {
             return (
               <div key={critter.id}>
                 <>
                   <Link to={`/critters/${critter.id}`} className="">
-                    <div className="critter-image">
-                      <img
-                        src={`${critter.image}`}
-                        className="border-solid w-[169.2px] h-[169.2px] object-cover border-[2px] border-dark-gray rounded-xl"
-                      />
+                    <div className="border-step4">
+                      <div className="image-container">
+                        <img src={critter.image} alt="Test Image" />
+                      </div>
                     </div>
                     <div className="critter-name leading-5 text-[1.2rem] text-center absolute w-[180px] mt-1">
                       {critter.name}
