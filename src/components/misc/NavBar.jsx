@@ -40,10 +40,10 @@ export const NavBar = ({ token, favoriteClicked }) => {
           <div className="relative">
             <div
               onClick={() => navigate("/plants/favorites")}
-              className={`text-3xl text-center hover:scale-105 cursor-pointer ease-in duration-75 ${
+              className={`text-3xl text-center hover:scale-105 cursor-pointer ${
                 favoriteClicked
-                  ? "text-super-green text-[1.95rem] transition-all ease-in-out duration-2000"
-                  : ""
+                  ? "fade-in-out-text-color transition-all ease-in-out duration-1000"
+                  : "ease-in duration-75"
               }`}
             >
               Favorites
@@ -51,7 +51,11 @@ export const NavBar = ({ token, favoriteClicked }) => {
             {favoriteClicked && (
               <img
                 src={plantdude}
-                className="h-[4rem] absolute bottom-1 right-[-2.5rem]"
+                className={`h-[4rem] absolute bottom-1 right-[-2.5rem] ${
+                  favoriteClicked
+                    ? "fade-in-out-opacity duration-1000"
+                    : "opacity-0"
+                }`}
                 alt="plant"
               />
             )}

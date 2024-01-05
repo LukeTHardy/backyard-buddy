@@ -41,6 +41,7 @@ export default withMT({
       },
       transitionDuration: {
         700: "700ms",
+        1000: "1000ms",
         2000: "2000ms",
       },
     },
