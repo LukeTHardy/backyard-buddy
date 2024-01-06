@@ -21,3 +21,21 @@
 .upload-input {
   margin: 0.5rem 0;
 }
+
+/* Add this to your global CSS or stylesheet */
+@keyframes reverseOpacity {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.fade-in-out-opacity {
+  animation: fade-in-out-opacity 1s ease-in-out;
+}
+
+.reverse-opacity {
+  animation: reverseOpacity 1s ease-in-out;
+}
