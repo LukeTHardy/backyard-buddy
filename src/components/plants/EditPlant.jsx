@@ -223,7 +223,7 @@ export const EditPlant = () => {
   };
 
   return (
-    <div className="comp-container flex flex-col justify-start items-center bg-amber-100 min-h-[80vh] relative">
+    <div className="comp-container flex flex-col justify-start items-center bg-amber-100 min-h-[100vh] relative">
       <h2 className="form-title my-2 text-3xl">Edit {plantToEdit.name}:</h2>
       <div className="fields-container flex justify-center">
         <div className="left-side-fields flex flex-col mx-4 w-[20rem]">
