@@ -148,7 +148,10 @@ export const Favorites = () => {
             return (
               <div key={favorite.id}>
                 <>
-                  <Link to={`/plants/${favorite.plant.id}`} className="">
+                  <Link
+                    to={`/plants/${favorite.plant.id}`}
+                    className="hover:text-eggshell"
+                  >
                     <div className="border-step4">
                       <div className="image-container">
                         <img src={favorite.plant.image} alt="Plant Image" />

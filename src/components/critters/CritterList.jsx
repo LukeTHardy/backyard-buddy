@@ -95,7 +95,10 @@ export const CritterList = () => {
             return (
               <div key={critter.id}>
                 <>
-                  <Link to={`/critters/${critter.id}`} className="">
+                  <Link
+                    to={`/critters/${critter.id}`}
+                    className="hover:text-eggshell"
+                  >
                     <div className="border-step4">
                       <div className="image-container">
                         <img src={critter.image} alt="Test Image" />
