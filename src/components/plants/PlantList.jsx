@@ -17,11 +17,122 @@ export const PlantList = () => {
   const [searchTermPlants, setSearchTermPlants] = useState([]);
   const [veggiesSelected, setVeggiesSelected] = useState(false);
   const [typePlants, setTypePlants] = useState([]);
-  const [zoneToggle, setZoneToggle] = useState(false);
   const [zoneSwitch, setZoneSwitch] = useState(false);
+  const [userZoneNumber, setUserZoneNumber] = useState(0);
+  const [fullZoneName, setFullZoneName] = useState("");
+  const [locationJustShared, setLocationJustShared] = useState(false);
   const [filterTypeSwitch, setFilterTypeSwitch] = useState("");
   const [selectedVeggieCategory, setSelectedVeggieCategory] = useState("");
   const [renderedPlants, setRenderedPlants] = useState([]);
+
+  useEffect(() => {
+    const getUserCoordinates = () => {
+      return new Promise(async (resolve, reject) => {
+        if ("geolocation" in navigator) {
+          try {
+            const position = await new Promise((innerResolve, innerReject) => {
+              navigator.geolocation.getCurrentPosition(
+                innerResolve,
+                innerReject
+              );
+            });
+
+            const { latitude, longitude } = position.coords;
+            localStorage.setItem(
+              "userCoordinates",
+              JSON.stringify({ latitude, longitude })
+            );
+            console.log("Latitude: " + latitude);
+            console.log("Longitude: " + longitude);
+
+            // Return the coordinates directly
+            resolve({ latitude, longitude });
+          } catch (error) {
+            setZoneSwitch(false);
+            console.error("Error getting location:", error);
+            reject(error);
+          }
+        } else {
+          console.log("Geolocation is not available in this browser.");
+          reject(new Error("Geolocation not available"));
+        }
+      });
+    };
+
+    const reverseGeocode = async ({ latitude, longitude }) => {
+      try {
+        const endpoint = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyB-9RSg71QhlzZOOMJTZmPpb0pOaqa6xuc`;
+
+        const response = await fetch(endpoint);
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        const zipcode = data.results[4].address_components?.[0].short_name;
+        return zipcode;
+      } catch (error) {
+        console.error("Error fetching geocode data:", error.message);
+        // You might want to handle the error appropriately (e.g., show a user-friendly message)
+        return null;
+      }
+    };
+
+    const getZoneFromZip = async (zipcode) => {
+      try {
+        const response = await fetch(`https://phzmapi.org/${zipcode}.json`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        const zone = data.zone;
+        localStorage.setItem("Full zone name:", JSON.stringify(zone));
+        if (!fullZoneName) {
+          const cleanedZoneName = zone.replace(/^"(.*)"$/, "$1");
+          setFullZoneName(cleanedZoneName);
+          setLocationJustShared(true);
+        }
+        console.log("Just set full zone name from function chain:", zone);
+        return zone;
+      } catch (error) {
+        console.error("Error fetching zone data:", error.message);
+        // You might want to handle the error appropriately (e.g., show a user-friendly message)
+        return null;
+      }
+    };
+    const extractZoneNumber = (zone) => {
+      const zoneNumber = parseInt(zone.toString().charAt(0));
+      setUserZoneNumber(zoneNumber);
+      localStorage.setItem("Zone number:", JSON.stringify(zoneNumber));
+      console.log("Just set zone number from function chain:", zoneNumber);
+    };
+
+    const zoneAlreadyStored = JSON.parse(localStorage.getItem("Zone number:"));
+
+    if (zoneSwitch && !zoneAlreadyStored) {
+      getUserCoordinates()
+        .then((coordinates) => reverseGeocode(coordinates))
+        .then((zipcode) => getZoneFromZip(zipcode))
+        .then((zone) => extractZoneNumber(zone))
+        .catch((error) => console.error("Error in the chain:", error));
+    }
+  }, [zoneSwitch]);
+
+  useEffect(() => {
+    const storedZoneName = localStorage.getItem("Full zone name:");
+    const storedZoneNumber = parseInt(localStorage.getItem("Zone number:"));
+
+    if (!fullZoneName && storedZoneName) {
+      const cleanedZoneName = storedZoneName.replace(/^"(.*)"$/, "$1");
+      setFullZoneName(cleanedZoneName);
+      console.log("Just set full zone name from local storage");
+    }
+    if (!userZoneNumber && storedZoneNumber) {
+      setUserZoneNumber(storedZoneNumber);
+      console.log("Just set zone number from local storage");
+    }
+  }, [fullZoneName, userZoneNumber]);
 
   const fetchAndSetAllPlants = async () => {
     const plantArray = await fetchAllPlants();
@@ -56,7 +167,9 @@ export const PlantList = () => {
     // Apply zone switch filter if enabled
     if (zoneSwitch) {
       filteredPlants = filteredPlants.filter((plant) => {
-        return plant.zones.some((zone) => zone.name.includes("3"));
+        return plant.zones.some(
+          (zone) => parseInt(zone.name) === userZoneNumber
+        );
       });
     }
 
@@ -69,6 +182,7 @@ export const PlantList = () => {
     filterTypeSwitch,
     typePlants,
     zoneSwitch,
+    userZoneNumber,
   ]);
 
   const handleTypeFilter = (e) => {
@@ -131,7 +245,6 @@ export const PlantList = () => {
   };
 
   const toggleZoneSwitch = () => {
-    setZoneToggle((prevState) => !prevState);
     setZoneSwitch((prevState) => !prevState);
   };
 
@@ -172,13 +285,13 @@ export const PlantList = () => {
       );
     } else if (allPlants && allPlants.length && filterTypeSwitch) {
       return (
-        <h3 className="text-xl w-3/4 my-8 p-8 pixel-border-green2 text-center">
+        <h3 className="text-xl w-[85%] my-8 p-8 pixel-border-green2 text-center">
           No plants found :(
         </h3>
       );
     } else {
       return (
-        <h3 className="text-xl w-3/4 my-8 p-8 pixel-border-green2 text-center">
+        <h3 className="text-xl w-[85%] my-8 p-8 pixel-border-green2 text-center">
           Loading Plants...
         </h3>
       );
@@ -187,7 +300,7 @@ export const PlantList = () => {
 
   return (
     <div className="comp-container bg-amber-100 flex flex-col justify-start items-center relative z-4 min-h-[80vh]">
-      <div className="title search-bar flex w-3/4 my-2 relative">
+      <div className="title search-bar flex w-[85%] my-2 relative">
         <div className="title text-3xl mx-auto font-bold">Browse Plants:</div>
         <button
           className="add-plant-button text-2xl text-light-green-900 absolute left-0 underline flex justify-center items-center h-[2.5rem]"
@@ -219,7 +332,7 @@ export const PlantList = () => {
           />
         </div>
       </div>
-      <div className="primary-buttons-container flex justify-center items-center relative w-3/4 h-9 mb-2">
+      <div className="primary-buttons-container flex justify-center items-center relative w-[85%] h-9 mb-2">
         <div className="type-buttons flex w-1/2 justify-evenly">
           <div className="button2 brown">
             <button
@@ -278,7 +391,7 @@ export const PlantList = () => {
           >
             <img
               className="w-full h-full object-cover"
-              src={zoneToggle ? onSwitch : offSwitch}
+              src={zoneSwitch ? onSwitch : offSwitch}
               alt="zone toggle button"
             />
           </button>
@@ -340,6 +453,11 @@ export const PlantList = () => {
         </button>
       ) : (
         ""
+      )}
+      {(fullZoneName || locationJustShared) && (
+        <div className="text-xl absolute right-24 top-24">
+          You are in zone: {fullZoneName}
+        </div>
       )}
       {displayPlants()}
     </div>

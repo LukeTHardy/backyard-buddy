@@ -116,13 +116,13 @@ export const CritterList = () => {
       );
     } else if (allCritters && allCritters.length && filterTypeSwitch) {
       return (
-        <h3 className="text-xl w-3/4 my-8 p-8 pixel-border-blue2 text-center">
+        <h3 className="text-xl w-[85%] my-8 p-8 pixel-border-blue2 text-center">
           No critters found :/
         </h3>
       );
     } else {
       return (
-        <h3 className="text-xl w-3/4 my-8 p-8 pixel-border-blue2 text-center">
+        <h3 className="text-xl w-[85%] my-8 p-8 pixel-border-blue2 text-center">
           Loading Critters...
         </h3>
       );
@@ -131,7 +131,7 @@ export const CritterList = () => {
 
   return (
     <div className="comp-container bg-amber-100 flex flex-col justify-start items-center relative min-h-[80vh]">
-      <div className="title search-bar flex w-3/4 mb-2 mt-2 relative">
+      <div className="title search-bar flex w-[85%] mb-2 mt-2 relative">
         <div className="title text-3xl mx-auto font-bold">Browse Critters:</div>
         <div className="search-bar-container absolute right-0">
           <input
@@ -150,7 +150,7 @@ export const CritterList = () => {
           />
         </div>
       </div>
-      <div className="buttons-container flex justify-center items-center relative w-3/4 h-9 mb-2">
+      <div className="buttons-container flex justify-center items-center relative w-[85%] h-9 mb-2">
         <div className="type-buttons flex w-[28rem] justify-evenly">
           <div className="button2 green">
             <button
