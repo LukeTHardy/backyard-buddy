@@ -1,6 +1,7 @@
 import { useNavigate, Link } from "react-router-dom";
 import "./NavBar.css";
 import plantdude from "/assets/graphics/plant_homie.gif";
+// import stars from "/assets/graphics/sparkle.png";
 
 export const NavBar = ({ token, favoriteClicked }) => {
   const navigate = useNavigate();
@@ -42,7 +43,7 @@ export const NavBar = ({ token, favoriteClicked }) => {
               onClick={() => navigate("/plants/favorites")}
               className={`text-3xl text-center hover:scale-105 cursor-pointer ${
                 favoriteClicked
-                  ? "fade-in-out-text-color transition-all ease-in-out duration-1000"
+                  ? "fade-in-out-text-color"
                   : "ease-in duration-75"
               }`}
             >
@@ -52,9 +53,7 @@ export const NavBar = ({ token, favoriteClicked }) => {
               <img
                 src={plantdude}
                 className={`h-[4rem] absolute bottom-1 right-[-2.5rem] ${
-                  favoriteClicked
-                    ? "fade-in-out-opacity duration-1000"
-                    : "opacity-0"
+                  favoriteClicked ? "fade-in-out-opacity duration-700" : ""
                 }`}
                 alt="plant"
               />

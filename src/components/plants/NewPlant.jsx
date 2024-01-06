@@ -79,7 +79,7 @@ export const NewPlant = () => {
       selectedPlants.length !== 0 &&
       selectedCritters.length !== 0;
     const areNewPlantPropertiesTruthy = Object.values(newPlant).every(
-      (prop) => !!prop
+      (prop) => prop !== "" && prop !== "0" && prop !== 0
     );
     const isImageValid = !!b64ImageString && !!b64IconString;
 
@@ -159,10 +159,8 @@ export const NewPlant = () => {
 
   const handleSave = async () => {
     try {
-      if (!isFormValid()) {
-        window.alert(
-          `Congratulations, you found a secret message that says fill out all the fields before saving :)`
-        );
+      if (!isFormValid) {
+        window.alert(`Fill out the whole thing silly`);
         return;
       }
       const newPlantObj = {
@@ -193,12 +191,12 @@ export const NewPlant = () => {
   };
 
   return (
-    <div className="comp-container flex flex-col justify-start items-center bg-amber-100 min-h-[80vh] relative">
+    <div className="comp-container flex flex-col justify-start items-center bg-amber-100 min-h-[100vh] relative">
       <h2 className="form-title my-2 text-3xl">New Plant:</h2>
       <div className="fields-container flex justify-center">
-        <div className="left-side-fields flex flex-col mx-4 w-[20rem]">
-          <div className="name-field flex">
-            <label htmlFor="name" className="mr-2">
+        <div className="left-side-fields flex flex-col justify-evenly mx-4 w-[25rem]">
+          <div className="name-field flex items-center">
+            <label htmlFor="name" className="mr-2 text-2xl">
               Name:
             </label>
             <input
@@ -206,149 +204,147 @@ export const NewPlant = () => {
               value={newPlant.name}
               name="name"
               type="text"
-              className="text-input"
-              placeholder=" Enter Plant Name"
+              className="text-input text-xl border-solid border-black border-[1px] rounded-md pl-2 h-[1.8rem] my-[0.5rem] overflow-x-hidden flex-1"
+              placeholder="Enter Plant Name"
               onChange={handleInputChange}
             />
           </div>
-          <div className="description-field flex">
-            <label htmlFor="description" className="mr-2">
+          <div className="description-field flex items-center">
+            <label htmlFor="description" className="mr-2 text-2xl">
               Description:
             </label>
-            <input
+            <textarea
               id="description"
               value={newPlant.description}
               name="description"
-              type="text"
-              className="text-input"
-              placeholder=" Enter Plant Description"
+              className="text-input text-md leading-4 border-solid border-black border-[1px] rounded-md pl-2 pt-2 h-[3rem] my-[0.5rem] overflow-x-hidden flex-1"
+              placeholder="Enter Plant Description"
               onChange={handleInputChange}
             />
           </div>
-          <div className="type-container flex select-input">
-            <div className="type-title mr-2">Plant Type:</div>
-            <div className="select-container">
-              <select
-                name="type"
-                onChange={handleInputChange}
-                value={newPlant.type}
-                placeholder="Select a Type"
-              >
-                <option value={0}>Select a type</option>
-                {plantTypes.map((typeObj) => {
-                  return (
-                    <option key={typeObj.id} value={typeObj.id}>
-                      {typeObj.label}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
+          <div className="type-container flex items-center">
+            <div className="type-title mr-2 text-2xl">Plant Type:</div>
+            <select
+              name="type"
+              onChange={handleInputChange}
+              value={newPlant.type}
+              placeholder="Select a Type"
+              className="text-xl border-solid border-black border-[1px] rounded-md pl-2 h-[1.8rem] my-[0.5rem] overflow-x-hidden flex-1"
+            >
+              <option value={0}>Select a type</option>
+              {plantTypes.map((typeObj) => {
+                return (
+                  <option key={typeObj.id} value={typeObj.id}>
+                    {typeObj.label}
+                  </option>
+                );
+              })}
+            </select>
           </div>
-          <div className="veggieCat-container flex select-input">
-            <div className="veggieCat-title mr-2">Veggie Category:</div>
-            <div className="select-container">
-              <select
-                name="veggie_cat"
-                onChange={handleInputChange}
-                value={newPlant.veggie_cat}
-                placeholder="Select a Category"
-              >
-                <option value={0}>Select a Category</option>
-                {veggieCats.map((catObj) => {
-                  return (
-                    <option key={catObj.id} value={catObj.id}>
-                      {catObj.label}
-                    </option>
-                  );
-                })}
-              </select>
+          <div className="veggieCat-container flex items-center">
+            <div className="veggieCat-title mr-2 text-2xl">
+              Veggie Category:
             </div>
+            <select
+              name="veggie_cat"
+              onChange={handleInputChange}
+              value={newPlant.veggie_cat}
+              placeholder="Select a Category"
+              className="text-xl border-solid border-black border-[1px] rounded-md pl-2 h-[1.8rem] my-[0.5rem] overflow-x-hidden flex-1"
+            >
+              <option value={0}>Select a category</option>
+              {veggieCats.map((catObj) => {
+                return (
+                  <option key={catObj.id} value={catObj.id}>
+                    {catObj.label}
+                  </option>
+                );
+              })}
+            </select>
           </div>
-          <div className="soil-container flex select-input">
-            <div className="soil-title mr-2">Soil:</div>
-            <div className="select-container">
-              <select
-                name="soil"
-                onChange={handleInputChange}
-                value={newPlant.soil}
-                placeholder="Select a Soil Type"
-              >
-                <option value={0}>Select a type</option>
-                {soils.map((soilObj) => {
-                  return (
-                    <option key={soilObj.id} value={soilObj.id}>
-                      {soilObj.soil_type}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
+          <div className="soil-container flex items-center">
+            <div className="soil-title mr-2 text-2xl">Soil:</div>
+
+            <select
+              name="soil"
+              onChange={handleInputChange}
+              value={newPlant.soil}
+              placeholder="Select a Soil Type"
+              className="text-xl border-solid border-black border-[1px] rounded-md pl-2 h-[1.8rem] my-[0.5rem] overflow-x-hidden flex-1"
+            >
+              <option value={0}>Select a type</option>
+              {soils.map((soilObj) => {
+                return (
+                  <option key={soilObj.id} value={soilObj.id}>
+                    {soilObj.soil_type}
+                  </option>
+                );
+              })}
+            </select>
           </div>
-          <div className="water-container flex select-input">
-            <div className="water-title mr-2">Water:</div>
-            <div className="select-container">
-              <select
-                name="water"
-                onChange={handleInputChange}
-                value={newPlant.water}
-                placeholder="Select a Frequency"
-              >
-                <option value={0}>Select a watering frequency</option>
-                {waters.map((waterObj) => {
-                  return (
-                    <option key={waterObj.id} value={waterObj.id}>
-                      {waterObj.frequency}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
+          <div className="water-container flex items-center">
+            <div className="water-title mr-2 text-2xl">Water:</div>
+            <select
+              name="water"
+              onChange={handleInputChange}
+              value={newPlant.water}
+              placeholder="Select a Frequency"
+              className="text-xl border-solid border-black border-[1px] rounded-md pl-2 h-[1.8rem] my-[0.5rem] overflow-x-hidden flex-1"
+            >
+              <option value={0}>Select a watering frequency</option>
+              {waters.map((waterObj) => {
+                return (
+                  <option key={waterObj.id} value={waterObj.id}>
+                    {waterObj.frequency}
+                  </option>
+                );
+              })}
+            </select>
           </div>
-          <div className="light-container flex select-input">
-            <div className="light-title mr-2">Light:</div>
-            <div className="select-container">
-              <select
-                name="light"
-                onChange={handleInputChange}
-                value={newPlant.light}
-                placeholder="Select a Light Level"
-              >
-                <option value={0}>Select a light level</option>
-                {lights.map((lightObj) => {
-                  return (
-                    <option key={lightObj.id} value={lightObj.id}>
-                      {lightObj.label}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
+          <div className="light-container flex items-center">
+            <div className="light-title mr-2 text-2xl">Light:</div>
+
+            <select
+              name="light"
+              onChange={handleInputChange}
+              value={newPlant.light}
+              placeholder="Select a Light Level"
+              className="text-xl border-solid border-black border-[1px] rounded-md pl-2 h-[1.8rem] my-[0.5rem] overflow-x-hidden flex-1"
+            >
+              <option value={0}>Select a light level</option>
+              {lights.map((lightObj) => {
+                return (
+                  <option key={lightObj.id} value={lightObj.id}>
+                    {lightObj.label}
+                  </option>
+                );
+              })}
+            </select>
           </div>
-          <div className="annual-container flex select-input w-[16rem]">
-            <label htmlFor="annual" className="mr-2">
+          <div className="annual-container flex items-center select-input w-[25rem]">
+            <label htmlFor="annual" className="text-2xl">
               Lifecycle:
             </label>
-            <div>
-              <label>
+            <div className="w-[25rem]">
+              <label className="text-xl">
                 <input
                   id="annual"
                   type="radio"
                   name="annual"
                   value={true}
-                  className="mx-1"
+                  className="mx-2"
                   onChange={handleInputChange}
                 />
                 Annual
               </label>
 
-              <label className="mx-1">
+              <label className="text-xl">
                 <input
                   id="perennial"
                   type="radio"
                   name="annual"
                   value={false}
-                  className="mx-1"
+                  className="mx-2"
                   onChange={handleInputChange}
                 />
                 Perennial
@@ -356,37 +352,37 @@ export const NewPlant = () => {
             </div>
           </div>
         </div>
-        <div className="right-side-fields flex flex-col mx-4 w-[20rem]">
-          <div className="height-container flex">
-            <label htmlFor="height" className="mr-2">
-              Height (inches):
+        <div className="right-side-fields flex flex-col justify-evenly mx-4 w-[25rem]">
+          <div className="height-container flex items-center">
+            <label htmlFor="height" className="mr-2 text-2xl">
+              Height:
             </label>
             <input
               id="height"
               value={newPlant.height}
               name="height"
               type="text"
-              className="text-input"
-              placeholder=" Enter Height (in.)"
+              className="text-input text-xl border-solid border-black border-[1px] rounded-md pl-2 h-[1.8rem] mt-[0.7rem] mb-[0.5rem] overflow-x-hidden flex-1"
+              placeholder="Enter Height (inches)"
               onChange={handleInputChange}
             />
           </div>
-          <div className="spacing-container flex">
-            <label htmlFor="spacing" className="mr-2">
-              Spacing (inches):
+          <div className="spacing-container flex items-center">
+            <label htmlFor="spacing" className="mr-2 text-2xl">
+              Spacing:
             </label>
             <input
               id="spacing"
               value={newPlant.spacing}
               name="spacing"
               type="text"
-              className="text-input"
-              placeholder=" Enter Spacing (in.)"
+              className="text-input text-xl border-solid border-black border-[1px] rounded-md pl-2 h-[1.8rem] my-[0.5rem] overflow-x-hidden flex-1"
+              placeholder="Enter Spacing (inches)"
               onChange={handleInputChange}
             />
           </div>
-          <div className="maturity-container flex">
-            <label htmlFor="maturity" className="mr-2">
+          <div className="maturity-container flex items-center">
+            <label htmlFor="maturity" className="mr-2 text-2xl">
               Time to Maturity:
             </label>
             <input
@@ -394,26 +390,36 @@ export const NewPlant = () => {
               value={newPlant.maturity}
               name="maturity"
               type="text"
-              className="text-input"
-              placeholder=" Number of Days"
+              className="text-input text-xl border-solid border-black border-[1px] rounded-md pl-2 h-[1.8rem] my-[0.5rem] overflow-x-hidden flex-1"
+              placeholder="Number and unit"
               onChange={handleInputChange}
             />
           </div>
-          <div className="image-upload flex upload-input">
-            <label htmlFor="image" className="mr-2">
+          <div className="image-upload flex items-center">
+            <label htmlFor="image" className="mr-2 text-2xl">
               Image Upload:
             </label>
-            <input type="file" id="image" onChange={createImageString} />
+            <input
+              type="file"
+              id="image"
+              onChange={createImageString}
+              className="pl-2 h-[1.9rem] my-[0.5rem] overflow-x-hidden flex-1"
+            />
           </div>
-          <div className="icon-upload flex upload-input">
-            <label htmlFor="icon" className="mr-2">
+          <div className="icon-upload flex items-center">
+            <label htmlFor="icon" className="mr-2 text-2xl">
               Icon Upload:
             </label>
-            <input type="file" id="icon" onChange={createIconString} />
+            <input
+              type="file"
+              id="icon"
+              onChange={createIconString}
+              className="pl-2 h-[1.9rem] my-[0.5rem] overflow-x-hidden flex-1"
+            />
           </div>
-          <div className="zones-container flex">
-            <span className="zones-title mr-2">Zones:</span>
-            <div className="select-container select-input">
+          <div className="zones-container flex items-center">
+            <span className="zones-title mr-2 text-2xl">Zones:</span>
+            <div className="pl-2 min-h-[2.5rem] my-[0.5rem] flex-1">
               <Select
                 options={zoneOptions}
                 isMulti
@@ -423,9 +429,9 @@ export const NewPlant = () => {
               />
             </div>
           </div>
-          <div className="companions-container flex">
-            <span className="companions-title mr-2">Companions:</span>
-            <div className="select-container select-input">
+          <div className="companions-container flex items-center">
+            <span className="companions-title mr-2 text-2xl">Companions:</span>
+            <div className="pl-2 min-h-[2.5rem] my-[0.5rem] flex-1">
               <Select
                 options={companionOptions}
                 isMulti
@@ -435,9 +441,9 @@ export const NewPlant = () => {
               />
             </div>
           </div>
-          <div className="critters-container flex">
-            <span className="critters-title mr-2">Critters:</span>
-            <div className="select-container select-input">
+          <div className="critters-container flex items-center">
+            <span className="critters-title mr-2 text-2xl">Critters:</span>
+            <div className="pl-2 min-h-[2.5rem] my-[0.5rem] flex-1">
               <Select
                 options={critterOptions}
                 isMulti
@@ -458,13 +464,13 @@ export const NewPlant = () => {
             {showFirstImage ? (
               <img
                 src={growingplant}
-                className="h-[3rem] absolute top-1 right-[-2.5rem]"
+                className="h-[3.5rem] absolute top-1.5 right-[-2.5rem]"
                 alt="growing plant"
               />
             ) : (
               <img
                 src={staticflower}
-                className="h-[3rem] absolute top-1 right-[-2.5rem]"
+                className="h-[3.5rem] absolute top-1.5 right-[-2.5rem]"
                 alt="static flower"
               />
             )}
