@@ -236,7 +236,7 @@
   padding: 1px 7px;
   font-family: "Pixel7";
   text-decoration: none;
-  color: #39261a;
+  color: rgb(40, 40, 40);
   box-shadow: inset calc(-1 * var(--shadow-width))
     calc(-1 * var(--shadow-width)) 0 0 var(--shadow-color);
 

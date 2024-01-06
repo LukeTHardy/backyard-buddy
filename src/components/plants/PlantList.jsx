@@ -18,46 +18,14 @@ export const PlantList = () => {
   const [veggiesSelected, setVeggiesSelected] = useState(false);
   const [typePlants, setTypePlants] = useState([]);
   const [zoneSwitch, setZoneSwitch] = useState(false);
-  // const [userLat, setUserLat] = useState(36.0645663);
-  // const [userLong, setUserLong] = useState(-80.4356711);
-  // const [userLat, setUserLat] = useState(0);
-  // const [userLong, setUserLong] = useState(0);
-  const [userZip, setUserZip] = useState(0);
-  const [userZone, setUserZone] = useState(0);
+  const [userZoneNumber, setUserZoneNumber] = useState(0);
+  const [fullZoneName, setFullZoneName] = useState("");
+  const [locationJustShared, setLocationJustShared] = useState(false);
   const [filterTypeSwitch, setFilterTypeSwitch] = useState("");
   const [selectedVeggieCategory, setSelectedVeggieCategory] = useState("");
   const [renderedPlants, setRenderedPlants] = useState([]);
 
-  // const getGeocodeData = async () => {
-  //   try {
-  //     const apiKey = "AIzaSyB-9RSg71QhlzZOOMJTZmPpb0pOaqa6xuc";
-  //     const endpoint = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${userLat},${userLong}&key=${apiKey}`;
-
-  //     const response = await fetch(endpoint);
-
-  //     if (!response.ok) {
-  //       throw new Error(`HTTP error! Status: ${response.status}`);
-  //     }
-
-  //     const data = await response.json();
-  //     const shortNameValue = data.results[4].address_components[0].short_name;
-
-  //     console.log('Value of "short_name":', shortNameValue);
-  //     return data;
-  //   } catch (error) {
-  //     console.error("Error fetching geocode data:", error.message);
-  //     // You might want to handle the error appropriately (e.g., show a user-friendly message)
-  //     return null;
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   getGeocodeData();
-  // }, []);
-
   useEffect(() => {
-    const savedCoords = JSON.parse(localStorage.getItem("userCoordinates"));
-
     const getUserCoordinates = () => {
       return new Promise((resolve, reject) => {
         if ("geolocation" in navigator) {
@@ -114,9 +82,13 @@ export const PlantList = () => {
         }
         const data = await response.json();
         const zone = data.zone;
-        setUserZone(zone);
-
-        console.log("Full zone name:", zone);
+        localStorage.setItem("Full zone name:", JSON.stringify(zone));
+        if (!fullZoneName) {
+          const cleanedZoneName = zone.replace(/^"(.*)"$/, "$1");
+          setFullZoneName(cleanedZoneName);
+          setLocationJustShared(true);
+        }
+        console.log("Just set full zone name from function chain:", zone);
         return zone;
       } catch (error) {
         console.error("Error fetching zone data:", error.message);
@@ -125,10 +97,15 @@ export const PlantList = () => {
       }
     };
     const extractZoneNumber = (zone) => {
-      const firstCharacter = zone.toString().charAt(0);
-      console.log("Zone number:", firstCharacter);
+      const zoneNumber = parseInt(zone.toString().charAt(0));
+      setUserZoneNumber(zoneNumber);
+      localStorage.setItem("Zone number:", JSON.stringify(zoneNumber));
+      console.log("Just set zone number from function chain:", zoneNumber);
     };
-    if (zoneSwitch) {
+
+    const zoneAlreadyStored = JSON.parse(localStorage.getItem("Zone number:"));
+
+    if (zoneSwitch && !zoneAlreadyStored) {
       getUserCoordinates()
         .then((coordinates) => reverseGeocode(coordinates))
         .then((zipcode) => getZoneFromZip(zipcode))
@@ -136,6 +113,21 @@ export const PlantList = () => {
         .catch((error) => console.error("Error in the chain:", error));
     }
   }, [zoneSwitch]);
+
+  useEffect(() => {
+    const storedZoneName = localStorage.getItem("Full zone name:");
+    const storedZoneNumber = parseInt(localStorage.getItem("Zone number:"));
+
+    if (!fullZoneName && storedZoneName) {
+      const cleanedZoneName = storedZoneName.replace(/^"(.*)"$/, "$1");
+      setFullZoneName(cleanedZoneName);
+      console.log("Just set full zone name from local storage");
+    }
+    if (!userZoneNumber && storedZoneNumber) {
+      setUserZoneNumber(storedZoneNumber);
+      console.log("Just set zone number from local storage");
+    }
+  }, [fullZoneName, userZoneNumber]);
 
   const fetchAndSetAllPlants = async () => {
     const plantArray = await fetchAllPlants();
@@ -170,7 +162,9 @@ export const PlantList = () => {
     // Apply zone switch filter if enabled
     if (zoneSwitch) {
       filteredPlants = filteredPlants.filter((plant) => {
-        return plant.zones.some((zone) => zone.name.includes(userZone));
+        return plant.zones.some(
+          (zone) => parseInt(zone.name) === userZoneNumber
+        );
       });
     }
 
@@ -183,7 +177,7 @@ export const PlantList = () => {
     filterTypeSwitch,
     typePlants,
     zoneSwitch,
-    userZone,
+    userZoneNumber,
   ]);
 
   const handleTypeFilter = (e) => {
@@ -455,9 +449,9 @@ export const PlantList = () => {
       ) : (
         ""
       )}
-      {userZone && (
+      {(fullZoneName || locationJustShared) && (
         <div className="text-xl absolute right-24 top-24">
-          You are in zone: {userZone}
+          You are in zone: {fullZoneName}
         </div>
       )}
       {displayPlants()}
