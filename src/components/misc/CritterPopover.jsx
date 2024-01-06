@@ -34,7 +34,7 @@ export const CritterPopover = ({ critter }) => {
           style={{
             position: "absolute",
             top: "-10.7rem",
-            left: "50%",
+            left: "55%",
             transform: "translateX(-50%)",
             zIndex: "999",
           }}
