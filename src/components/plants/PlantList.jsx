@@ -27,26 +27,31 @@ export const PlantList = () => {
 
   useEffect(() => {
     const getUserCoordinates = () => {
-      return new Promise((resolve, reject) => {
+      return new Promise(async (resolve, reject) => {
         if ("geolocation" in navigator) {
-          navigator.geolocation.getCurrentPosition(
-            (position) => {
-              const { latitude, longitude } = position.coords;
-              localStorage.setItem(
-                "userCoordinates",
-                JSON.stringify({ latitude, longitude })
+          try {
+            const position = await new Promise((innerResolve, innerReject) => {
+              navigator.geolocation.getCurrentPosition(
+                innerResolve,
+                innerReject
               );
-              console.log("Latitude: " + latitude);
-              console.log("Longitude: " + longitude);
+            });
 
-              // Return the coordinates directly
-              resolve({ latitude, longitude });
-            },
-            (error) => {
-              console.error("Error getting location:", error);
-              reject(error);
-            }
-          );
+            const { latitude, longitude } = position.coords;
+            localStorage.setItem(
+              "userCoordinates",
+              JSON.stringify({ latitude, longitude })
+            );
+            console.log("Latitude: " + latitude);
+            console.log("Longitude: " + longitude);
+
+            // Return the coordinates directly
+            resolve({ latitude, longitude });
+          } catch (error) {
+            setZoneSwitch(false);
+            console.error("Error getting location:", error);
+            reject(error);
+          }
         } else {
           console.log("Geolocation is not available in this browser.");
           reject(new Error("Geolocation not available"));
