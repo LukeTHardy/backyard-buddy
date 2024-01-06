@@ -9,7 +9,8 @@ import {
 } from "../../services/MiscServices";
 import { fetchAllPlants } from "../../services/PlantServices";
 import { fetchAllCritters } from "../../services/CritterServices";
-
+import growingplant from "/assets/graphics/growing_plant.gif";
+import staticflower from "/assets/graphics/flower_after2.png";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
@@ -41,9 +42,9 @@ export const NewPlant = () => {
     height: "",
     spacing: "",
     maturity: "",
-    image: "",
-    icon: "",
   });
+  const [isFormValid, setIsFormValid] = useState(false);
+  const [showFirstImage, setShowFirstImage] = useState(true);
 
   useEffect(() => {
     fetchAllPlants().then((plantsArray) => {
@@ -71,6 +72,41 @@ export const NewPlant = () => {
       setZones(zonesArray);
     });
   }, []);
+
+  useEffect(() => {
+    const areArraysNonEmpty =
+      selectedZones.length !== 0 &&
+      selectedPlants.length !== 0 &&
+      selectedCritters.length !== 0;
+    const areNewPlantPropertiesTruthy = Object.values(newPlant).every(
+      (prop) => !!prop
+    );
+    const isImageValid = !!b64ImageString && !!b64IconString;
+
+    setIsFormValid(
+      areArraysNonEmpty && areNewPlantPropertiesTruthy && isImageValid
+    );
+  }, [
+    selectedZones,
+    selectedPlants,
+    selectedCritters,
+    b64ImageString,
+    b64IconString,
+    newPlant,
+  ]);
+
+  useEffect(() => {
+    if (isFormValid) {
+      const timeoutId = setTimeout(() => {
+        setShowFirstImage(false);
+      }, 1400);
+
+      return () => clearTimeout(timeoutId);
+    } else {
+      // Reset showFirstImage if isFormValid becomes false
+      setShowFirstImage(true);
+    }
+  }, [isFormValid]);
 
   const zoneOptions = zones.map((zone) => ({
     value: zone.id,
@@ -121,39 +157,9 @@ export const NewPlant = () => {
     });
   };
 
-  const isFormValid = () => {
-    if (
-      !newPlant.name ||
-      !newPlant.description ||
-      !newPlant.type ||
-      newPlant.type === "0" ||
-      !newPlant.veggie_cat ||
-      newPlant.veggie_cat === "0" ||
-      !newPlant.soil ||
-      newPlant.soil === "0" ||
-      !newPlant.water ||
-      newPlant.water === "0" ||
-      !newPlant.light ||
-      newPlant.light === "0" ||
-      !newPlant.height ||
-      !newPlant.annual ||
-      !newPlant.spacing ||
-      !newPlant.maturity ||
-      selectedCritters.length === 0 ||
-      selectedPlants.length === 0 ||
-      selectedZones.length === 0 ||
-      !b64ImageString ||
-      !b64IconString
-    ) {
-      return false;
-    }
-    return true;
-  };
-
   const handleSave = async () => {
     try {
       if (!isFormValid()) {
-        console.error("Please fill in all fields before saving.");
         window.alert(
           `Congratulations, you found a secret message that says fill out all the fields before saving :)`
         );
@@ -393,13 +399,13 @@ export const NewPlant = () => {
               onChange={handleInputChange}
             />
           </div>
-          <div className="image-container flex upload-input">
+          <div className="image-upload flex upload-input">
             <label htmlFor="image" className="mr-2">
               Image Upload:
             </label>
             <input type="file" id="image" onChange={createImageString} />
           </div>
-          <div className="icon-container flex upload-input">
+          <div className="icon-upload flex upload-input">
             <label htmlFor="icon" className="mr-2">
               Icon Upload:
             </label>
@@ -443,9 +449,28 @@ export const NewPlant = () => {
           </div>
         </div>
       </div>
-      <button className="bb-button" onClick={handleSave}>
-        Save Plant
-      </button>
+      <div className="save-btn relative">
+        <button className="bb-button" onClick={handleSave}>
+          Save Plant
+        </button>
+        {isFormValid && (
+          <>
+            {showFirstImage ? (
+              <img
+                src={growingplant}
+                className="h-[3rem] absolute top-1 right-[-2.5rem]"
+                alt="growing plant"
+              />
+            ) : (
+              <img
+                src={staticflower}
+                className="h-[3rem] absolute top-1 right-[-2.5rem]"
+                alt="static flower"
+              />
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
 };

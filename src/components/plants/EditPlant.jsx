@@ -436,13 +436,13 @@ export const EditPlant = () => {
               onChange={handleInputChange}
             />
           </div>
-          <div className="image-container flex upload-input">
+          <div className="image-upload flex upload-input">
             <label htmlFor="image" className="mr-2">
               Image Upload:
             </label>
             <input type="file" id="image" onChange={createImageString} />
           </div>
-          <div className="icon-container flex upload-input">
+          <div className="icon-upload flex upload-input">
             <label htmlFor="icon" className="mr-2">
               Icon Upload:
             </label>

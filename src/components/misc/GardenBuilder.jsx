@@ -16,10 +16,3 @@ export const GardenBuilder = () => {
     </div>
   );
 };
-
-{
-  /* testing */
-}
-{
-  /* <img src={testpic} className="relative z-5 w-[10rem] h-[10rem]" /> */
-}
