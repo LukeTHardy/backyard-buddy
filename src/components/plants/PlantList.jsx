@@ -19,9 +19,38 @@ export const PlantList = () => {
   const [typePlants, setTypePlants] = useState([]);
   const [zoneToggle, setZoneToggle] = useState(false);
   const [zoneSwitch, setZoneSwitch] = useState(false);
+  const [userLat, setUserLat] = useState("");
+  const [userLong, setUserLong] = useState("");
   const [filterTypeSwitch, setFilterTypeSwitch] = useState("");
   const [selectedVeggieCategory, setSelectedVeggieCategory] = useState("");
   const [renderedPlants, setRenderedPlants] = useState([]);
+
+  useEffect(() => {
+    const savedCoords = JSON.parse(localStorage.getItem("userCoordinates"));
+
+    if (zoneSwitch && (!savedCoords || (!userLat && !userLong))) {
+      if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const { latitude, longitude } = position.coords;
+            setUserLat(latitude);
+            setUserLong(longitude);
+            localStorage.setItem(
+              "userCoordinates",
+              JSON.stringify({ latitude, longitude })
+            );
+            console.log("Latitude: " + latitude);
+            console.log("Longitude: " + longitude);
+          },
+          (error) => {
+            console.error("Error getting location:", error);
+          }
+        );
+      } else {
+        console.log("Geolocation is not available in this browser.");
+      }
+    }
+  }, [zoneSwitch, userLat, userLong]);
 
   const fetchAndSetAllPlants = async () => {
     const plantArray = await fetchAllPlants();
