@@ -79,7 +79,7 @@ export const NewPlant = () => {
       selectedPlants.length !== 0 &&
       selectedCritters.length !== 0;
     const areNewPlantPropertiesTruthy = Object.values(newPlant).every(
-      (prop) => prop !== "" && prop !== "0"
+      (prop) => prop !== "" && prop !== "0" && prop !== 0
     );
     const isImageValid = !!b64ImageString && !!b64IconString;
 
@@ -284,7 +284,6 @@ export const NewPlant = () => {
           </div>
           <div className="water-container flex items-center">
             <div className="water-title mr-2 text-2xl">Water:</div>
-
             <select
               name="water"
               onChange={handleInputChange}
@@ -420,7 +419,7 @@ export const NewPlant = () => {
           </div>
           <div className="zones-container flex items-center">
             <span className="zones-title mr-2 text-2xl">Zones:</span>
-            <div className="pl-2 h-[2.5rem] my-[0.5rem] overflow-x-hidden flex-1">
+            <div className="pl-2 min-h-[2.5rem] my-[0.5rem] flex-1">
               <Select
                 options={zoneOptions}
                 isMulti
@@ -432,7 +431,7 @@ export const NewPlant = () => {
           </div>
           <div className="companions-container flex items-center">
             <span className="companions-title mr-2 text-2xl">Companions:</span>
-            <div className="pl-2 h-[2.5rem] my-[0.5rem] overflow-x-hidden flex-1">
+            <div className="pl-2 min-h-[2.5rem] my-[0.5rem] flex-1">
               <Select
                 options={companionOptions}
                 isMulti
@@ -444,7 +443,7 @@ export const NewPlant = () => {
           </div>
           <div className="critters-container flex items-center">
             <span className="critters-title mr-2 text-2xl">Critters:</span>
-            <div className="pl-2 h-[2.5rem] my-[0.5rem] overflow-x-hidden flex-1">
+            <div className="pl-2 min-h-[2.5rem] my-[0.5rem] flex-1">
               <Select
                 options={critterOptions}
                 isMulti
@@ -465,13 +464,13 @@ export const NewPlant = () => {
             {showFirstImage ? (
               <img
                 src={growingplant}
-                className="h-[3rem] absolute top-1 right-[-2.5rem]"
+                className="h-[3.5rem] absolute top-1.5 right-[-2.5rem]"
                 alt="growing plant"
               />
             ) : (
               <img
                 src={staticflower}
-                className="h-[3rem] absolute top-1 right-[-2.5rem]"
+                className="h-[3.5rem] absolute top-1.5 right-[-2.5rem]"
                 alt="static flower"
               />
             )}

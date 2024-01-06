@@ -152,7 +152,10 @@ export const PlantList = () => {
           {renderedPlants.map((plant) => {
             return (
               <div className="" key={plant.id}>
-                <Link to={`/plants/${plant.id}`} className="">
+                <Link
+                  to={`/plants/${plant.id}`}
+                  className="hover:text-eggshell"
+                >
                   <div className="border-step4">
                     <div className="image-container">
                       <img src={plant.image} alt="Plant Image" />
