@@ -79,7 +79,7 @@ export const NewPlant = () => {
       selectedPlants.length !== 0 &&
       selectedCritters.length !== 0;
     const areNewPlantPropertiesTruthy = Object.values(newPlant).every(
-      (prop) => !!prop
+      (prop) => prop !== "" && prop !== "0"
     );
     const isImageValid = !!b64ImageString && !!b64IconString;
 
