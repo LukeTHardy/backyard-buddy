@@ -10,7 +10,10 @@
   0% {
     opacity: 0;
   }
-  50% {
+  10% {
+    opacity: 1;
+  }
+  90% {
     opacity: 1;
   }
   100% {
@@ -19,15 +22,18 @@
 }
 
 .fade-in-out-opacity {
-  animation: fadeInOutOpacity 3000ms ease-in-out;
+  animation: fadeInOutOpacity 2000ms ease-in-out;
 }
 
 @keyframes fadeInOutTextColor {
   0% {
     color: logo-green;
   }
-  50% {
-    color: rgb(96, 255, 96);
+  20% {
+    color: rgb(204, 252, 188);
+  }
+  80% {
+    color: rgb(204, 252, 188);
   }
   100% {
     color: logo-green;
@@ -35,5 +41,5 @@
 }
 
 .fade-in-out-text-color {
-  animation: fadeInOutTextColor 3000ms ease-in-out;
+  animation: fadeInOutTextColor 2000ms ease-in-out;
 }

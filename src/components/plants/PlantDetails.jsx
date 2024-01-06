@@ -79,7 +79,7 @@ export const PlantDetails = ({ userId, setFavoriteClicked }) => {
     // Set a timeout to reset favoriteClicked to false after 2000 milliseconds (2 seconds)
     setTimeout(() => {
       setFavoriteClicked(false);
-    }, 3000);
+    }, 2000);
   };
 
   const handleRemoveFavoriteClick = async () => {
