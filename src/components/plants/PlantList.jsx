@@ -195,6 +195,20 @@ export const PlantList = () => {
         setPlantsFiltered(true);
         break;
 
+      case searchFilterOn && typeFilterOn && zoneFilterOn:
+        filteredPlants = filteredPlants.filter(
+          (plant) => plant.type.label.toLowerCase() === typeName
+        );
+        filteredPlants = filteredPlants.filter((plant) =>
+          plant.zones.some((zone) => parseInt(zone.name) === userZoneNumber)
+        );
+        filteredPlants = filteredPlants.filter((plant) =>
+          plant.name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setRenderedPlants(filteredPlants);
+        setPlantsFiltered(true);
+        break;
+
       case zoneFilterOn && typeFilterOn && veggieCatFilterOn:
         filteredPlants = filteredPlants.filter(
           (plant) => plant.type.label.toLowerCase() === typeName
@@ -333,7 +347,6 @@ export const PlantList = () => {
   const handleSearch = (e) => {
     setSearchFilterOn(true);
     setSearchTerm(e.target.value);
-    setLastTBClicked(0);
   };
 
   const clearFilters = () => {
