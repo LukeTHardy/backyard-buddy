@@ -1,6 +1,4 @@
 import { Route, Routes } from "react-router-dom";
-import { Login } from "../components/auth/Login";
-import { Register } from "../components/auth/Register";
 import { Authorized } from "./Authorized";
 import { Home } from "../components/misc/Home";
 import { PlantList } from "../components/plants/PlantList";
@@ -11,6 +9,7 @@ import { Favorites } from "../components/plants/Favorites";
 import { CritterList } from "../components/critters/CritterList";
 import { CritterDetails } from "../components/critters/CritterDetails";
 import { GardenBuilder } from "../components/misc/GardenBuilder";
+import { LoginRegister } from "../components/auth/LoginRegister";
 
 export const AppViews = ({
   token,
@@ -18,22 +17,30 @@ export const AppViews = ({
   userId,
   setCurrentUserId,
   setFavoriteClicked,
+  favoriteClicked,
 }) => {
   return (
     <Routes>
       <Route
         path="/login"
         element={
-          <Login setToken={setToken} setCurrentUserId={setCurrentUserId} />
+          <LoginRegister
+            setToken={setToken}
+            setCurrentUserId={setCurrentUserId}
+          />
         }
       />
       <Route
-        path="/register"
         element={
-          <Register setToken={setToken} setCurrentUserId={setCurrentUserId} />
+          <Authorized
+            token={token}
+            userId={userId}
+            setToken={setToken}
+            favoriteClicked={favoriteClicked}
+            setFavoriteClicked={setFavoriteClicked}
+          />
         }
-      />
-      <Route element={<Authorized token={token} userId={userId} />}>
+      >
         <Route path="/" element={<Home />} />
         <Route path="plants">
           <Route index element={<PlantList userId={userId} />} />

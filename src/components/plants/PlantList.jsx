@@ -417,7 +417,7 @@ export const PlantList = () => {
             style={{
               position: "absolute",
               top: "5.85rem", // Adjusted top value
-              left: "35.1rem",
+              left: "33.75rem",
               transform: "translateX(-50%)",
               width: "0",
               height: "0",
@@ -427,7 +427,7 @@ export const PlantList = () => {
               borderBottom: "8px solid transparent", // Flipped
             }}
           />
-          <div className="absolute left-[15.34rem] top-[6.2rem] flex justify-evenly w-[40rem] h-7 my-2">
+          <div className="absolute left-[13.93rem] top-[6.2rem] flex justify-evenly w-[40rem] h-7 my-2">
             {veggieCategories.map((category) => (
               <button
                 key={category}

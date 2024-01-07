@@ -22,7 +22,7 @@
 }
 
 .fade-in-out-opacity {
-  animation: fadeInOutOpacity 2000ms ease-in-out;
+  animation: fadeInOutOpacity 2000ms;
 }
 
 @keyframes fadeInOutTextColor {

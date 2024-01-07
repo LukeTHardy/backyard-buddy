@@ -33,7 +33,6 @@
   --reset-sec-button-background: #69b934;
   --reset-shadow-color: #53a33b;
   --step: 4px;
-  --greeeen: rgb(45, 253, 45);
 
   /* Button 2 Styling: */
 
@@ -47,4 +46,12 @@
   --font: "Pixel7", display;
 
   --button_height: 2.3rem;
+
+  /* Extra colors: */
+
+  --greeeen: rgb(45, 253, 45);
+  --brown1: #e6c099;
+  --brown2: #be8662;
+  --brown3: #7b5035;
+  --skyblue: #8fdafc;
 }

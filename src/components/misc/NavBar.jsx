@@ -53,7 +53,9 @@ export const NavBar = ({ token, favoriteClicked }) => {
               <img
                 src={plantdude}
                 className={`h-[4rem] absolute bottom-1 right-[-2.5rem] ${
-                  favoriteClicked ? "fade-in-out-opacity duration-700" : ""
+                  favoriteClicked
+                    ? "fade-in-out-opacity ease-in-out duration-2000"
+                    : ""
                 }`}
                 alt="plant"
               />
