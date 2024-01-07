@@ -9,7 +9,7 @@ import { Favorites } from "../components/plants/Favorites";
 import { CritterList } from "../components/critters/CritterList";
 import { CritterDetails } from "../components/critters/CritterDetails";
 import { GardenBuilder } from "../components/misc/GardenBuilder";
-import { Auth } from "../components/auth/Auth";
+import { LoginRegister } from "../components/auth/LoginRegister";
 
 export const AppViews = ({
   token,
@@ -24,7 +24,10 @@ export const AppViews = ({
       <Route
         path="/login"
         element={
-          <Auth setToken={setToken} setCurrentUserId={setCurrentUserId} />
+          <LoginRegister
+            setToken={setToken}
+            setCurrentUserId={setCurrentUserId}
+          />
         }
       />
       <Route

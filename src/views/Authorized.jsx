@@ -18,7 +18,10 @@ export const Authorized = ({
           favoriteClicked={favoriteClicked}
           setFavoriteClicked={setFavoriteClicked}
         />
-        <Outlet />;
+        <Outlet
+          favoriteClicked={favoriteClicked}
+          setFavoriteClicked={setFavoriteClicked}
+        />
       </>
     );
   }

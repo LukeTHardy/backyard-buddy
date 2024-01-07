@@ -307,7 +307,7 @@ export const PlantDetails = ({ userId, setFavoriteClicked }) => {
   };
 
   return (
-    <div className="detail-comp-container relative flex flex-col items-center bg-amber-100 min-h-[80vh]">
+    <div className="detail-comp-container relative flex flex-col items-center bg-amber-100 h-100%">
       {displayPlant()}
     </div>
   );
