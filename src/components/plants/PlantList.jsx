@@ -18,14 +18,14 @@ export const PlantList = () => {
   // const [veggiesSelected, setVeggiesSelected] = useState(false);
   // const [typePlants, setTypePlants] = useState([]);
   // const [zoneSwitch, setZoneSwitch] = useState(false);
+  // const [filterTypeSwitch, setFilterTypeSwitch] = useState("");
+  // const [selectedVeggieCategory, setSelectedVeggieCategory] = useState("");
   const [userZoneNumber, setUserZoneNumber] = useState(0);
   const [fullZoneName, setFullZoneName] = useState("");
   const [locationJustShared, setLocationJustShared] = useState(false);
-  // const [filterTypeSwitch, setFilterTypeSwitch] = useState("");
-  // const [selectedVeggieCategory, setSelectedVeggieCategory] = useState("");
   const [searchFilterOn, setSearchFilterOn] = useState(false);
   const [typeFilterOn, setTypeFilterOn] = useState(false);
-  const [veggieFilterOn, setVeggieFilterOn] = useState(false);
+  const [veggieCatFilterOn, setVeggieCatFilterOn] = useState(false);
   const [zoneFilterOn, setZoneFilterOn] = useState(false);
   const [typeName, setTypeName] = useState("");
   const [veggieCat, setVeggieCat] = useState("");
@@ -157,7 +157,7 @@ export const PlantList = () => {
     let filteredPlants = allPlants;
 
     switch (true) {
-      case searchFilterOn && typeFilterOn && veggieFilterOn && zoneFilterOn:
+      case searchFilterOn && typeFilterOn && veggieCatFilterOn && zoneFilterOn:
         filteredPlants = filteredPlants.filter(
           (plant) => plant.type.label.toLowerCase() === typeName
         );
@@ -175,7 +175,7 @@ export const PlantList = () => {
         setPlantsFiltered(true);
         break;
 
-      case searchFilterOn && typeFilterOn && veggieFilterOn:
+      case searchFilterOn && typeFilterOn && veggieCatFilterOn:
         filteredPlants = filteredPlants.filter(
           (plant) => plant.type.label.toLowerCase() === typeName
         );
@@ -190,7 +190,7 @@ export const PlantList = () => {
         setPlantsFiltered(true);
         break;
 
-      case zoneFilterOn && typeFilterOn && veggieFilterOn:
+      case zoneFilterOn && typeFilterOn && veggieCatFilterOn:
         filteredPlants = filteredPlants.filter(
           (plant) => plant.type.label.toLowerCase() === typeName
         );
@@ -227,7 +227,18 @@ export const PlantList = () => {
         setPlantsFiltered(true);
         break;
 
-      case typeFilterOn && veggieFilterOn:
+      case typeFilterOn && zoneFilterOn:
+        filteredPlants = filteredPlants.filter(
+          (plant) => plant.type.label.toLowerCase() === typeName
+        );
+        filteredPlants = filteredPlants.filter((plant) =>
+          plant.zones.some((zone) => parseInt(zone.name) === userZoneNumber)
+        );
+        setRenderedPlants(filteredPlants);
+        setPlantsFiltered(true);
+        break;
+
+      case typeFilterOn && veggieCatFilterOn:
         filteredPlants = filteredPlants.filter(
           (plant) => plant.type.label.toLowerCase() === typeName
         );
@@ -271,7 +282,7 @@ export const PlantList = () => {
   }, [
     searchFilterOn,
     typeFilterOn,
-    veggieFilterOn,
+    veggieCatFilterOn,
     zoneFilterOn,
     allPlants,
     typeName,
@@ -287,14 +298,19 @@ export const PlantList = () => {
   }, [searchTerm]);
 
   const handleTypeClick = (e) => {
-    setTypeFilterOn((prevState) => !prevState);
+    !typeFilterOn ? setTypeFilterOn(true) : null;
     setTypeName(e.target.name);
-    setVeggieFilterOn(false);
+    setVeggieCatFilterOn(false);
   };
 
   const handleVeggieClick = (e) => {
-    setVeggieFilterOn((prevState) => !prevState);
+    !typeFilterOn ? setTypeFilterOn(true) : null;
+    setTypeName(e.target.name);
+  };
+
+  const handleVeggieCatClick = (e) => {
     setVeggieCat(e.target.name);
+    setVeggieCatFilterOn(true); //
   };
 
   const handleZoneClick = () => {
@@ -315,7 +331,7 @@ export const PlantList = () => {
   const clearFilters = () => {
     setSearchTerm("");
     setSearchFilterOn(false);
-    setVeggieFilterOn(false);
+    setVeggieCatFilterOn(false);
     setTypeFilterOn(false);
     setZoneFilterOn(false);
     setLastClicked(0);
@@ -511,7 +527,7 @@ export const PlantList = () => {
                 className={`eightbit-btn text-lg ${
                   veggieCat === category ? "bg-blue-500" : "bg-gray-300"
                 }`}
-                onClick={(e) => handleVeggieClick(e)}
+                onClick={(e) => handleVeggieCatClick(e)}
               >
                 {category}
               </button>
@@ -519,7 +535,7 @@ export const PlantList = () => {
           </div>
         </>
       ) : null}
-      {searchFilterOn || typeFilterOn || veggieFilterOn || zoneFilterOn ? (
+      {searchFilterOn || typeFilterOn || veggieCatFilterOn || zoneFilterOn ? (
         <button
           onClick={clearFilters}
           className="border border-solid border-black rounded-xl px-1 pt-0.5 mt-1"
