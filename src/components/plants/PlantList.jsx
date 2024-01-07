@@ -11,11 +11,13 @@ import "/src/components/plants/PixelBorder.scss";
 
 export const PlantList = () => {
   const navigate = useNavigate();
-  const [lastClicked, setLastClicked] = useState(null);
+  const [lastTBClicked, setLastTBClicked] = useState(null);
+  const [lastVCBClicked, setLastVCBClicked] = useState(null);
   const [allPlants, setAllPlants] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   // const [searchTermPlants, setSearchTermPlants] = useState([]);
   // const [veggiesSelected, setVeggiesSelected] = useState(false);
+  const [veggieCatsToggle, setVeggieCatsToggle] = useState(false);
   // const [typePlants, setTypePlants] = useState([]);
   // const [zoneSwitch, setZoneSwitch] = useState(false);
   // const [filterTypeSwitch, setFilterTypeSwitch] = useState("");
@@ -23,13 +25,13 @@ export const PlantList = () => {
   const [userZoneNumber, setUserZoneNumber] = useState(0);
   const [fullZoneName, setFullZoneName] = useState("");
   const [locationJustShared, setLocationJustShared] = useState(false);
+  const [plantsFiltered, setPlantsFiltered] = useState(false);
   const [searchFilterOn, setSearchFilterOn] = useState(false);
   const [typeFilterOn, setTypeFilterOn] = useState(false);
-  const [veggieCatFilterOn, setVeggieCatFilterOn] = useState(false);
   const [zoneFilterOn, setZoneFilterOn] = useState(false);
-  const [typeName, setTypeName] = useState("");
+  const [veggieCatFilterOn, setVeggieCatFilterOn] = useState(false);
   const [veggieCat, setVeggieCat] = useState("");
-  const [plantsFiltered, setPlantsFiltered] = useState(false);
+  const [typeName, setTypeName] = useState("");
   const [renderedPlants, setRenderedPlants] = useState([]);
 
   const fetchAndSetAllPlants = async () => {
@@ -67,6 +69,9 @@ export const PlantList = () => {
             resolve({ latitude, longitude });
           } catch (error) {
             setZoneFilterOn(false);
+            window.alert(
+              "You must share your location for this feature to work"
+            );
             console.error("Error getting location:", error);
             reject(error);
           }
@@ -297,20 +302,28 @@ export const PlantList = () => {
     }
   }, [searchTerm]);
 
-  const handleTypeClick = (e) => {
+  const handleTypeClick = (e, buttonId) => {
     !typeFilterOn ? setTypeFilterOn(true) : null;
     setTypeName(e.target.name);
     setVeggieCatFilterOn(false);
+    setVeggieCatsToggle(false);
+    setLastTBClicked(buttonId);
+    setLastVCBClicked(0);
   };
 
-  const handleVeggieClick = (e) => {
+  const handleVeggieClick = (e, buttonId) => {
     !typeFilterOn ? setTypeFilterOn(true) : null;
+    lastVCBClicked ? setLastVCBClicked(0) : null;
+    setVeggieCatsToggle((prevState) => !prevState);
+    setVeggieCatFilterOn(false);
     setTypeName(e.target.name);
+    setLastTBClicked(buttonId);
   };
 
-  const handleVeggieCatClick = (e) => {
+  const handleVeggieCatClick = (e, buttonId) => {
     setVeggieCat(e.target.name);
-    setVeggieCatFilterOn(true); //
+    setVeggieCatFilterOn(true);
+    setLastVCBClicked(buttonId + 1);
   };
 
   const handleZoneClick = () => {
@@ -320,21 +333,18 @@ export const PlantList = () => {
   const handleSearch = (e) => {
     setSearchFilterOn(true);
     setSearchTerm(e.target.value);
-    setLastClicked(0);
-  };
-
-  const handleButtonClick = (buttonId) => {
-    // Update the state to the id of the last clicked button
-    setLastClicked(buttonId);
+    setLastTBClicked(0);
   };
 
   const clearFilters = () => {
     setSearchTerm("");
     setSearchFilterOn(false);
     setVeggieCatFilterOn(false);
+    setVeggieCatsToggle(false);
     setTypeFilterOn(false);
     setZoneFilterOn(false);
-    setLastClicked(0);
+    setLastTBClicked(0);
+    setLastVCBClicked(0);
   };
   const seeRandomPlant = () => {
     const randomId = Math.floor(Math.random() * allPlants.length);
@@ -375,7 +385,12 @@ export const PlantList = () => {
           })}
         </div>
       );
-    } else if (allPlants && allPlants.length && plantsFiltered) {
+    } else if (
+      allPlants &&
+      allPlants.length &&
+      plantsFiltered &&
+      userZoneNumber
+    ) {
       return (
         <h3 className="text-xl w-[85%] my-8 p-8 pixel-border-green2 text-center">
           No plants found :(
@@ -429,10 +444,9 @@ export const PlantList = () => {
           <div className="button2 brown">
             <button
               name="veggie"
-              className={`text-xl ${lastClicked === 1 ? "clicked" : ""}`}
+              className={`text-xl ${lastTBClicked === 1 ? "clicked" : ""}`}
               onClick={(e) => {
-                handleVeggieClick(e);
-                handleButtonClick(1);
+                handleVeggieClick(e, 1);
               }}
             >
               Veggies
@@ -441,10 +455,9 @@ export const PlantList = () => {
           <div className="button2 green">
             <button
               name="herb"
-              className={`text-xl ${lastClicked === 2 ? "clicked" : ""}`}
+              className={`text-xl ${lastTBClicked === 2 ? "clicked" : ""}`}
               onClick={(e) => {
-                handleTypeClick(e);
-                handleButtonClick(2);
+                handleTypeClick(e, 2);
               }}
             >
               Herbs
@@ -453,10 +466,9 @@ export const PlantList = () => {
           <div className="button2 blue">
             <button
               name="flower"
-              className={`text-xl ${lastClicked === 3 ? "clicked" : ""}`}
+              className={`text-xl ${lastTBClicked === 3 ? "clicked" : ""}`}
               onClick={(e) => {
-                handleTypeClick(e);
-                handleButtonClick(3);
+                handleTypeClick(e, 3);
               }}
             >
               Flowers
@@ -465,10 +477,9 @@ export const PlantList = () => {
           <div className="button2 red">
             <button
               name="fruit"
-              className={`text-xl ${lastClicked === 4 ? "clicked" : ""}`}
+              className={`text-xl ${lastTBClicked === 4 ? "clicked" : ""}`}
               onClick={(e) => {
-                handleTypeClick(e);
-                handleButtonClick(4);
+                handleTypeClick(e, 4);
               }}
             >
               Fruit
@@ -502,7 +513,7 @@ export const PlantList = () => {
           </button>
         </div>
       </div>
-      {typeFilterOn && typeName === "veggie" ? (
+      {typeFilterOn && typeName === "veggie" && veggieCatsToggle ? (
         <>
           <div
             className="arrow"
@@ -520,14 +531,14 @@ export const PlantList = () => {
             }}
           />
           <div className="absolute left-[13.93rem] top-[6.2rem] flex justify-evenly w-[40rem] h-7 my-2">
-            {veggieCategories.map((category) => (
+            {veggieCategories.map((category, index) => (
               <button
-                key={category}
+                key={index + 1}
                 name={category}
                 className={`eightbit-btn text-lg ${
-                  veggieCat === category ? "bg-blue-500" : "bg-gray-300"
+                  lastVCBClicked === index + 1 ? "veggie-clicked" : ""
                 }`}
-                onClick={(e) => handleVeggieCatClick(e)}
+                onClick={(e) => handleVeggieCatClick(e, index)}
               >
                 {category}
               </button>
