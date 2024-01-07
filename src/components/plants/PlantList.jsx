@@ -14,16 +14,35 @@ export const PlantList = () => {
   const [lastClicked, setLastClicked] = useState(null);
   const [allPlants, setAllPlants] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [searchTermPlants, setSearchTermPlants] = useState([]);
-  const [veggiesSelected, setVeggiesSelected] = useState(false);
-  const [typePlants, setTypePlants] = useState([]);
-  const [zoneSwitch, setZoneSwitch] = useState(false);
+  // const [searchTermPlants, setSearchTermPlants] = useState([]);
+  // const [veggiesSelected, setVeggiesSelected] = useState(false);
+  // const [typePlants, setTypePlants] = useState([]);
+  // const [zoneSwitch, setZoneSwitch] = useState(false);
   const [userZoneNumber, setUserZoneNumber] = useState(0);
   const [fullZoneName, setFullZoneName] = useState("");
   const [locationJustShared, setLocationJustShared] = useState(false);
-  const [filterTypeSwitch, setFilterTypeSwitch] = useState("");
-  const [selectedVeggieCategory, setSelectedVeggieCategory] = useState("");
+  // const [filterTypeSwitch, setFilterTypeSwitch] = useState("");
+  // const [selectedVeggieCategory, setSelectedVeggieCategory] = useState("");
+  const [searchFilterOn, setSearchFilterOn] = useState(false);
+  const [typeFilterOn, setTypeFilterOn] = useState(false);
+  const [veggieFilterOn, setVeggieFilterOn] = useState(false);
+  const [zoneFilterOn, setZoneFilterOn] = useState(false);
+  const [typeName, setTypeName] = useState("");
+  const [veggieCat, setVeggieCat] = useState("");
+  const [plantsFiltered, setPlantsFiltered] = useState(false);
   const [renderedPlants, setRenderedPlants] = useState([]);
+
+  const fetchAndSetAllPlants = async () => {
+    const plantArray = await fetchAllPlants();
+    const alphabetizedPlants = plantArray
+      .slice()
+      .sort((a, b) => a.name.localeCompare(b.name));
+    setAllPlants(alphabetizedPlants);
+  };
+
+  useEffect(() => {
+    fetchAndSetAllPlants();
+  }, []);
 
   useEffect(() => {
     const getUserCoordinates = () => {
@@ -45,15 +64,15 @@ export const PlantList = () => {
             console.log("Latitude: " + latitude);
             console.log("Longitude: " + longitude);
 
-            // Return the coordinates directly
             resolve({ latitude, longitude });
           } catch (error) {
-            setZoneSwitch(false);
+            setZoneFilterOn(false);
             console.error("Error getting location:", error);
             reject(error);
           }
         } else {
           console.log("Geolocation is not available in this browser.");
+          // Come back later and handle the error more appropriately (user-friendly message)
           reject(new Error("Geolocation not available"));
         }
       });
@@ -74,7 +93,7 @@ export const PlantList = () => {
         return zipcode;
       } catch (error) {
         console.error("Error fetching geocode data:", error.message);
-        // You might want to handle the error appropriately (e.g., show a user-friendly message)
+        // Come back later and handle the error more appropriately (user-friendly message)
         return null;
       }
     };
@@ -93,11 +112,11 @@ export const PlantList = () => {
           setFullZoneName(cleanedZoneName);
           setLocationJustShared(true);
         }
-        console.log("Just set full zone name from function chain:", zone);
+        console.log("Just set the full zone name from function chain:", zone);
         return zone;
       } catch (error) {
         console.error("Error fetching zone data:", error.message);
-        // You might want to handle the error appropriately (e.g., show a user-friendly message)
+        // Come back later and handle the error more appropriately (user-friendly message)
         return null;
       }
     };
@@ -105,19 +124,19 @@ export const PlantList = () => {
       const zoneNumber = parseInt(zone.toString().charAt(0));
       setUserZoneNumber(zoneNumber);
       localStorage.setItem("Zone number:", JSON.stringify(zoneNumber));
-      console.log("Just set zone number from function chain:", zoneNumber);
+      console.log("Just set the zone number from function chain:", zoneNumber);
     };
 
     const zoneAlreadyStored = JSON.parse(localStorage.getItem("Zone number:"));
 
-    if (zoneSwitch && !zoneAlreadyStored) {
+    if (zoneFilterOn && !zoneAlreadyStored) {
       getUserCoordinates()
         .then((coordinates) => reverseGeocode(coordinates))
         .then((zipcode) => getZoneFromZip(zipcode))
         .then((zone) => extractZoneNumber(zone))
         .catch((error) => console.error("Error in the chain:", error));
     }
-  }, [zoneSwitch]);
+  }, [zoneFilterOn]);
 
   useEffect(() => {
     const storedZoneName = localStorage.getItem("Full zone name:");
@@ -126,85 +145,185 @@ export const PlantList = () => {
     if (!fullZoneName && storedZoneName) {
       const cleanedZoneName = storedZoneName.replace(/^"(.*)"$/, "$1");
       setFullZoneName(cleanedZoneName);
-      console.log("Just set full zone name from local storage");
+      console.log("Just set the full zone name from local storage");
     }
     if (!userZoneNumber && storedZoneNumber) {
       setUserZoneNumber(storedZoneNumber);
-      console.log("Just set zone number from local storage");
+      console.log("Just set the zone number from local storage");
     }
   }, [fullZoneName, userZoneNumber]);
 
-  const fetchAndSetAllPlants = async () => {
-    const plantArray = await fetchAllPlants();
-    const alphabetizedPlants = plantArray
-      .slice()
-      .sort((a, b) => a.name.localeCompare(b.name));
-    setAllPlants(alphabetizedPlants);
-  };
-
   useEffect(() => {
-    fetchAndSetAllPlants();
-  }, []);
+    let filteredPlants = allPlants;
 
-  useEffect(() => {
-    const foundPlants = allPlants.filter((plant) =>
-      plant.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setSearchTermPlants(foundPlants);
-  }, [searchTerm, allPlants]);
-
-  useEffect(() => {
-    // Apply other filters
-    let filteredPlants;
-    if (filterTypeSwitch === "search") {
-      filteredPlants = searchTermPlants;
-    } else if (filterTypeSwitch === "type") {
-      filteredPlants = typePlants;
-    } else {
-      filteredPlants = allPlants;
-    }
-
-    // Apply zone switch filter if enabled
-    if (zoneSwitch) {
-      filteredPlants = filteredPlants.filter((plant) => {
-        return plant.zones.some(
-          (zone) => parseInt(zone.name) === userZoneNumber
+    switch (true) {
+      case searchFilterOn && typeFilterOn && veggieFilterOn && zoneFilterOn:
+        filteredPlants = filteredPlants.filter(
+          (plant) => plant.type.label.toLowerCase() === typeName
         );
-      });
-    }
+        filteredPlants = filteredPlants.filter(
+          (plant) =>
+            plant.veggie_cat.label.toLowerCase() === veggieCat.toLowerCase()
+        );
+        filteredPlants = filteredPlants.filter((plant) =>
+          plant.zones.some((zone) => parseInt(zone.name) === userZoneNumber)
+        );
+        filteredPlants = filteredPlants.filter((plant) =>
+          plant.name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setRenderedPlants(filteredPlants);
+        setPlantsFiltered(true);
+        break;
 
-    // Update renderedPlants
-    setRenderedPlants(filteredPlants);
+      case searchFilterOn && typeFilterOn && veggieFilterOn:
+        filteredPlants = filteredPlants.filter(
+          (plant) => plant.type.label.toLowerCase() === typeName
+        );
+        filteredPlants = filteredPlants.filter(
+          (plant) =>
+            plant.veggie_cat.label.toLowerCase() === veggieCat.toLowerCase()
+        );
+        filteredPlants = filteredPlants.filter((plant) =>
+          plant.name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setRenderedPlants(filteredPlants);
+        setPlantsFiltered(true);
+        break;
+
+      case zoneFilterOn && typeFilterOn && veggieFilterOn:
+        filteredPlants = filteredPlants.filter(
+          (plant) => plant.type.label.toLowerCase() === typeName
+        );
+        filteredPlants = filteredPlants.filter(
+          (plant) =>
+            plant.veggie_cat.label.toLowerCase() === veggieCat.toLowerCase()
+        );
+        filteredPlants = filteredPlants.filter((plant) =>
+          plant.zones.some((zone) => parseInt(zone.name) === userZoneNumber)
+        );
+        setRenderedPlants(filteredPlants);
+        setPlantsFiltered(true);
+        break;
+
+      case searchFilterOn && typeFilterOn:
+        filteredPlants = filteredPlants.filter(
+          (plant) => plant.type.label.toLowerCase() === typeName
+        );
+        filteredPlants = filteredPlants.filter((plant) =>
+          plant.name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setRenderedPlants(filteredPlants);
+        setPlantsFiltered(true);
+        break;
+
+      case searchFilterOn && zoneFilterOn:
+        filteredPlants = filteredPlants.filter((plant) =>
+          plant.zones.some((zone) => parseInt(zone.name) === userZoneNumber)
+        );
+        filteredPlants = filteredPlants.filter((plant) =>
+          plant.name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setRenderedPlants(filteredPlants);
+        setPlantsFiltered(true);
+        break;
+
+      case typeFilterOn && veggieFilterOn:
+        filteredPlants = filteredPlants.filter(
+          (plant) => plant.type.label.toLowerCase() === typeName
+        );
+        filteredPlants = filteredPlants.filter(
+          (plant) =>
+            plant.veggie_cat.label.toLowerCase() === veggieCat.toLowerCase()
+        );
+        setRenderedPlants(filteredPlants);
+        setPlantsFiltered(true);
+        break;
+
+      case searchFilterOn:
+        filteredPlants = filteredPlants.filter((plant) =>
+          plant.name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setRenderedPlants(filteredPlants);
+        setPlantsFiltered(true);
+        break;
+
+      case typeFilterOn:
+        filteredPlants = filteredPlants.filter(
+          (plant) => plant.type.label.toLowerCase() === typeName
+        );
+        setRenderedPlants(filteredPlants);
+        setPlantsFiltered(true);
+        break;
+
+      case zoneFilterOn:
+        filteredPlants = filteredPlants.filter((plant) => {
+          return plant.zones.some(
+            (zone) => parseInt(zone.name) === userZoneNumber
+          );
+        });
+        setRenderedPlants(filteredPlants);
+        setPlantsFiltered(true);
+        break;
+
+      default:
+        setRenderedPlants(allPlants);
+    }
   }, [
-    searchTerm,
+    searchFilterOn,
+    typeFilterOn,
+    veggieFilterOn,
+    zoneFilterOn,
     allPlants,
-    searchTermPlants,
-    filterTypeSwitch,
-    typePlants,
-    zoneSwitch,
+    typeName,
+    veggieCat,
     userZoneNumber,
+    searchTerm,
   ]);
 
-  const handleTypeFilter = (e) => {
-    setFilterTypeSwitch("type");
-    const filteredPlants = allPlants.filter(
-      (plant) => plant.type.label.toLowerCase() === e.target.name
-    );
-    setTypePlants(filteredPlants);
-    setSelectedVeggieCategory("");
-    setVeggiesSelected(false);
+  useEffect(() => {
+    if (!searchTerm) {
+      setSearchFilterOn(false);
+    }
+  }, [searchTerm]);
+
+  const handleTypeClick = (e) => {
+    setTypeFilterOn((prevState) => !prevState);
+    setTypeName(e.target.name);
+    setVeggieFilterOn(false);
   };
 
   const handleVeggieClick = (e) => {
-    setFilterTypeSwitch("type");
-    const filteredPlants = allPlants.filter(
-      (plant) => plant.type.label.toLowerCase() === e.target.name
-    );
-    setTypePlants(filteredPlants);
-    setSelectedVeggieCategory("");
-    setVeggiesSelected((prevState) => !prevState);
+    setVeggieFilterOn((prevState) => !prevState);
+    setVeggieCat(e.target.name);
   };
 
+  const handleZoneClick = () => {
+    setZoneFilterOn((prevState) => !prevState);
+  };
+
+  const handleSearch = (e) => {
+    setSearchFilterOn(true);
+    setSearchTerm(e.target.value);
+    setLastClicked(0);
+  };
+
+  const handleButtonClick = (buttonId) => {
+    // Update the state to the id of the last clicked button
+    setLastClicked(buttonId);
+  };
+
+  const clearFilters = () => {
+    setSearchTerm("");
+    setSearchFilterOn(false);
+    setVeggieFilterOn(false);
+    setTypeFilterOn(false);
+    setZoneFilterOn(false);
+    setLastClicked(0);
+  };
+  const seeRandomPlant = () => {
+    const randomId = Math.floor(Math.random() * allPlants.length);
+    navigate(`/plants/${randomId}`);
+  };
   const veggieCategories = [
     "Tomato",
     "Root",
@@ -214,49 +333,6 @@ export const PlantList = () => {
     "Legume",
     "Misc",
   ];
-
-  const handleVeggieCategoryFilter = (category) => {
-    setSelectedVeggieCategory(category);
-
-    // Filter renderedPlants based on the selected veggie category
-    const filteredPlants = typePlants.filter(
-      (plant) => plant.veggie_cat.label.toLowerCase() === category.toLowerCase()
-    );
-
-    setRenderedPlants(filteredPlants);
-  };
-
-  useEffect(() => {
-    if (!searchTerm) {
-      setFilterTypeSwitch("");
-    }
-  }, [searchTerm]);
-
-  const handleSearch = (e) => {
-    setFilterTypeSwitch("search");
-    setSearchTerm(e.target.value);
-    setLastClicked(0);
-  };
-
-  const clearFilters = () => {
-    setSearchTerm("");
-    setFilterTypeSwitch("");
-    setLastClicked(0);
-  };
-
-  const toggleZoneSwitch = () => {
-    setZoneSwitch((prevState) => !prevState);
-  };
-
-  const seeRandomPlant = () => {
-    const randomId = Math.floor(Math.random() * allPlants.length);
-    navigate(`/plants/${randomId}`);
-  };
-
-  const handleButtonClick = (buttonId) => {
-    // Update the state to the id of the last clicked button
-    setLastClicked(buttonId);
-  };
 
   const displayPlants = () => {
     if (renderedPlants.length > 0) {
@@ -283,7 +359,7 @@ export const PlantList = () => {
           })}
         </div>
       );
-    } else if (allPlants && allPlants.length && filterTypeSwitch) {
+    } else if (allPlants && allPlants.length && plantsFiltered) {
       return (
         <h3 className="text-xl w-[85%] my-8 p-8 pixel-border-green2 text-center">
           No plants found :(
@@ -351,7 +427,7 @@ export const PlantList = () => {
               name="herb"
               className={`text-xl ${lastClicked === 2 ? "clicked" : ""}`}
               onClick={(e) => {
-                handleTypeFilter(e);
+                handleTypeClick(e);
                 handleButtonClick(2);
               }}
             >
@@ -363,7 +439,7 @@ export const PlantList = () => {
               name="flower"
               className={`text-xl ${lastClicked === 3 ? "clicked" : ""}`}
               onClick={(e) => {
-                handleTypeFilter(e);
+                handleTypeClick(e);
                 handleButtonClick(3);
               }}
             >
@@ -375,7 +451,7 @@ export const PlantList = () => {
               name="fruit"
               className={`text-xl ${lastClicked === 4 ? "clicked" : ""}`}
               onClick={(e) => {
-                handleTypeFilter(e);
+                handleTypeClick(e);
                 handleButtonClick(4);
               }}
             >
@@ -387,11 +463,11 @@ export const PlantList = () => {
         <div className="zone-toggle flex items-center absolute right-0 ">
           <button
             className="w-16 h-[1.85rem] static justify-end"
-            onClick={toggleZoneSwitch}
+            onClick={handleZoneClick}
           >
             <img
               className="w-full h-full object-cover"
-              src={zoneSwitch ? onSwitch : offSwitch}
+              src={zoneFilterOn ? onSwitch : offSwitch}
               alt="zone toggle button"
             />
           </button>
@@ -410,7 +486,7 @@ export const PlantList = () => {
           </button>
         </div>
       </div>
-      {filterTypeSwitch === "type" && veggiesSelected && (
+      {typeFilterOn && typeName === "veggie" ? (
         <>
           <div
             className="arrow"
@@ -431,29 +507,26 @@ export const PlantList = () => {
             {veggieCategories.map((category) => (
               <button
                 key={category}
+                name={category}
                 className={`eightbit-btn text-lg ${
-                  selectedVeggieCategory === category
-                    ? "bg-blue-500"
-                    : "bg-gray-300"
+                  veggieCat === category ? "bg-blue-500" : "bg-gray-300"
                 }`}
-                onClick={() => handleVeggieCategoryFilter(category)}
+                onClick={(e) => handleVeggieClick(e)}
               >
                 {category}
               </button>
             ))}
           </div>
         </>
-      )}
-      {searchTerm || filterTypeSwitch ? (
+      ) : null}
+      {searchFilterOn || typeFilterOn || veggieFilterOn || zoneFilterOn ? (
         <button
           onClick={clearFilters}
           className="border border-solid border-black rounded-xl px-1 pt-0.5 mt-1"
         >
           ⓧ clear filters
         </button>
-      ) : (
-        ""
-      )}
+      ) : null}
       {(fullZoneName || locationJustShared) && (
         <div className="text-xl absolute right-24 top-24">
           You are in zone: {fullZoneName}
