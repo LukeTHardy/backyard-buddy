@@ -453,7 +453,7 @@ export const PlantList = () => {
         </div>
       </div>
       <div className="primary-buttons-container flex justify-center items-center relative w-[85%] h-9 mb-2">
-        <div className="type-buttons flex w-1/2 justify-evenly">
+        <div className="type-buttons flex w-[37rem] justify-evenly">
           <div className="button2 brown">
             <button
               name="veggie"
@@ -533,7 +533,7 @@ export const PlantList = () => {
             style={{
               position: "absolute",
               top: "5.85rem", // Adjusted top value
-              left: "33.75rem",
+              left: "34.65rem",
               transform: "translateX(-50%)",
               width: "0",
               height: "0",
@@ -543,7 +543,7 @@ export const PlantList = () => {
               borderBottom: "8px solid transparent", // Flipped
             }}
           />
-          <div className="absolute left-[13.93rem] top-[6.2rem] flex justify-evenly w-[40rem] h-7 my-2">
+          <div className="absolute left-[14.85rem] top-[6.2rem] flex justify-evenly w-[40rem] h-7 my-2">
             {veggieCategories.map((category, index) => (
               <button
                 key={index + 1}
