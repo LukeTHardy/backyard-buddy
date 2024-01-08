@@ -16,9 +16,9 @@ import "./ImageBorder.scss";
 import sunicon from "/assets/graphics/sun.png";
 import watericon from "/assets/graphics/water.png";
 import soilicon from "/assets/graphics/soil.png";
-import leftarrow from "/assets/graphics/leftgreenarrow.png";
 import uparrow from "/assets/graphics/upgreenarrow.png";
 import heart from "/assets/graphics/heart.png";
+import emptyheart from "/assets/graphics/emptyheart.png";
 import pencil from "/assets/graphics/pencil.png";
 import trash from "/assets/graphics/trash.png";
 import sparkle from "/assets/graphics/sparkle.png";
@@ -281,14 +281,14 @@ export const PlantDetails = ({ userId, setFavoriteClicked }) => {
                 {foundFavorite ? (
                   <img
                     className="h-[2rem] cursor-pointer"
-                    src={sunicon}
+                    src={heart}
                     alt="favorite-button"
                     onClick={handleRemoveFavoriteClick}
                   />
                 ) : (
                   <img
                     className="h-[2rem] cursor-pointer"
-                    src={heart}
+                    src={emptyheart}
                     alt="favorite-button"
                     onClick={handleAddFavoriteClick}
                   />
@@ -304,7 +304,7 @@ export const PlantDetails = ({ userId, setFavoriteClicked }) => {
                       }}
                     />
                     <img
-                      className="h-[2rem] cursor-pointer"
+                      className="h-[2rem] w-[1.8rem] cursor-pointer"
                       src={trash}
                       alt="favorite-button"
                       onClick={() => {

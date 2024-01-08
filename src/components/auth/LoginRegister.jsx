@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginUser, registerUser } from "../../services/AuthServices";
+import wallpaper from "/assets/graphics/wallpaper2.jpeg";
 
 export const LoginRegister = ({ setToken, setCurrentUserId }) => {
   const [activeTab, setActiveTab] = useState("login");
@@ -65,10 +66,15 @@ export const LoginRegister = ({ setToken, setCurrentUserId }) => {
     }
   };
 
+  const background = `url(${wallpaper})`;
+
   return (
-    <div className="comp-container relative flex flex-col items-center justify-center h-screen border-2 border-black">
+    <div
+      className="comp-container relative flex flex-col items-center justify-center h-screen"
+      style={{ background, backgroundSize: "cover" }}
+    >
       <div className="w-96 bg-white p-6 rounded shadow-md border-2 border-black mb-4 relative">
-        <div className="absolute top-0 left-0 w-full flex mb-4">
+        <div className="absolute top-0 left-0 w-full flex">
           <div
             className={`cursor-pointer w-1/2 text-center border-r-2 ${
               activeTab === "login"

@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Lightbox } from "../misc/Lightbox";
 import { PlantPopover } from "../misc/PlantPopover";
 import "/src/components/plants/PlantsCritters.css";
+import sparkle from "/assets/graphics/sparkle.png";
 import uparrow from "/assets/graphics/uparrow.png";
 
 export const CritterDetails = () => {
@@ -80,6 +81,11 @@ export const CritterDetails = () => {
     }
   };
 
+  const seeRandomCritter = () => {
+    const randomId = Math.floor(Math.random() * critters.length);
+    navigate(`/critters/${randomId}`);
+  };
+
   const displayCritter = () => {
     if (chosenCritter) {
       return (
@@ -141,15 +147,25 @@ export const CritterDetails = () => {
                   </div>
                 )}
               </div>
-              <div className="buttons-container w-[12rem] flex justify-evenly">
+              <div className="buttons-container w-[12rem] mt-auto flex justify-evenly">
                 <div className="back-btn absolute left-4 -bottom-[0.4rem] flex text-[1.15rem] justify-center items-center">
-                  <button onClick={() => navigate("/critters")} className="">
+                  <button onClick={() => navigate("/plants")} className="">
                     <img
                       className="h-[1.5rem] mr-2 inline-block mt-[-0.85rem]"
                       src={uparrow}
                       alt="uparrow"
                     />
                     Back to Critters
+                  </button>
+                </div>
+                <div className="random-btn absolute right-4 -bottom-[0.4rem] text-[1.2rem] flex justify-center items-center">
+                  <button onClick={seeRandomCritter}>
+                    Random Critter
+                    <img
+                      className="h-[1.5rem] ml-1.5 inline-block"
+                      src={sparkle}
+                      alt="sparkle"
+                    />
                   </button>
                 </div>
               </div>

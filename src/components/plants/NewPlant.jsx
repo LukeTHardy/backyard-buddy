@@ -428,7 +428,7 @@ export const NewPlant = () => {
               onChange={handleInputChange}
             />
           </div>
-          <div className="annual-container flex items-center select-input w-[25rem]">
+          <div className="annual-container flex items-center select-input w-[25rem] py-2">
             <label htmlFor="annual" className="text-2xl">
               Lifecycle:
             </label>

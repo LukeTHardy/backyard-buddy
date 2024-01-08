@@ -352,73 +352,6 @@ export const EditPlant = () => {
               })}
             </select>
           </div>
-          <div className="annual-container flex items-center select-input w-[25rem]">
-            <label htmlFor="annual" className="text-2xl">
-              Lifecycle:
-            </label>
-            <div className="w-[25rem]">
-              <label className="text-xl">
-                <input
-                  id="annual"
-                  type="radio"
-                  name="annual"
-                  value={true}
-                  className="mx-2"
-                  checked={
-                    plantToEdit.annual == true || plantToEdit.annual === "true"
-                  }
-                  onChange={handleInputChange}
-                />
-                Annual
-              </label>
-
-              <label className="mx-1">
-                <input
-                  id="perennial"
-                  type="radio"
-                  name="annual"
-                  value={false}
-                  className="mx-2"
-                  checked={
-                    plantToEdit.annual == false ||
-                    plantToEdit.annual === "false"
-                  }
-                  onChange={handleInputChange}
-                />
-                Perennial
-              </label>
-            </div>
-          </div>
-        </div>
-        <div className="right-side-fields flex flex-col justify-evenly mx-4 w-[25rem]">
-          <div className="height-container flex items-center">
-            <label htmlFor="height" className="mr-2 text-2xl">
-              Height:
-            </label>
-            <input
-              id="height"
-              value={plantToEdit.height}
-              name="height"
-              type="text"
-              className="text-input text-xl border-solid border-black border-[1px] rounded-md pl-2 h-[1.8rem] mt-[0.7rem] mb-[0.5rem] overflow-x-hidden flex-1"
-              placeholder="Enter Height (inches)"
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="spacing-container flex items-center">
-            <label htmlFor="spacing" className="mr-2 text-2xl">
-              Spacing (inches):
-            </label>
-            <input
-              id="spacing"
-              value={plantToEdit.spacing}
-              name="spacing"
-              type="text"
-              className="text-input text-xl border-solid border-black border-[1px] rounded-md pl-2 h-[1.8rem] my-[0.5rem] overflow-x-hidden flex-1"
-              placeholder="Enter Spacing (inches)"
-              onChange={handleInputChange}
-            />
-          </div>
           <div className="maturity-container flex items-center">
             <label htmlFor="maturity" className="mr-2 text-2xl">
               Time to Maturity:
@@ -433,6 +366,8 @@ export const EditPlant = () => {
               onChange={handleInputChange}
             />
           </div>
+        </div>
+        <div className="right-side-fields flex flex-col justify-evenly mx-4 w-[25rem]">
           <div className="image-upload flex items-center">
             <label htmlFor="image" className="mr-2 text-2xl">
               Image Upload:
@@ -472,7 +407,7 @@ export const EditPlant = () => {
             </div>
           </div>
           <div className="companions-container flex items-center">
-            <span className="companions-title mr-2">Companions:</span>
+            <span className="companions-title mr-2 text-2xl">Companions:</span>
             <div className="pl-2 min-h-[2.5rem] my-[0.5rem] flex-1">
               <Select
                 options={companions.map((companion) => ({
@@ -503,11 +438,77 @@ export const EditPlant = () => {
               />
             </div>
           </div>
+          <div className="height-container flex items-center py-1">
+            <label htmlFor="height" className="mr-2 text-2xl">
+              Height:
+            </label>
+            <input
+              id="height"
+              value={plantToEdit.height}
+              name="height"
+              type="text"
+              className="text-input text-xl border-solid border-black border-[1px] rounded-md pl-2 h-[1.8rem] mt-[0.7rem] mb-[0.5rem] overflow-x-hidden flex-1"
+              placeholder="Enter Height (inches)"
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="spacing-container flex items-center py-1">
+            <label htmlFor="spacing" className="mr-2 text-2xl">
+              Spacing (inches):
+            </label>
+            <input
+              id="spacing"
+              value={plantToEdit.spacing}
+              name="spacing"
+              type="text"
+              className="text-input text-xl border-solid border-black border-[1px] rounded-md pl-2 h-[1.8rem] my-[0.5rem] overflow-x-hidden flex-1"
+              placeholder="Enter Spacing (inches)"
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="annual-container flex items-center select-input w-[25rem] py-2">
+            <label htmlFor="annual" className="text-2xl">
+              Lifecycle:
+            </label>
+            <div className="w-[25rem]">
+              <label className="text-xl">
+                <input
+                  id="annual"
+                  type="radio"
+                  name="annual"
+                  value={true}
+                  className="mx-2"
+                  checked={
+                    plantToEdit.annual == true || plantToEdit.annual === "true"
+                  }
+                  onChange={handleInputChange}
+                />
+                Annual
+              </label>
+              <label className="mx-1">
+                <input
+                  id="perennial"
+                  type="radio"
+                  name="annual"
+                  value={false}
+                  className="mx-2"
+                  checked={
+                    plantToEdit.annual == false ||
+                    plantToEdit.annual === "false"
+                  }
+                  onChange={handleInputChange}
+                />
+                Perennial
+              </label>
+            </div>
+          </div>
         </div>
       </div>
-      <button className="bb-button" onClick={handleSave}>
-        Save Changes
-      </button>
+      <div className="button2 green pt-6">
+        <button name="herb" className="text-xl" onClick={handleSave}>
+          Save
+        </button>
+      </div>
     </div>
   );
 };
