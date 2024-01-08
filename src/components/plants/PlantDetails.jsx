@@ -17,7 +17,7 @@ import sunicon from "/assets/graphics/sun.png";
 import watericon from "/assets/graphics/water.png";
 import soilicon from "/assets/graphics/soil.png";
 import leftarrow from "/assets/graphics/leftgreenarrow.png";
-import rightarrow from "/assets/graphics/rightgreenarrow.png";
+import uparrow from "/assets/graphics/upgreenarrow.png";
 import heart from "/assets/graphics/heart.png";
 import pencil from "/assets/graphics/pencil.png";
 import trash from "/assets/graphics/trash.png";
@@ -152,34 +152,12 @@ export const PlantDetails = ({ userId, setFavoriteClicked }) => {
     if (chosenPlant) {
       return (
         <>
-          <div className="navigate-btns text-lg h-9 w-[75%] italic">
-            <div className="back-btn absolute left-[11.8rem] top-[0.35rem] flex justify-center items-center">
-              <button onClick={() => navigate("/plants")} className="">
-                <img
-                  className="h-[1rem] mr-2 inline-block"
-                  src={leftarrow}
-                  alt="leftarrow"
-                />
-                Back to Plants
-              </button>
-            </div>
-            <div className="random-btn absolute top-[0.35rem] right-[11.8rem] flex justify-center items-center">
-              <button onClick={seeRandomPlant}>
-                Random Plant
-                <img
-                  className="h-[1.3rem] ml-1.5 inline-block"
-                  src={sparkle}
-                  alt="sparkle"
-                />
-              </button>
-            </div>
-          </div>
-          <div className="card-container flex justify-evenly w-[80%]">
+          <div className="card-container flex justify-evenly w-[80%] mt-5">
             <div className="image-card items-start">
               <button onClick={openLightbox}>
                 <img
                   src={chosenPlant.image}
-                  className="plant-image border-double border-[6px] border-brown-600 hover:border-teal-800 rounded-2xl w-[30rem] h-[30rem] object-cover"
+                  className="plant-image border-double border-[6px] border-brown-600 hover:border-brown-300 rounded-2xl w-[30rem] h-[30rem] object-cover"
                   alt="Plant Image"
                 />
               </button>
@@ -289,45 +267,65 @@ export const PlantDetails = ({ userId, setFavoriteClicked }) => {
                   )}
                 </div>
               </div>
-              <div className="buttons-container w-[23rem] flex justify-evenly">
+              <div className="buttons-container w-[12rem] flex justify-evenly">
+                <div className="back-btn absolute left-4 -bottom-[0.4rem] flex text-[1.15rem] justify-center items-center">
+                  <button onClick={() => navigate("/plants")} className="">
+                    <img
+                      className="h-[1.5rem] mr-2 inline-block mt-[-0.85rem]"
+                      src={uparrow}
+                      alt="uparrow"
+                    />
+                    Back to Plants
+                  </button>
+                </div>
                 {foundFavorite ? (
-                  <button
-                    className="delete-favorite-button text-xl border-double border-4 border-green-900 rounded-xl p-1"
+                  <img
+                    className="h-[2rem] cursor-pointer"
+                    src={sunicon}
+                    alt="favorite-button"
                     onClick={handleRemoveFavoriteClick}
-                  >
-                    Un-favorite 💔
-                  </button>
+                  />
                 ) : (
-                  <button
-                    className="favorite-button text-xl border-double border-4 border-green-900 rounded-xl p-1"
+                  <img
+                    className="h-[2rem] cursor-pointer"
+                    src={heart}
+                    alt="favorite-button"
                     onClick={handleAddFavoriteClick}
-                  >
-                    Favorite 🌻
-                  </button>
+                  />
                 )}
                 {userId == chosenPlant.user ? (
                   <>
-                    <button
-                      className="text-xl border-double border-4 border-green-900 rounded-xl p-1"
+                    <img
+                      className="h-[2rem] cursor-pointer"
+                      src={pencil}
+                      alt="favorite-button"
                       onClick={() => {
                         navigate(`/plants/${plantId}/edit`);
                       }}
-                    >
-                      Edit 🔧
-                    </button>
-                    <button
-                      className="text-xl border-double border-4 border-green-900 rounded-xl p-1"
+                    />
+                    <img
+                      className="h-[2rem] cursor-pointer"
+                      src={trash}
+                      alt="favorite-button"
                       onClick={() => {
                         deletePlant(plantId);
                         navigate("/plants");
                       }}
-                    >
-                      Delete 🗑️
-                    </button>
+                    />
                   </>
                 ) : (
                   ""
                 )}
+                <div className="random-btn absolute right-4 -bottom-[0.4rem] text-[1.2rem] flex justify-center items-center">
+                  <button onClick={seeRandomPlant}>
+                    Random Plant
+                    <img
+                      className="h-[1.5rem] ml-1.5 inline-block"
+                      src={sparkle}
+                      alt="sparkle"
+                    />
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -339,7 +337,7 @@ export const PlantDetails = ({ userId, setFavoriteClicked }) => {
   };
 
   return (
-    <div className="detail-comp-container relative flex flex-col items-center bg-amber-100 h-100%">
+    <div className="detail-comp-container relative flex flex-col items-center bg-amber-100 min-h-[80vh]">
       {displayPlant()}
     </div>
   );

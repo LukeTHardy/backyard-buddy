@@ -30,7 +30,7 @@ export const Lightbox = ({
           {isChosenPlant ? plantName : critterName}
         </div>
         <div className="lightbox-body flex justify-evenly items-center">
-          <span className="lightbox-close text-3xl pt-7" onClick={onClose}>
+          <span className="lightbox-close text-3xl pt-9" onClick={onClose}>
             X
           </span>
           <img
