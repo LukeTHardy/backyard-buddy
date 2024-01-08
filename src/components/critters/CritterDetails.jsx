@@ -100,8 +100,11 @@ export const CritterDetails = () => {
 
               {lightboxOpen && (
                 <Lightbox
+                  critterName={chosenCritter.name}
                   imageUrl={chosenCritter.image}
                   onClose={closeLightbox}
+                  previousCritter={previousCritter}
+                  nextCritter={nextCritter}
                 />
               )}
             </div>

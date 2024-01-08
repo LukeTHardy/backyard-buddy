@@ -16,6 +16,12 @@ import "./ImageBorder.scss";
 import sunicon from "/assets/graphics/sun.png";
 import watericon from "/assets/graphics/water.png";
 import soilicon from "/assets/graphics/soil.png";
+import leftarrow from "/assets/graphics/leftgreenarrow.png";
+import rightarrow from "/assets/graphics/rightgreenarrow.png";
+import heart from "/assets/graphics/heart.png";
+import pencil from "/assets/graphics/pencil.png";
+import trash from "/assets/graphics/trash.png";
+import sparkle from "/assets/graphics/sparkle.png";
 
 export const PlantDetails = ({ userId, setFavoriteClicked }) => {
   const navigate = useNavigate();
@@ -137,29 +143,55 @@ export const PlantDetails = ({ userId, setFavoriteClicked }) => {
     }
   };
 
+  const seeRandomPlant = () => {
+    const randomId = Math.floor(Math.random() * plants.length);
+    navigate(`/plants/${randomId}`);
+  };
+
   const displayPlant = () => {
     if (chosenPlant) {
       return (
         <>
-          <div className="navigate-btn flex justify-start items-end text-lg h-8 w-[75%] italic">
-            <button onClick={() => navigate("/plants")}>
-              ﹤Back to Plants
-            </button>
+          <div className="navigate-btns text-lg h-9 w-[75%] italic">
+            <div className="back-btn absolute left-[11.8rem] top-[0.35rem] flex justify-center items-center">
+              <button onClick={() => navigate("/plants")} className="">
+                <img
+                  className="h-[1rem] mr-2 inline-block"
+                  src={leftarrow}
+                  alt="leftarrow"
+                />
+                Back to Plants
+              </button>
+            </div>
+            <div className="random-btn absolute top-[0.35rem] right-[11.8rem] flex justify-center items-center">
+              <button onClick={seeRandomPlant}>
+                Random Plant
+                <img
+                  className="h-[1.3rem] ml-1.5 inline-block"
+                  src={sparkle}
+                  alt="sparkle"
+                />
+              </button>
+            </div>
           </div>
           <div className="card-container flex justify-evenly w-[80%]">
             <div className="image-card items-start">
               <button onClick={openLightbox}>
                 <img
                   src={chosenPlant.image}
-                  className="plant-image border-double border-[6px] border-brown-600 rounded-2xl w-[30rem] h-[30rem] object-cover"
+                  className="plant-image border-double border-[6px] border-brown-600 hover:border-teal-800 rounded-2xl w-[30rem] h-[30rem] object-cover"
                   alt="Plant Image"
                 />
               </button>
 
               {lightboxOpen && (
                 <Lightbox
+                  plantName={chosenPlant.name}
+                  plantImage={chosenPlant.image}
                   imageUrl={chosenPlant.image}
                   onClose={closeLightbox}
+                  nextPlant={nextPlant}
+                  previousPlant={previousPlant}
                 />
               )}
             </div>
