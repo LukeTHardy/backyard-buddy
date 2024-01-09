@@ -432,7 +432,7 @@ export const PlantList = () => {
               </div>
             )}
           </div>
-          <div className="list-container pixel-border-green2 w-[85%] grid grid-cols-6 justify-center gap-14 mt-[4.5rem] mb-12 px-8 pt-4 pb-6">
+          <div className="list-container pixel-border-green2 w-[85%] grid grid-cols-6 justify-center gap-14 mt-[4.5rem] mb-12 px-8 pt-4 pb-9">
             {renderedPlants.map((plant) => {
               return (
                 <div className="" key={plant.id}>
