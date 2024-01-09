@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
 import "./Forms.css";
+import "./PlantsCritters.css";
 
 export const NewPlant = () => {
   const navigate = useNavigate();
@@ -42,6 +43,7 @@ export const NewPlant = () => {
     height: "",
     spacing: "",
     maturity: "",
+    annual: null,
   });
   const [isFormValid, setIsFormValid] = useState(false);
   const [showFirstImage, setShowFirstImage] = useState(true);
@@ -84,7 +86,10 @@ export const NewPlant = () => {
     const isImageValid = !!b64ImageString && !!b64IconString;
 
     setIsFormValid(
-      areArraysNonEmpty && areNewPlantPropertiesTruthy && isImageValid
+      areArraysNonEmpty &&
+        areNewPlantPropertiesTruthy &&
+        isImageValid &&
+        (newPlant.annual === "true" || newPlant.annual === "false")
     );
   }, [
     selectedZones,
@@ -321,66 +326,6 @@ export const NewPlant = () => {
               })}
             </select>
           </div>
-          <div className="annual-container flex items-center select-input w-[25rem]">
-            <label htmlFor="annual" className="text-2xl">
-              Lifecycle:
-            </label>
-            <div className="w-[25rem]">
-              <label className="text-xl">
-                <input
-                  id="annual"
-                  type="radio"
-                  name="annual"
-                  value={true}
-                  className="mx-2"
-                  onChange={handleInputChange}
-                />
-                Annual
-              </label>
-
-              <label className="text-xl">
-                <input
-                  id="perennial"
-                  type="radio"
-                  name="annual"
-                  value={false}
-                  className="mx-2"
-                  onChange={handleInputChange}
-                />
-                Perennial
-              </label>
-            </div>
-          </div>
-        </div>
-        <div className="right-side-fields flex flex-col justify-evenly mx-4 w-[25rem]">
-          <div className="height-container flex items-center">
-            <label htmlFor="height" className="mr-2 text-2xl">
-              Height:
-            </label>
-            <input
-              id="height"
-              value={newPlant.height}
-              name="height"
-              type="text"
-              className="text-input text-xl border-solid border-black border-[1px] rounded-md pl-2 h-[1.8rem] mt-[0.7rem] mb-[0.5rem] overflow-x-hidden flex-1"
-              placeholder="Enter Height (inches)"
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="spacing-container flex items-center">
-            <label htmlFor="spacing" className="mr-2 text-2xl">
-              Spacing:
-            </label>
-            <input
-              id="spacing"
-              value={newPlant.spacing}
-              name="spacing"
-              type="text"
-              className="text-input text-xl border-solid border-black border-[1px] rounded-md pl-2 h-[1.8rem] my-[0.5rem] overflow-x-hidden flex-1"
-              placeholder="Enter Spacing (inches)"
-              onChange={handleInputChange}
-            />
-          </div>
           <div className="maturity-container flex items-center">
             <label htmlFor="maturity" className="mr-2 text-2xl">
               Time to Maturity:
@@ -395,6 +340,8 @@ export const NewPlant = () => {
               onChange={handleInputChange}
             />
           </div>
+        </div>
+        <div className="right-side-fields flex flex-col justify-evenly mx-4 w-[25rem]">
           <div className="image-upload flex items-center">
             <label htmlFor="image" className="mr-2 text-2xl">
               Image Upload:
@@ -453,24 +400,84 @@ export const NewPlant = () => {
               />
             </div>
           </div>
+          <div className="height-container flex items-center">
+            <label htmlFor="height" className="mr-2 text-2xl">
+              Height:
+            </label>
+            <input
+              id="height"
+              value={newPlant.height}
+              name="height"
+              type="text"
+              className="text-input text-xl border-solid border-black border-[1px] rounded-md pl-2 h-[1.8rem] mt-[0.7rem] mb-[0.5rem] overflow-x-hidden flex-1"
+              placeholder="Enter Height (inches)"
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="spacing-container flex items-center">
+            <label htmlFor="spacing" className="mr-2 text-2xl">
+              Spacing:
+            </label>
+            <input
+              id="spacing"
+              value={newPlant.spacing}
+              name="spacing"
+              type="text"
+              className="text-input text-xl border-solid border-black border-[1px] rounded-md pl-2 h-[1.8rem] my-[0.5rem] overflow-x-hidden flex-1"
+              placeholder="Enter Spacing (inches)"
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="annual-container flex items-center select-input w-[25rem] py-2">
+            <label htmlFor="annual" className="text-2xl">
+              Lifecycle:
+            </label>
+            <div className="w-[25rem]">
+              <label className="text-xl">
+                <input
+                  id="annual"
+                  type="radio"
+                  name="annual"
+                  value={true}
+                  className="mx-2"
+                  onChange={handleInputChange}
+                />
+                Annual
+              </label>
+
+              <label className="text-xl">
+                <input
+                  id="perennial"
+                  type="radio"
+                  name="annual"
+                  value={false}
+                  className="mx-2"
+                  onChange={handleInputChange}
+                />
+                Perennial
+              </label>
+            </div>
+          </div>
         </div>
       </div>
-      <div className="save-btn relative">
-        <button className="bb-button" onClick={handleSave}>
-          Save Plant
-        </button>
+      <div className="save-btn relative pt-6">
+        <div className="button2 green">
+          <button name="herb" className="text-xl" onClick={handleSave}>
+            {isFormValid ? "Save!" : "Save"}
+          </button>
+        </div>
         {isFormValid && (
           <>
             {showFirstImage ? (
               <img
                 src={growingplant}
-                className="h-[3.5rem] absolute top-1.5 right-[-2.5rem]"
+                className="h-[3.5rem] absolute top-1.5 right-[-3.5rem]"
                 alt="growing plant"
               />
             ) : (
               <img
                 src={staticflower}
-                className="h-[3.5rem] absolute top-1.5 right-[-2.5rem]"
+                className="h-[3.5rem] absolute top-1.5 right-[-3.5rem]"
                 alt="static flower"
               />
             )}

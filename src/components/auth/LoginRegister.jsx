@@ -1,6 +1,8 @@
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginUser, registerUser } from "../../services/AuthServices";
+import wallpaper from "/assets/graphics/wallpaper4.jpg";
+import "./LoginRegister.css";
 
 export const LoginRegister = ({ setToken, setCurrentUserId }) => {
   const [activeTab, setActiveTab] = useState("login");
@@ -65,25 +67,30 @@ export const LoginRegister = ({ setToken, setCurrentUserId }) => {
     }
   };
 
+  const background = `url(${wallpaper})`;
+
   return (
-    <div className="comp-container relative flex flex-col items-center justify-center h-screen border-2 border-black">
-      <div className="w-96 bg-white p-6 rounded shadow-md border-2 border-black mb-4 relative">
-        <div className="absolute top-0 left-0 w-full flex mb-4">
+    <div
+      className="comp-container relative flex flex-col items-center justify-center h-screen"
+      style={{ background, backgroundSize: "cover" }}
+    >
+      <div className="w-96 bg-white px-6 pb-4 pt-10 shadow-md absolute top-[11rem] flex flex-col">
+        <div className="absolute top-0 left-0 w-full flex">
           <div
-            className={`cursor-pointer w-1/2 text-center border-r-2 ${
+            className={`cursor-pointer h-[3rem] w-1/2 text-center text-xl border-r-2 pt-3 ${
               activeTab === "login"
-                ? "bg-light-blue-500 text-white"
-                : "bg-black text-white"
+                ? "bg-light-green-400 text-white"
+                : "bg-light-green-600 text-white"
             }`}
             onClick={() => handleTabClick("login")}
           >
             Login
           </div>
           <div
-            className={`cursor-pointer w-1/2 text-center ${
+            className={`cursor-pointer w-1/2 h-[3rem] text-center text-xl pt-3 ${
               activeTab === "register"
                 ? "bg-light-blue-500 text-white"
-                : "bg-black text-white"
+                : "bg-light-blue-700 text-white"
             }`}
             onClick={() => handleTabClick("register")}
           >
@@ -93,15 +100,15 @@ export const LoginRegister = ({ setToken, setCurrentUserId }) => {
 
         {activeTab === "login" ? (
           <form onSubmit={handleLogin}>
-            <div className="mb-4">
-              <label htmlFor="username" className="block text-gray-700">
+            <div className="mb-2">
+              <label htmlFor="username" className="block text-gray-700 mt-5">
                 Username:
               </label>
               <input
                 type="text"
                 id="username"
                 name="username"
-                className="w-full mt-1 p-2 border rounded"
+                className="w-full mt-1 py-1 px-2 border rounded"
                 ref={loginUsername}
               />
             </div>
@@ -113,16 +120,26 @@ export const LoginRegister = ({ setToken, setCurrentUserId }) => {
                 type="password"
                 id="password"
                 name="password"
-                className="w-full mt-1 p-2 border rounded"
+                className="w-full mt-1 py-1 px-2 border rounded"
                 ref={loginPassword}
               />
             </div>
-            <button
-              type="submit"
-              className="bg-light-green-300 text-white p-2 rounded mx-auto block hover:bg-light-green-400"
-            >
+            <button type="submit" name="submit" className="green-btn">
+              <div className="hover">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
               Login
             </button>
+            {/* <button
+              type="submit"
+              className="bg-light-green-400 text-white text-xl px-2 py-1 rounded mx-auto block hover:bg-light-green-500"
+            >
+              Login
+            </button> */}
             {isUnsuccessful ? (
               <p className="help is-danger">Username or password not valid</p>
             ) : (
@@ -131,19 +148,19 @@ export const LoginRegister = ({ setToken, setCurrentUserId }) => {
           </form>
         ) : (
           <form onSubmit={handleRegister}>
-            <div className="mb-4">
-              <label htmlFor="firstname" className="block text-gray-700">
+            <div className="mb-2">
+              <label htmlFor="firstname" className="block text-gray-700 mt-5">
                 First Name:
               </label>
               <input
                 type="text"
                 id="firstname"
                 name="firstname"
-                className="w-full mt-1 p-2 border rounded"
+                className="w-full mt-1 py-1 px-2 border rounded"
                 ref={firstName}
               />
             </div>
-            <div className="mb-4">
+            <div className="mb-2">
               <label htmlFor="lastname" className="block text-gray-700">
                 Last Name:
               </label>
@@ -151,11 +168,11 @@ export const LoginRegister = ({ setToken, setCurrentUserId }) => {
                 type="text"
                 id="lastname"
                 name="lastname"
-                className="w-full mt-1 p-2 border rounded"
+                className="w-full mt-1 py-1 px-2 border rounded"
                 ref={lastName}
               />
             </div>
-            <div className="mb-4">
+            <div className="mb-2">
               <label htmlFor="email" className="block text-gray-700">
                 Email:
               </label>
@@ -163,11 +180,11 @@ export const LoginRegister = ({ setToken, setCurrentUserId }) => {
                 type="email"
                 id="email"
                 name="email"
-                className="w-full mt-1 p-2 border rounded"
+                className="w-full mt-1 py-1 px-2 border rounded"
                 ref={registerUsername}
               />
             </div>
-            <div className="mb-4">
+            <div className="mb-2">
               <label htmlFor="additionalField" className="block text-gray-700">
                 Username:
               </label>
@@ -175,11 +192,11 @@ export const LoginRegister = ({ setToken, setCurrentUserId }) => {
                 type="text"
                 id="additionalField"
                 name="additionalField"
-                className="w-full mt-1 p-2 border rounded"
+                className="w-full mt-1 py-1 px-2 border rounded"
                 ref={email}
               />
             </div>
-            <div className="mb-4">
+            <div className="mb-2">
               <label htmlFor="password" className="block text-gray-700">
                 Password:
               </label>
@@ -187,11 +204,11 @@ export const LoginRegister = ({ setToken, setCurrentUserId }) => {
                 type="password"
                 id="password"
                 name="password"
-                className="w-full mt-1 p-2 border rounded"
+                className="w-full mt-1 py-1 px-2 border rounded"
                 ref={registerPassword}
               />
             </div>
-            <div className="mb-4">
+            <div className="mb-2">
               <label htmlFor="confirmPassword" className="block text-gray-700">
                 Confirm Password:
               </label>
@@ -199,14 +216,18 @@ export const LoginRegister = ({ setToken, setCurrentUserId }) => {
                 type="password"
                 id="confirmPassword"
                 name="confirmPassword"
-                className="w-full mt-1 p-2 border rounded"
+                className="w-full mt-1 py-1 px-2 mb-2 border rounded"
                 ref={verifyPassword}
               />
             </div>
-            <button
-              type="submit"
-              className="bg-light-green-300 text-white p-2 rounded mx-auto block hover:bg-light-green-400"
-            >
+            <button type="submit" name="submit" className="blue-btn">
+              <div className="hover">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
               Register
             </button>
           </form>

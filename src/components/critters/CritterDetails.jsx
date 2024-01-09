@@ -4,6 +4,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Lightbox } from "../misc/Lightbox";
 import { PlantPopover } from "../misc/PlantPopover";
 import "/src/components/plants/PlantsCritters.css";
+import sparkle from "/assets/graphics/sparkle.png";
+import uparrow from "/assets/graphics/uparrow.png";
 
 export const CritterDetails = () => {
   const navigate = useNavigate();
@@ -79,29 +81,32 @@ export const CritterDetails = () => {
     }
   };
 
+  const seeRandomCritter = () => {
+    const randomId = Math.floor(Math.random() * critters.length);
+    navigate(`/critters/${randomId}`);
+  };
+
   const displayCritter = () => {
     if (chosenCritter) {
       return (
         <>
-          <div className="navigate-btn flex justify-start items-end text-lg h-8 w-[75%] italic">
-            <button onClick={() => navigate("/critters")}>
-              ﹤Back to Critters
-            </button>
-          </div>
-          <div className="card-container flex justify-evenly w-[80%]">
+          <div className="card-container flex justify-evenly w-[80%] mt-5">
             <div className="image-card items-start">
               <button onClick={openLightbox}>
                 <img
                   src={chosenCritter.image}
-                  className="critter-image border-double border-[6px] border-brown-600 rounded-2xl w-[30rem] h-[30rem] object-cover"
+                  className="critter-image border-double border-[6px] border-brown-600 hover:border-brown-300 rounded-2xl w-[30rem] h-[30rem] object-cover"
                   alt="Critter Image"
                 />
               </button>
 
               {lightboxOpen && (
                 <Lightbox
+                  critterName={chosenCritter.name}
                   imageUrl={chosenCritter.image}
                   onClose={closeLightbox}
+                  previousCritter={previousCritter}
+                  nextCritter={nextCritter}
                 />
               )}
             </div>
@@ -130,7 +135,7 @@ export const CritterDetails = () => {
                 -{chosenCritter.management}
               </div>
 
-              <div className="critter-plants flex flex-col items-center pb-4">
+              <div className="critter-plants flex flex-col items-center pb-4 mb-6">
                 <div className="header text-2xl mb-2">May be found on: </div>
                 {chosenCritter.plants.length === 0 ? (
                   <div className="italic text-center text-xl">All plants!</div>
@@ -138,9 +143,31 @@ export const CritterDetails = () => {
                   <div className="plant-names-list text-xl w-[30rem] flex flex-wrap flex-col items-evenly text-center max-h-[18rem]">
                     {chosenCritter.plants.map((plant) => (
                       <PlantPopover key={plant.id} plant={plant} />
-                    ))}{" "}
+                    ))}
                   </div>
                 )}
+              </div>
+              <div className="buttons-container w-[12rem] mt-auto flex justify-evenly">
+                <div className="back-btn absolute left-4 -bottom-[0.4rem] flex text-[1.15rem] justify-center items-center">
+                  <button onClick={() => navigate("/plants")} className="">
+                    <img
+                      className="h-[1.5rem] mr-2 inline-block mt-[-0.85rem]"
+                      src={uparrow}
+                      alt="uparrow"
+                    />
+                    Back to Critters
+                  </button>
+                </div>
+                <div className="random-btn absolute right-4 -bottom-[0.4rem] text-[1.2rem] flex justify-center items-center">
+                  <button onClick={seeRandomCritter}>
+                    Random Critter
+                    <img
+                      className="h-[1.5rem] ml-1.5 inline-block"
+                      src={sparkle}
+                      alt="sparkle"
+                    />
+                  </button>
+                </div>
               </div>
             </div>
           </div>

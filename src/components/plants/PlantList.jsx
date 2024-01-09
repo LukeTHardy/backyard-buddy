@@ -15,13 +15,7 @@ export const PlantList = () => {
   const [lastVCBClicked, setLastVCBClicked] = useState(null);
   const [allPlants, setAllPlants] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  // const [searchTermPlants, setSearchTermPlants] = useState([]);
-  // const [veggiesSelected, setVeggiesSelected] = useState(false);
   const [veggieCatsToggle, setVeggieCatsToggle] = useState(false);
-  // const [typePlants, setTypePlants] = useState([]);
-  // const [zoneSwitch, setZoneSwitch] = useState(false);
-  // const [filterTypeSwitch, setFilterTypeSwitch] = useState("");
-  // const [selectedVeggieCategory, setSelectedVeggieCategory] = useState("");
   const [userZoneNumber, setUserZoneNumber] = useState(0);
   const [fullZoneName, setFullZoneName] = useState("");
   const [locationJustShared, setLocationJustShared] = useState(false);
@@ -195,6 +189,20 @@ export const PlantList = () => {
         setPlantsFiltered(true);
         break;
 
+      case searchFilterOn && typeFilterOn && zoneFilterOn:
+        filteredPlants = filteredPlants.filter(
+          (plant) => plant.type.label.toLowerCase() === typeName
+        );
+        filteredPlants = filteredPlants.filter((plant) =>
+          plant.zones.some((zone) => parseInt(zone.name) === userZoneNumber)
+        );
+        filteredPlants = filteredPlants.filter((plant) =>
+          plant.name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setRenderedPlants(filteredPlants);
+        setPlantsFiltered(true);
+        break;
+
       case zoneFilterOn && typeFilterOn && veggieCatFilterOn:
         filteredPlants = filteredPlants.filter(
           (plant) => plant.type.label.toLowerCase() === typeName
@@ -333,7 +341,6 @@ export const PlantList = () => {
   const handleSearch = (e) => {
     setSearchFilterOn(true);
     setSearchTerm(e.target.value);
-    setLastTBClicked(0);
   };
 
   const clearFilters = () => {
@@ -363,27 +370,90 @@ export const PlantList = () => {
   const displayPlants = () => {
     if (renderedPlants.length > 0) {
       return (
-        <div className="list-container pixel-border-green2 w-[85%] grid grid-cols-6 justify-center gap-14 mt-8 mb-12 px-8 pt-4 pb-6">
-          {renderedPlants.map((plant) => {
-            return (
-              <div className="" key={plant.id}>
-                <Link
-                  to={`/plants/${plant.id}`}
-                  className="hover:text-eggshell"
+        <>
+          <div className="list-header w-[85%]">
+            {typeFilterOn && typeName === "veggie" && veggieCatsToggle ? (
+              <>
+                <div
+                  className="arrow"
+                  style={{
+                    position: "absolute",
+                    top: "6.35rem", // Adjusted top value
+                    left: "34.65rem",
+                    transform: "translateX(-50%)",
+                    width: "0",
+                    height: "0",
+                    borderTop: "8px solid rgb(40, 40, 40)", // Flipped
+                    borderLeft: "8px solid transparent",
+                    borderRight: "8px solid transparent",
+                    borderBottom: "8px solid transparent", // Flipped
+                  }}
+                />
+                <div className="absolute left-[17.35rem] top-[6.7rem] flex justify-evenly w-[35rem] h-7 my-2">
+                  {veggieCategories.map((category, index) => (
+                    <button
+                      key={index + 1}
+                      name={category}
+                      className={`eightbit-btn text-lg ${
+                        lastVCBClicked === index + 1 ? "veggie-clicked" : ""
+                      }`}
+                      onClick={(e) => handleVeggieCatClick(e, index)}
+                    >
+                      {category}
+                    </button>
+                  ))}
+                </div>
+              </>
+            ) : null}
+            {(searchFilterOn || typeFilterOn || zoneFilterOn) &&
+              !veggieCatsToggle && (
+                <button
+                  onClick={clearFilters}
+                  className="absolute top-[6.97rem] left-[46%] border border-solid border-black rounded-xl px-1 pt-0.5 mt-1"
                 >
-                  <div className="border-step4">
-                    <div className="image-container">
-                      <img src={plant.image} alt="Plant Image" />
-                    </div>
-                  </div>
-                  <div className="plant-name leading-5 text-[1.2rem] text-center -mb-8 mt-1">
-                    {plant.name}
-                  </div>
-                </Link>
+                  ⓧ clear filters
+                </button>
+              )}
+            {(searchFilterOn || typeFilterOn || zoneFilterOn) &&
+              veggieCatsToggle && (
+                <button
+                  onClick={clearFilters}
+                  className="absolute top-[6.97rem] left-[56%] border border-solid border-black rounded-xl px-1 pt-0.5 mt-1"
+                >
+                  ⓧ clear filters
+                </button>
+              )}
+            {(fullZoneName || locationJustShared) && (
+              <div className="text-2xl italic absolute right-[7rem] top-[7rem]">
+                You are in zone:
+                <span className="text-4xl not-italic pl-3 text-dark-green">
+                  {fullZoneName}
+                </span>
               </div>
-            );
-          })}
-        </div>
+            )}
+          </div>
+          <div className="list-container pixel-border-green2 w-[85%] grid grid-cols-6 justify-center gap-14 mt-[4.5rem] mb-12 px-8 pt-4 pb-9">
+            {renderedPlants.map((plant) => {
+              return (
+                <div className="" key={plant.id}>
+                  <Link
+                    to={`/plants/${plant.id}`}
+                    className="hover:text-eggshell"
+                  >
+                    <div className="border-step4">
+                      <div className="image-container">
+                        <img src={plant.image} alt="Plant Image" />
+                      </div>
+                    </div>
+                    <div className="plant-name leading-5 text-[1.2rem] text-center -mb-8 mt-1">
+                      {plant.name}
+                    </div>
+                  </Link>
+                </div>
+              );
+            })}
+          </div>
+        </>
       );
     } else if (
       allPlants &&
@@ -407,21 +477,31 @@ export const PlantList = () => {
 
   return (
     <div className="comp-container bg-amber-100 flex flex-col justify-start items-center relative z-4 min-h-[80vh]">
-      <div className="title search-bar flex w-[85%] my-2 relative">
+      <div className="title search-bar flex w-[85%] mt-2 mb-4 relative">
         <div className="title text-3xl mx-auto font-bold">Browse Plants:</div>
         <button
-          className="add-plant-button text-2xl text-light-green-900 absolute left-0 underline flex justify-center items-center h-[2.5rem]"
+          className="add-plant-button text-2xl text-light-green-900 absolute left-0 underline underline-offset-[3px] flex justify-center items-center h-[2.5rem]"
           onClick={() => {
             navigate("/plants/newplant");
           }}
         >
-          + Add Plant
+          Add Plant
           <img
             className="h-[1.8rem] ml-1 mb-1.5"
             src={seedling}
             alt="Seedling"
           />
         </button>
+        <div className="random-btn absolute left-[11rem] text-2xl text-light-green-900 underline underline-offset-[3px] top-1 flex justify-center items-center">
+          <button onClick={seeRandomPlant}>
+            Random Plant
+            <img
+              className="h-[1.3rem] ml-1.5 inline-block"
+              src={sparkle}
+              alt="sparkle"
+            />
+          </button>
+        </div>
         <div className="search-bar-container absolute right-0">
           <input
             className="search-bar border text-2xl border-solid border-black rounded-md w-[14rem] h-[1.85rem]"
@@ -440,7 +520,7 @@ export const PlantList = () => {
         </div>
       </div>
       <div className="primary-buttons-container flex justify-center items-center relative w-[85%] h-9 mb-2">
-        <div className="type-buttons flex w-1/2 justify-evenly">
+        <div className="type-buttons flex w-[37rem] justify-evenly">
           <div className="button2 brown">
             <button
               name="veggie"
@@ -487,7 +567,7 @@ export const PlantList = () => {
           </div>
         </div>
 
-        <div className="zone-toggle flex items-center absolute right-0 ">
+        <div className="zone-toggle flex items-center absolute -top-1 -right-4 ">
           <button
             className="w-16 h-[1.85rem] static justify-end"
             onClick={handleZoneClick}
@@ -498,67 +578,12 @@ export const PlantList = () => {
               alt="zone toggle button"
             />
           </button>
-          <div className="w-[6rem] ml-3 text-lg font-bold">
+          <div className="w-[6rem] ml-3 text-[1rem] font-bold">
             Only plants in my zone
           </div>
         </div>
-        <div className="random-btn absolute left-6 top-7 flex justify-center items-center">
-          <button onClick={seeRandomPlant}>
-            Random Plant
-            <img
-              className="h-[1.3rem] ml-1.5 inline-block"
-              src={sparkle}
-              alt="sparkle"
-            />
-          </button>
-        </div>
       </div>
-      {typeFilterOn && typeName === "veggie" && veggieCatsToggle ? (
-        <>
-          <div
-            className="arrow"
-            style={{
-              position: "absolute",
-              top: "5.85rem", // Adjusted top value
-              left: "33.75rem",
-              transform: "translateX(-50%)",
-              width: "0",
-              height: "0",
-              borderTop: "8px solid rgb(40, 40, 40)", // Flipped
-              borderLeft: "8px solid transparent",
-              borderRight: "8px solid transparent",
-              borderBottom: "8px solid transparent", // Flipped
-            }}
-          />
-          <div className="absolute left-[13.93rem] top-[6.2rem] flex justify-evenly w-[40rem] h-7 my-2">
-            {veggieCategories.map((category, index) => (
-              <button
-                key={index + 1}
-                name={category}
-                className={`eightbit-btn text-lg ${
-                  lastVCBClicked === index + 1 ? "veggie-clicked" : ""
-                }`}
-                onClick={(e) => handleVeggieCatClick(e, index)}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
-        </>
-      ) : null}
-      {searchFilterOn || typeFilterOn || veggieCatFilterOn || zoneFilterOn ? (
-        <button
-          onClick={clearFilters}
-          className="border border-solid border-black rounded-xl px-1 pt-0.5 mt-1"
-        >
-          ⓧ clear filters
-        </button>
-      ) : null}
-      {(fullZoneName || locationJustShared) && (
-        <div className="text-xl absolute right-24 top-24">
-          You are in zone: {fullZoneName}
-        </div>
-      )}
+
       {displayPlants()}
     </div>
   );

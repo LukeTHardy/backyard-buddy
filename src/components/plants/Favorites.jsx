@@ -1,4 +1,4 @@
-import { fetchMyFavorites } from "../../services/PlantServices";
+import { fetchMyFavorites, fetchAllPlants } from "../../services/PlantServices";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -6,12 +6,14 @@ import searchSymbol from "/assets/graphics/search_symbol.png";
 import onSwitch from "/assets/graphics/on_switch.png";
 import offSwitch from "/assets/graphics/off_switch.png";
 import seedling from "/assets/graphics/seedling.png";
+import sparkle from "/assets/graphics/sparkle.png";
 import "./PlantsCritters.css";
 import "/src/components/plants/PixelBorder.scss";
 
 export const Favorites = () => {
   const navigate = useNavigate();
   const [lastClicked, setLastClicked] = useState(null);
+  const [allPlants, setAllPlants] = useState([]);
   const [allFavorites, setAllFavorites] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchTermFavorites, setSearchTermFavorites] = useState([]);
@@ -22,6 +24,18 @@ export const Favorites = () => {
   const [filterTypeSwitch, setFilterTypeSwitch] = useState("");
   const [selectedVeggieCategory, setSelectedVeggieCategory] = useState("");
   const [renderedFavorites, setRenderedFavorites] = useState([]);
+
+  const fetchAndSetAllPlants = async () => {
+    const plantArray = await fetchAllPlants();
+    const alphabetizedPlants = plantArray
+      .slice()
+      .sort((a, b) => a.name.localeCompare(b.name));
+    setAllPlants(alphabetizedPlants);
+  };
+
+  useEffect(() => {
+    fetchAndSetAllPlants();
+  }, []);
 
   const fetchAndSetFavorites = async () => {
     const favoritesArray = await fetchMyFavorites();
@@ -90,6 +104,11 @@ export const Favorites = () => {
     setVeggiesSelected((prevState) => !prevState);
   };
 
+  const seeRandomPlant = () => {
+    const randomId = Math.floor(Math.random() * allPlants.length);
+    navigate(`/plants/${randomId}`);
+  };
+
   const veggieCategories = [
     "Tomato",
     "Root",
@@ -143,29 +162,89 @@ export const Favorites = () => {
   const displayFavorites = () => {
     if (renderedFavorites && renderedFavorites.length) {
       return (
-        <div className="list-container pixel-border-green2 w-[85%] grid grid-cols-6 justify-center gap-14 mt-8 mb-12 px-8 pt-4 pb-6">
-          {renderedFavorites.map((favorite) => {
-            return (
-              <div key={favorite.id}>
-                <>
-                  <Link
-                    to={`/plants/${favorite.plant.id}`}
-                    className="hover:text-eggshell"
-                  >
-                    <div className="border-step4">
-                      <div className="image-container">
-                        <img src={favorite.plant.image} alt="Plant Image" />
+        <>
+          <div className="list-header w-[85%]">
+            {filterTypeSwitch === "type" && veggiesSelected && (
+              <>
+                <div
+                  className="arrow"
+                  style={{
+                    position: "absolute",
+                    top: "6.35rem", // Adjusted top value
+                    left: "34.65rem",
+                    transform: "translateX(-50%)",
+                    width: "0",
+                    height: "0",
+                    borderTop: "8px solid rgb(40, 40, 40)", // Flipped
+                    borderLeft: "8px solid transparent",
+                    borderRight: "8px solid transparent",
+                    borderBottom: "8px solid transparent", // Flipped
+                  }}
+                />
+                <div className="absolute left-[17.35rem] top-[6.7rem] flex justify-evenly w-[35rem] h-7 my-2">
+                  {veggieCategories.map((category) => (
+                    <button
+                      key={category}
+                      className={`eightbit-btn text-lg ${
+                        selectedVeggieCategory === category
+                          ? "bg-blue-500"
+                          : "bg-gray-300"
+                      }`}
+                      onClick={() => handleVeggieCategoryFilter(category)}
+                    >
+                      {category}
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
+            {(searchTerm || filterTypeSwitch) && !veggiesSelected && (
+              <button
+                onClick={clearFilters}
+                className="absolute top-[6.97rem] left-[46%] border border-solid border-black rounded-xl px-1 pt-0.5 mt-1"
+              >
+                ⓧ clear filters
+              </button>
+            )}
+            {(searchTerm || filterTypeSwitch) && veggiesSelected && (
+              <button
+                onClick={clearFilters}
+                className="absolute top-[6.97rem] left-[56%] border border-solid border-black rounded-xl px-1 pt-0.5 mt-1"
+              >
+                ⓧ clear filters
+              </button>
+            )}
+            <div className="text-2xl italic absolute right-[7rem] top-[7rem]">
+              You are in zone:
+              <span className="text-4xl not-italic pl-3 text-dark-green">
+                7b
+              </span>
+            </div>
+          </div>
+          <div className="list-container pixel-border-green2 w-[85%] grid grid-cols-6 justify-center gap-14 mt-[4.5rem] mb-12 px-8 pt-4 pb-6">
+            {renderedFavorites.map((favorite) => {
+              return (
+                <div key={favorite.id}>
+                  <>
+                    <Link
+                      to={`/plants/${favorite.plant.id}`}
+                      className="hover:text-eggshell"
+                    >
+                      <div className="border-step4">
+                        <div className="image-container">
+                          <img src={favorite.plant.image} alt="Plant Image" />
+                        </div>
                       </div>
-                    </div>
-                    <div className="favorite-name leading-5 text-[1.2rem] text-center -mb-8 mt-1">
-                      {favorite.plant.name}
-                    </div>
-                  </Link>
-                </>
-              </div>
-            );
-          })}
-        </div>
+                      <div className="favorite-name leading-5 text-[1.2rem] text-center -mb-8 mt-1">
+                        {favorite.plant.name}
+                      </div>
+                    </Link>
+                  </>
+                </div>
+              );
+            })}
+          </div>
+        </>
       );
     } else if (allFavorites && allFavorites.length && searchTerm) {
       return (
@@ -184,21 +263,31 @@ export const Favorites = () => {
 
   return (
     <div className="comp-container bg-amber-100 flex flex-col items-center justify-start relative z-4 min-h-[80vh]">
-      <div className="title search-bar flex w-[85%] my-2 relative">
+      <div className="title search-bar flex w-[85%] mt-2 mb-4 relative">
         <div className="title text-3xl mx-auto font-bold">My Saved Plants:</div>
         <button
-          className="add-plant-button text-2xl text-light-green-900 absolute left-0 underline flex justify-center items-center h-[2.5rem]"
+          className="add-plant-button text-2xl text-light-green-900 absolute left-0 underline underline-offset-[3px] flex justify-center items-center h-[2.5rem]"
           onClick={() => {
             navigate("/plants/newplant");
           }}
         >
-          + Add Plant
+          Add Plant
           <img
             className="h-[1.8rem] ml-1 mb-1.5"
             src={seedling}
             alt="Seedling"
           />
         </button>
+        <div className="random-btn absolute left-[11rem] text-2xl text-light-green-900 underline underline-offset-[3px] top-1 flex justify-center items-center">
+          <button onClick={seeRandomPlant}>
+            Random Plant
+            <img
+              className="h-[1.3rem] ml-1.5 inline-block"
+              src={sparkle}
+              alt="sparkle"
+            />
+          </button>
+        </div>
         <div className="search-bar-container absolute right-0">
           <input
             className="search-bar border text-2xl border-solid border-black rounded-md w-[14rem] h-[1.85rem]"
@@ -217,7 +306,7 @@ export const Favorites = () => {
         </div>
       </div>
       <div className="primary-buttons-container flex justify-center items-center relative w-[85%] h-9 mb-2">
-        <div className="type-buttons flex w-1/2 justify-evenly">
+        <div className="type-buttons flex w-[37rem] justify-evenly">
           <div className="button2 brown">
             <button
               name="veggie"
@@ -284,50 +373,7 @@ export const Favorites = () => {
           </div>
         </div>
       </div>
-      {filterTypeSwitch === "type" && veggiesSelected && (
-        <>
-          <div
-            className="arrow"
-            style={{
-              position: "absolute",
-              top: "5.85rem", // Adjusted top value
-              left: "33.75rem",
-              transform: "translateX(-50%)",
-              width: "0",
-              height: "0",
-              borderTop: "8px solid rgb(40, 40, 40)", // Flipped
-              borderLeft: "8px solid transparent",
-              borderRight: "8px solid transparent",
-              borderBottom: "8px solid transparent", // Flipped
-            }}
-          />
-          <div className="absolute left-[13.93rem] top-[6.2rem] flex justify-evenly w-[40rem] h-7 my-2">
-            {veggieCategories.map((category) => (
-              <button
-                key={category}
-                className={`eightbit-btn text-lg ${
-                  selectedVeggieCategory === category
-                    ? "bg-blue-500"
-                    : "bg-gray-300"
-                }`}
-                onClick={() => handleVeggieCategoryFilter(category)}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
-        </>
-      )}
-      {searchTerm || filterTypeSwitch ? (
-        <button
-          onClick={clearFilters}
-          className="border border-solid border-black rounded-xl px-1 pt-0.5 mt-1"
-        >
-          ⓧ clear filters
-        </button>
-      ) : (
-        ""
-      )}
+
       {displayFavorites()}
     </div>
   );
