@@ -89,8 +89,8 @@ export const LoginRegister = ({ setToken, setCurrentUserId }) => {
           <div
             className={`cursor-pointer w-1/2 h-[3rem] text-center text-xl pt-3 ${
               activeTab === "register"
-                ? "bg-light-blue-500 text-white"
-                : "bg-light-blue-700 text-white"
+                ? "bg-light-blue-300 text-white"
+                : "bg-light-blue-500 text-white"
             }`}
             onClick={() => handleTabClick("register")}
           >
@@ -124,7 +124,7 @@ export const LoginRegister = ({ setToken, setCurrentUserId }) => {
                 ref={loginPassword}
               />
             </div>
-            <button type="submit" name="submit" className="green-btn">
+            <button name="submit" className="green-button">
               <div className="hover">
                 <span></span>
                 <span></span>
@@ -220,7 +220,7 @@ export const LoginRegister = ({ setToken, setCurrentUserId }) => {
                 ref={verifyPassword}
               />
             </div>
-            <button type="submit" name="submit" className="blue-btn">
+            <button name="submit" className="blue-button">
               <div className="hover">
                 <span></span>
                 <span></span>
