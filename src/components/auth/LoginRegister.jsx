@@ -124,7 +124,7 @@ export const LoginRegister = ({ setToken, setCurrentUserId }) => {
                 ref={loginPassword}
               />
             </div>
-            <button type="submit" name="submit" className="green-btn">
+            <button type="submit" name="submit" className="btn-green">
               <div className="hover">
                 <span></span>
                 <span></span>
