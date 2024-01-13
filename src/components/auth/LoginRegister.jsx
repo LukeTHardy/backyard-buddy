@@ -74,10 +74,10 @@ export const LoginRegister = ({ setToken, setCurrentUserId }) => {
       className="comp-container relative flex flex-col items-center justify-center h-screen"
       style={{ background, backgroundSize: "cover" }}
     >
-      <div className="w-96 bg-white px-6 pb-4 pt-10 shadow-md absolute top-[11rem] flex flex-col">
+      <div className="w-96 bg-white px-6 pb-4 pt-10 shadow-md absolute top-[14rem] flex flex-col rounded-sm">
         <div className="absolute top-0 left-0 w-full flex">
           <div
-            className={`cursor-pointer h-[3rem] w-1/2 text-center text-xl border-r-2 pt-3 ${
+            className={`cursor-pointer h-[3rem] w-1/2 text-center text-xl border-r-2 pt-3 rounded-tl-sm ${
               activeTab === "login"
                 ? "bg-light-green-400 text-white"
                 : "bg-light-green-600 text-white"
@@ -87,7 +87,7 @@ export const LoginRegister = ({ setToken, setCurrentUserId }) => {
             Login
           </div>
           <div
-            className={`cursor-pointer w-1/2 h-[3rem] text-center text-xl pt-3 ${
+            className={`cursor-pointer w-1/2 h-[3rem] text-center text-xl pt-3 rounded-tr-sm ${
               activeTab === "register"
                 ? "bg-light-blue-300 text-white"
                 : "bg-light-blue-500 text-white"
