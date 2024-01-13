@@ -131,7 +131,17 @@ export const CritterList = () => {
 
   return (
     <div className="comp-container bg-amber-100 flex flex-col justify-start items-center relative min-h-[80vh]">
-      <div className="title search-bar flex w-[85%] mb-2 mt-2 relative">
+      <div className="title search-bar flex w-[85%] mb-4 mt-2 relative">
+        <div className="random-btn absolute left-0 text-2xl text-light-blue-800 underline underline-offset-[3px] top-1 flex justify-center items-center">
+          <button onClick={seeRandomCritter}>
+            Random Critter
+            <img
+              className="h-[1.3rem] ml-1.5 inline-block"
+              src={sparkle}
+              alt="sparkle"
+            />
+          </button>
+        </div>
         <div className="title text-3xl mx-auto font-bold">Browse Critters:</div>
         <div className="search-bar-container absolute right-0">
           <input
@@ -186,16 +196,6 @@ export const CritterList = () => {
               }}
             >
               Harmful
-            </button>
-          </div>
-          <div className="random-btn absolute left-6 top-7 flex justify-center items-center">
-            <button onClick={seeRandomCritter}>
-              Random Critter
-              <img
-                className="h-[1.3rem] ml-1.5 inline-block"
-                src={sparkle}
-                alt="sparkle"
-              />
             </button>
           </div>
         </div>

@@ -149,7 +149,7 @@ export const CritterDetails = () => {
               </div>
               <div className="buttons-container w-[12rem] mt-auto flex justify-evenly">
                 <div className="back-btn absolute left-4 -bottom-[0.4rem] flex text-[1.15rem] justify-center items-center">
-                  <button onClick={() => navigate("/plants")} className="">
+                  <button onClick={() => navigate("/critters")} className="">
                     <img
                       className="h-[1.5rem] mr-2 inline-block mt-[-0.85rem]"
                       src={uparrow}
