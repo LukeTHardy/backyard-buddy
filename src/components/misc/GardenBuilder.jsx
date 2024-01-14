@@ -81,23 +81,36 @@ export const GardenBuilder = () => {
         </div>
         <div className="plant-buttons flex flex-col items-center mt-8">
           <div className="title text-2xl">I want to grow...</div>
-          <div className="subtitle italic text-md text-gray-dark mt-4">
+          <div className="subtitle italic text-md text-gray-dark mt-3">
             (Add up to 6 total)
           </div>
           <div className="buttons-container w-[30rem] flex justify-evenly">
-            <button className="bg-eggshell px-2 py-1 border-2 border-solid border-black rounded-md">
+            <button
+              className="bg-eggshell px-2 py-1 border-2 border-solid border-black rounded-md"
+              name="veggies"
+            >
               Add Veggie
             </button>
-            <button className="bg-eggshell px-2 py-1 border-2 border-solid border-black rounded-md">
+            <button
+              className="bg-eggshell px-2 py-1 border-2 border-solid border-black rounded-md"
+              name="herbs"
+            >
               Add Herb
             </button>
-            <button className="bg-eggshell px-2 py-1 border-2 border-solid border-black rounded-md">
+            <button
+              className="bg-eggshell px-2 py-1 border-2 border-solid border-black rounded-md"
+              name="flowers"
+            >
               Add Flower
             </button>
-            <button className="bg-eggshell px-2 py-1 border-2 border-solid border-black rounded-md">
+            <button
+              className="bg-eggshell px-2 py-1 border-2 border-solid border-black rounded-md"
+              name="fruit"
+            >
               Add Fruit
             </button>
           </div>
+          <div className="selectors-container"></div>
         </div>
       </div>
     </div>
