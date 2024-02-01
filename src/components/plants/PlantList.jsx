@@ -28,6 +28,8 @@ export const PlantList = () => {
   const [typeName, setTypeName] = useState("");
   const [renderedPlants, setRenderedPlants] = useState([]);
 
+  // Fetch and alphabetize all plant objects
+
   const fetchAndSetAllPlants = async () => {
     const plantArray = await fetchAllPlants();
     const alphabetizedPlants = plantArray
@@ -40,17 +42,23 @@ export const PlantList = () => {
     fetchAndSetAllPlants();
   }, []);
 
+  // Capture user coordinates:
+
   useEffect(() => {
     const getUserCoordinates = () => {
       return new Promise(async (resolve, reject) => {
         if ("geolocation" in navigator) {
           try {
+            // Pause execution until user input received:
+
             const position = await new Promise((innerResolve, innerReject) => {
               navigator.geolocation.getCurrentPosition(
                 innerResolve,
                 innerReject
               );
             });
+
+            // Store coordinates in local browser storage:
 
             const { latitude, longitude } = position.coords;
             localStorage.setItem(
@@ -60,7 +68,11 @@ export const PlantList = () => {
             console.log("Latitude: " + latitude);
             console.log("Longitude: " + longitude);
 
+            // Return coordinates from this function:
+
             resolve({ latitude, longitude });
+
+            // Handle error case or user blocking location sharing:
           } catch (error) {
             setZoneFilterOn(false);
             window.alert(
@@ -76,6 +88,8 @@ export const PlantList = () => {
         }
       });
     };
+
+    // Pass in coordinates to reverse geocoding API to find zipcode:
 
     const reverseGeocode = async ({ latitude, longitude }) => {
       try {
@@ -97,12 +111,16 @@ export const PlantList = () => {
       }
     };
 
+    // Pass user's zipcode to USDA zone-finder API:
+
     const getZoneFromZip = async (zipcode) => {
       try {
         const response = await fetch(`https://phzmapi.org/${zipcode}.json`);
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
+        // Format and save zone name in state and local storage:
+
         const data = await response.json();
         const zone = data.zone;
         localStorage.setItem("Full zone name:", JSON.stringify(zone));
@@ -119,6 +137,9 @@ export const PlantList = () => {
         return null;
       }
     };
+
+    // Extract and save the zone number alone for filtering functionality:
+
     const extractZoneNumber = (zone) => {
       const zoneNumber = parseInt(zone.toString().charAt(0));
       setUserZoneNumber(zoneNumber);
@@ -128,6 +149,8 @@ export const PlantList = () => {
 
     const zoneAlreadyStored = JSON.parse(localStorage.getItem("Zone number:"));
 
+    // Invoke this bad boy:
+
     if (zoneFilterOn && !zoneAlreadyStored) {
       getUserCoordinates()
         .then((coordinates) => reverseGeocode(coordinates))
@@ -136,6 +159,8 @@ export const PlantList = () => {
         .catch((error) => console.error("Error in the chain:", error));
     }
   }, [zoneFilterOn]);
+
+  // If zone name and number have not been set by the API chain but are present in local storage, save them in state and log for clarity:
 
   useEffect(() => {
     const storedZoneName = localStorage.getItem("Full zone name:");
@@ -151,6 +176,8 @@ export const PlantList = () => {
       console.log("Just set the zone number from local storage");
     }
   }, [fullZoneName, userZoneNumber]);
+
+  // Switch case statement handles every possible filtering combination:
 
   useEffect(() => {
     let filteredPlants = allPlants;
@@ -304,11 +331,15 @@ export const PlantList = () => {
     searchTerm,
   ]);
 
+  // Reset search filter switch when search term is cleared:
+
   useEffect(() => {
     if (!searchTerm) {
       setSearchFilterOn(false);
     }
   }, [searchTerm]);
+
+  // Necessary state changes for different filter clicks and conditional button styling:
 
   const handleTypeClick = (e, buttonId) => {
     !typeFilterOn ? setTypeFilterOn(true) : null;
@@ -343,6 +374,8 @@ export const PlantList = () => {
     setSearchTerm(e.target.value);
   };
 
+  // Clear function for all relevant filtering state:
+
   const clearFilters = () => {
     setSearchTerm("");
     setSearchFilterOn(false);
@@ -353,10 +386,14 @@ export const PlantList = () => {
     setLastTBClicked(0);
     setLastVCBClicked(0);
   };
+
   const seeRandomPlant = () => {
     const randomId = Math.floor(Math.random() * allPlants.length);
     navigate(`/plants/${randomId}`);
   };
+
+  // Button names for VeggieCat filters:
+
   const veggieCategories = [
     "Tomato",
     "Root",
@@ -367,9 +404,12 @@ export const PlantList = () => {
     "Misc",
   ];
 
+  // Grid element rendering:
+
   const displayPlants = () => {
     if (renderedPlants.length > 0) {
       return (
+        // Header with VeggieCat arrow/buttons, clear filters button, and zone name readout:
         <>
           <div className="list-header w-[85%]">
             {typeFilterOn && typeName === "veggie" && veggieCatsToggle ? (
@@ -433,25 +473,29 @@ export const PlantList = () => {
             )}
           </div>
           <div className="list-container pixel-border-green2 w-[85%] grid grid-cols-6 justify-center gap-14 mt-[4.5rem] mb-12 px-8 pt-4 pb-9">
-            {renderedPlants.map((plant) => {
-              return (
-                <div className="" key={plant.id}>
-                  <Link
-                    to={`/plants/${plant.id}`}
-                    className="hover:text-eggshell"
-                  >
-                    <div className="border-step4">
-                      <div className="image-container">
-                        <img src={plant.image} alt="Plant Image" />
+            {
+              // Grid thumbnails:
+
+              renderedPlants.map((plant) => {
+                return (
+                  <div className="" key={plant.id}>
+                    <Link
+                      to={`/plants/${plant.id}`}
+                      className="hover:text-eggshell"
+                    >
+                      <div className="border-step4">
+                        <div className="image-container">
+                          <img src={plant.image} alt="Plant Image" />
+                        </div>
                       </div>
-                    </div>
-                    <div className="plant-name leading-5 text-[1.2rem] text-center -mb-8 mt-1">
-                      {plant.name}
-                    </div>
-                  </Link>
-                </div>
-              );
-            })}
+                      <div className="plant-name leading-5 text-[1.2rem] text-center -mb-8 mt-1">
+                        {plant.name}
+                      </div>
+                    </Link>
+                  </div>
+                );
+              })
+            }
           </div>
         </>
       );
@@ -476,6 +520,8 @@ export const PlantList = () => {
   };
 
   return (
+    // Comp header and grid invocation:
+
     <div className="comp-container bg-amber-100 flex flex-col justify-start items-center relative z-4 min-h-[80vh]">
       <div className="title search-bar flex w-[85%] mt-2 mb-4 relative">
         <div className="title text-3xl mx-auto font-bold">Browse Plants:</div>

@@ -9,6 +9,12 @@ export const GardenBuilder = () => {
   const [herbs, setHerbs] = useState([]);
   const [flowers, setFlowers] = useState([]);
   const [fruit, setFruit] = useState([]);
+  const [selectedPlants, setSelectedPlants] = useState({
+    veggies: [],
+    herbs: [],
+    flowers: [],
+    fruit: [],
+  });
 
   const fetchAndSetAllPlants = async () => {
     const plantArray = await fetchAllPlants();
@@ -22,29 +28,24 @@ export const GardenBuilder = () => {
     fetchAndSetAllPlants();
   }, []);
 
-  const grabVeggies = () => {
-    const veggiesArr = allPlants.filter(
-      (plant) => plant.type.label.toLowerCase() === "veggie"
+  const grabPlantsByType = (type) => {
+    const plantsArr = allPlants.filter(
+      (plant) => plant.type.label.toLowerCase() === type
     );
-    setVeggies(veggiesArr);
+    return plantsArr;
+  };
+
+  const grabVeggies = () => {
+    setVeggies(grabPlantsByType("veggie"));
   };
   const grabHerbs = () => {
-    const herbsArr = allPlants.filter(
-      (plant) => plant.type.label.toLowerCase() === "herb"
-    );
-    setHerbs(herbsArr);
+    setHerbs(grabPlantsByType("herb"));
   };
   const grabFlowers = () => {
-    const flowersArr = allPlants.filter(
-      (plant) => plant.type.label.toLowerCase() === "flower"
-    );
-    setFlowers(flowersArr);
+    setFlowers(grabPlantsByType("flower"));
   };
   const grabFruit = () => {
-    const fruitArr = allPlants.filter(
-      (plant) => plant.type.label.toLowerCase() === "fruit"
-    );
-    setFruit(fruitArr);
+    setFruit(grabPlantsByType("fruit"));
   };
 
   useEffect(() => {
@@ -55,6 +56,17 @@ export const GardenBuilder = () => {
       grabFruit();
     }
   }, [allPlants]);
+
+  const handleButtonClick = (type) => {
+    // Check if the limit for the selected type is reached
+    if (selectedPlants[type].length < 4) {
+      // Add a new select element to the respective array
+      setSelectedPlants((prevState) => ({
+        ...prevState,
+        [type]: [...prevState[type], grabPlantsByType(type)],
+      }));
+    }
+  };
 
   return (
     <div className="comp-container flex flex-col items-center bg-amber-100 justify-start relative min-h-[80vh]">
@@ -87,30 +99,44 @@ export const GardenBuilder = () => {
           <div className="buttons-container w-[30rem] flex justify-evenly">
             <button
               className="bg-eggshell px-2 py-1 border-2 border-solid border-black rounded-md"
-              name="veggies"
+              onClick={() => handleButtonClick("veggies")}
             >
               Add Veggie
             </button>
             <button
               className="bg-eggshell px-2 py-1 border-2 border-solid border-black rounded-md"
-              name="herbs"
+              onClick={() => handleButtonClick("herbs")}
             >
               Add Herb
             </button>
             <button
               className="bg-eggshell px-2 py-1 border-2 border-solid border-black rounded-md"
-              name="flowers"
+              onClick={() => handleButtonClick("flowers")}
             >
               Add Flower
             </button>
             <button
               className="bg-eggshell px-2 py-1 border-2 border-solid border-black rounded-md"
-              name="fruit"
+              onClick={() => handleButtonClick("fruit")}
             >
               Add Fruit
             </button>
           </div>
-          <div className="selectors-container"></div>
+          <div className="selectors-container">
+            {/* Render select elements from the selectedPlants state */}
+            {selectedPlants.veggies.map((plants, index) => (
+              <div key={index}>
+                <select>
+                  {plants.map((plant) => (
+                    <option key={plant.id} value={plant.id}>
+                      {plant.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            ))}
+            {/* Repeat similar code for other plant types */}
+          </div>
         </div>
       </div>
     </div>
