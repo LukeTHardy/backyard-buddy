@@ -5,16 +5,12 @@ import { useState, useEffect } from "react";
 
 export const GardenBuilder = () => {
   const [allPlants, setAllPlants] = useState([]);
+  const [dimensions, setDimensions] = useState({ width: null, length: null });
   const [veggies, setVeggies] = useState([]);
   const [herbs, setHerbs] = useState([]);
   const [flowers, setFlowers] = useState([]);
   const [fruit, setFruit] = useState([]);
-  const [selectedPlants, setSelectedPlants] = useState({
-    veggies: [],
-    herbs: [],
-    flowers: [],
-    fruit: [],
-  });
+  const [chosenPlants, setChosenPlants] = useState([]);
 
   const fetchAndSetAllPlants = async () => {
     const plantArray = await fetchAllPlants();
@@ -57,11 +53,11 @@ export const GardenBuilder = () => {
     }
   }, [allPlants]);
 
-  const handleButtonClick = (type) => {
+  const handleButtonClick = () => {
     // Check if the limit for the selected type is reached
-    if (selectedPlants[type].length < 4) {
+    if (chosenPlants.length < 4) {
       // Add a new select element to the respective array
-      setSelectedPlants((prevState) => ({
+      setChosenPlants((prevState) => ({
         ...prevState,
         [type]: [...prevState[type], grabPlantsByType(type)],
       }));
@@ -100,31 +96,35 @@ export const GardenBuilder = () => {
             <button
               className="bg-eggshell px-2 py-1 border-2 border-solid border-black rounded-md"
               onClick={() => handleButtonClick("veggies")}
+              name="veggies"
             >
               Add Veggie
             </button>
             <button
               className="bg-eggshell px-2 py-1 border-2 border-solid border-black rounded-md"
               onClick={() => handleButtonClick("herbs")}
+              name="herbs"
             >
               Add Herb
             </button>
             <button
               className="bg-eggshell px-2 py-1 border-2 border-solid border-black rounded-md"
               onClick={() => handleButtonClick("flowers")}
+              name="flowers"
             >
               Add Flower
             </button>
             <button
               className="bg-eggshell px-2 py-1 border-2 border-solid border-black rounded-md"
               onClick={() => handleButtonClick("fruit")}
+              name="fruit"
             >
               Add Fruit
             </button>
           </div>
           <div className="selectors-container">
             {/* Render select elements from the selectedPlants state */}
-            {selectedPlants.veggies.map((plants, index) => (
+            {chosenPlants.map((plants, index) => (
               <div key={index}>
                 <select>
                   {plants.map((plant) => (
