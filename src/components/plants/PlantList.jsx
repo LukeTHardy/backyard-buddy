@@ -72,7 +72,7 @@ export const PlantList = () => {
 
             resolve({ latitude, longitude });
 
-            // Handle error case or user blocking location sharing:
+            // Handle error case or user rejecting location sharing:
           } catch (error) {
             setZoneFilterOn(false);
             window.alert(
@@ -149,7 +149,7 @@ export const PlantList = () => {
 
     const zoneAlreadyStored = JSON.parse(localStorage.getItem("Zone number:"));
 
-    // Invoke this bad boy:
+    // Invoke all functions:
 
     if (zoneFilterOn && !zoneAlreadyStored) {
       getUserCoordinates()

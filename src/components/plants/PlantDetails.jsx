@@ -41,6 +41,8 @@ export const PlantDetails = ({ userId, setFavoriteClicked }) => {
   });
   const { plantId } = useParams();
 
+  // Fetch and set chosen plant
+
   const fetchAndSetPlant = async () => {
     const plant = await fetchPlant(plantId);
     setChosenPlant(plant);
@@ -50,11 +52,15 @@ export const PlantDetails = ({ userId, setFavoriteClicked }) => {
     fetchAndSetPlant();
   }, [plantId, foundFavorite]);
 
+  // Fetch all plants for navigation functions
+
   useEffect(() => {
     fetchAllPlants().then((plantsArray) => {
       setPlants(plantsArray);
     });
   }, []);
+
+  // Fetch current user's favorites and refresh on every favorite/unfavorite click
 
   useEffect(() => {
     const fetchData = async () => {
@@ -66,12 +72,16 @@ export const PlantDetails = ({ userId, setFavoriteClicked }) => {
     fetchData();
   }, [favoriteSwitch]);
 
+  // Check if current plant is already a favorite or not
+
   useEffect(() => {
     const thisFavorite = favorites.find(
       (favorite) => favorite.plant.id === parseInt(plantId)
     );
     setFoundFavorite(thisFavorite);
   }, [userId, favorites, plantId]);
+
+  // Handler for adding favorite and triggering NavBar animation
 
   const handleAddFavoriteClick = async () => {
     const newFavorite = {
@@ -83,10 +93,13 @@ export const PlantDetails = ({ userId, setFavoriteClicked }) => {
     setFavoriteClicked(true);
 
     // Set a timeout to reset favoriteClicked to false after 2000 milliseconds (2 seconds)
+
     setTimeout(() => {
       setFavoriteClicked(false);
     }, 2000);
   };
+
+  // Handler for removing favorite
 
   const handleRemoveFavoriteClick = async () => {
     const favoriteId = foundFavorite.id;
@@ -94,8 +107,12 @@ export const PlantDetails = ({ userId, setFavoriteClicked }) => {
     setFavoriteSwitch((prevFavoriteSwitch) => !prevFavoriteSwitch);
   };
 
+  // Handlers for lightbox clicks
+
   const openLightbox = () => setLightboxOpen(true);
   const closeLightbox = () => setLightboxOpen(false);
+
+  // Finding next and prev plant id alphabetically, with limits for first and last plants
 
   const getNextPlantId = (currentPlantId) => {
     const alphabetizedPlants = plants
@@ -125,6 +142,8 @@ export const PlantDetails = ({ userId, setFavoriteClicked }) => {
     return null;
   };
 
+  // Handlers for navigation clicks
+
   const nextPlant = () => {
     const nextId = getNextPlantId(parseInt(plantId));
     if (nextId !== null) {
@@ -147,6 +166,8 @@ export const PlantDetails = ({ userId, setFavoriteClicked }) => {
     const randomId = Math.floor(Math.random() * plants.length);
     navigate(`/plants/${randomId}`);
   };
+
+  // JSX...
 
   const displayPlant = () => {
     if (chosenPlant) {
