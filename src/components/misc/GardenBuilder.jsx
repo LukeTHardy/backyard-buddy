@@ -67,10 +67,10 @@ export const GardenBuilder = () => {
   return (
     <div className="comp-container flex flex-col items-center bg-amber-100 justify-start relative min-h-[80vh]">
       <div className="garden-builder-comp flex flex-col items-center">
-        <div className="title text-3xl m-4">See Your Garden:</div>
+        <div className="title text-3xl m-4">Create a Garden</div>
         <div className="dimensions flex flex-col items-center">
-          <div className="dimensions-title text-2xl mb-2">
-            My garden will be...
+          <div className="dimensions-title text-2xl mb-3 mt-2">
+            My planting area will be:
           </div>
           <div className="dimensions-inputs h-8 flex justify-evenly items-end text-xl">
             <input
@@ -80,7 +80,7 @@ export const GardenBuilder = () => {
             />{" "}
             ft. x{" "}
             <input
-              className="text-xl rounded-lg w-[4rem] pl-2 ml-6 mr-1 "
+              className="text-xl rounded-lg w-[4rem] pl-2 ml-4 mr-1 "
               type="text"
               placeholder="length"
             />{" "}
@@ -88,9 +88,9 @@ export const GardenBuilder = () => {
           </div>
         </div>
         <div className="plant-buttons flex flex-col items-center mt-8">
-          <div className="title text-2xl">I want to grow...</div>
-          <div className="subtitle italic text-md text-gray-dark mt-3">
-            (Add up to 6 total)
+          <div className="title text-2xl">I want to grow:</div>
+          <div className="subtitle italic text-md text-gray-dark mt-3 mb-1">
+            (Add up to 6)
           </div>
           <div className="buttons-container w-[30rem] flex justify-evenly">
             <button
